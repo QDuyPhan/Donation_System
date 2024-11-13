@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <style>
+      .card {
+          width: 600px;
+          border: 1px solid black;
+          font-family: Arial;
+      }
+
+      .card-header {
+          background: orange;
+          color: white;
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+      }
+
+      .card-body table tr th {
+          width: 100px;
+          text-align: left;
+          padding: 5px;
+      }
+
+      .card-footer {
+      }
+
+
+      .card-footer a {
+          text-decoration: none;
+          display: inline-block;
+          padding: 5px;
+      }
+
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <h3>THÔNG TIN ĐĂNG KÝ TÀI KHOẢN</h3>
+  </div>
+  <div class="card-body">
+    <table th:object="${user}">
+      <tr>
+        <th>Username</th>
+        <td><span th:text="${username}"></span></td>
+      </tr>
+      <tr>
+        <th>Mật khẩu</th>
+        <td><span th:text="${password}"></span></td>
+      </tr>
+      <tr>
+        <th>Họ Tên</th>
+        <td><span th:text="${fullname}"></span></td>
+      </tr>
+      <tr>
+        <th>SDT</th>
+        <td><span th:text="${sdt}"></span></td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td><span th:text="${email}"></span></td>
+      </tr>
+      <tr>
+        <th>Địa Chỉ</th>
+        <td><span th:text="${address}"></span></td>
+      </tr>
+    </table>
+  </div>
+  <div class="card-footer">
+    <a th:href="@{/register(action='activate', username=${username}, key=${key})}" class="card-link">Nhấn vào đây để
+      kích hoạt tài khoản</a>
+  </div>
+</div>
+</body>
+</html>
