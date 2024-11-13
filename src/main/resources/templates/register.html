@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8"/>
   <link
@@ -46,7 +46,7 @@
                 <form
                   class="mx-1 mx-md-4"
                   method="post"
-                  th:action="@{/register}"
+                  th:action="@{/Donations/register}"
                   th:object="${user}"
                 >
                   <div class="d-flex flex-row align-items-center mb-4 flex-column">

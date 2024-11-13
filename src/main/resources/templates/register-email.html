@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Insert title here</title>
@@ -27,7 +27,6 @@
       .card-footer {
       }
 
-
       .card-footer a {
           text-decoration: none;
           display: inline-block;
@@ -42,7 +41,7 @@
     <h3>THÔNG TIN ĐĂNG KÝ TÀI KHOẢN</h3>
   </div>
   <div class="card-body">
-    <table th:object="${user}">
+    <table>
       <tr>
         <th>Username</th>
         <td><span th:text="${username}"></span></td>
@@ -53,7 +52,7 @@
       </tr>
       <tr>
         <th>Họ Tên</th>
-        <td><span th:text="${fullname}"></span></td>
+        <td><span th:text="${fullName}"></span></td>
       </tr>
       <tr>
         <th>SDT</th>
@@ -65,14 +64,17 @@
       </tr>
       <tr>
         <th>Địa Chỉ</th>
-        <td><span th:text="${address}"></span></td>
+        <td><span th:text="${diachi}"></span></td>
       </tr>
     </table>
   </div>
   <div class="card-footer">
-    <a th:href="@{/register(action='activate', username=${username}, key=${key})}" class="card-link">Nhấn vào đây để
+    <a th:href="@{http://localhost:8080/Donations/register(action=${activate}, username=${username}, id=${id})}" class="card-link">Nhấn
+      vào đây để
       kích hoạt tài khoản</a>
   </div>
 </div>
 </body>
 </html>
+
+<!--href="http://localhost:8080/DuAnTuThien/register?action=activate&username=@username&key=@key"-->

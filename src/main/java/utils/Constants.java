@@ -15,5 +15,9 @@ public class Constants {
     public static final String LOWERCASE_CHARS = "abcdefghijklmnopqrstuvwxyz";
     public static final String NUMBERS = "0123456789";
     public static final String SPECIAL_CHARS = "!@#$%^&*()-_=+[]{}|;:,.<>?";
+    public static final String MAIL_TEMPLATE_BASE_NAME = "mail/MailMessages";
+    public static final String MAIL_TEMPLATE_PREFIX = "/templates/";
+    public static final String MAIL_TEMPLATE_SUFFIX = ".html";
+    public static final String UTF_8 = "UTF-8";
 
 }

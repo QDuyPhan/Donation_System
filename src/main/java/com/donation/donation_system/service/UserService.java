@@ -13,7 +13,4 @@ public interface UserService {
     User findByEmail(String email);
 
     User save(User user);
-
-    void sendMail(User user, String email, String password) throws UnsupportedEncodingException, MessagingException;
-
 }
