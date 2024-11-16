@@ -31,7 +31,8 @@
                   Login Account
                 </p>
 
-                <form class="mx-1 mx-md-4" method="post">
+                <form class="mx-1 mx-md-4" method="post" th:action="@{/Donations/login}"
+                      th:object="${user}">
                   <div class="d-flex flex-row align-items-center mb-4">
                     <div class="form-outline flex-fill mb-0 d-flex">
                           <span
@@ -44,7 +45,9 @@
                       <input
                         type="text"
                         id="username"
+                        name="username"
                         class="form-control"
+                        th:field="*{username}"
                         placeholder="Username"
                       />
                       <label class="form-label" for="username"></label>
@@ -56,11 +59,13 @@
                           <span
                             class="d-flex justify-content-center align-items-center"
                           >
-                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                           </span>
                       <input
                         type="password"
                         id="password"
+                        name="password"
+                        th:field="*{password}"
                         class="form-control"
                         placeholder="Password"
                       />
@@ -89,7 +94,7 @@
                     class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
                   >
                     <button
-                      type="button"
+                      type="submit"
                       class="btn btn-primary btn-lg w-100"
                     >
                       Login

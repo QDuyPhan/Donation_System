@@ -8,14 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import static com.donation.donation_system.api.StringAPI.*;
-import static utils.Constants.STATUS_NOTACTIVATED;
-import static utils.Constants.USER_ROLE;
+import static utils.Constants.*;
 //http://localhost:8080/Donations/register
 
 @Controller
@@ -28,14 +24,47 @@ public class RegisterController {
     private EmailService emailService;
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register(Model model, HttpSession session, @RequestParam(value = "action", defaultValue = "") String action, @RequestParam(value = "username", defaultValue = "") String username, @RequestParam(value = "id", defaultValue = "") String id) {
         User user = new User();
         model.addAttribute("user", user);
+        if (action != null && action.equals("activate")) {
+            int result = userService.updateStatusAfterActivated(Integer.parseInt(id));
+            if (result == 1) {
+                return "activate-account-success";
+            } else {
+                return "activate-account-fail";
+            }
+        }
         return "register";  // Trả về trang index.html
     }
 
+    @GetMapping("/register-success")
+    public String registerSuccess() {
+        return "register-success";
+    }
+
+    @GetMapping("/register-fail")
+    public String registerFail() {
+        return "register-fail";
+    }
+
+    @GetMapping("/activate-account-success")
+    public String activateAccountSuccess() {
+        return "activate-account-success";
+    }
+
+    @GetMapping("/activate-account-fail")
+    public String activateAccountFail() {
+        return "activate-account-fail";
+    }
+
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+
     @PostMapping("/register")
-    public String processRegistration(@ModelAttribute("user") User user, HttpSession session) {
+    public String processRegistration(@ModelAttribute("user") User user, HttpSession session, Model model) {
         try {
             String password = generateStrongPassword(8);
             String hashPassword = encodePassword(password);
@@ -54,15 +83,15 @@ public class RegisterController {
             User newUser = userService.save(user);
             if (newUser != null) {
                 emailService.sendMailRegisterUser(newUser, password);
-                session.setAttribute("newuser", newUser);
-                return "redirect:/Donations";
+                return "register-success";
             } else {
                 System.out.println("create user fail");
+                return "register-fail";
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        return "register";
+        return "redirect:/register";
     }
 
 }

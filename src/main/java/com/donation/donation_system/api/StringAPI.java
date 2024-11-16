@@ -16,7 +16,7 @@ import static utils.Constants.*;
 
 public class StringAPI {
     public static String generateStrongPassword(int length) {
-        String allChars = UPPERCASE_CHARS + LOWERCASE_CHARS + NUMBERS + SPECIAL_CHARS;
+        String allChars = UPPERCASE_CHARS + LOWERCASE_CHARS + NUMBERS;
         Random random = new Random();
         StringBuilder password = new StringBuilder();
 
@@ -24,7 +24,7 @@ public class StringAPI {
         password.append(getRandomChar(UPPERCASE_CHARS, random));
         password.append(getRandomChar(LOWERCASE_CHARS, random));
         password.append(getRandomChar(String.valueOf(NUMBERS), random));
-        password.append(getRandomChar(SPECIAL_CHARS, random));
+//        password.append(getRandomChar(SPECIAL_CHARS, random));
 
         // Tạo các ký tự còn lại ngẫu nhiên
         for (int i = 4; i < length; i++) {

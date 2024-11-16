@@ -1,10 +1,7 @@
 package com.donation.donation_system.service;
 
 import com.donation.donation_system.model.User;
-import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
-
-import java.io.UnsupportedEncodingException;
 
 @Service
 public interface UserService {
@@ -13,4 +10,10 @@ public interface UserService {
     User findByEmail(String email);
 
     User save(User user);
+
+    int activate(String username, String id);
+
+    int updateStatusAfterActivated(int id);
+
+
 }
