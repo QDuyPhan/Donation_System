@@ -64,10 +64,10 @@
                         th:field="*{username}"
                       />
                     </div>
-                    <div th:if="${param.exisuser}" class="w-100 d-flex">
+                    <div th:if="${param.existuser}" class="w-100 d-flex">
                       <span
                         class="text-danger align-items-center"
-                        th:text="${param.exisuser}"
+                        th:text="${param.existuser}"
                       >
                         ...
                       </span>
@@ -108,10 +108,10 @@
                         placeholder="Email"
                         th:field="*{email}"
                       />
-                      <div th:if="${param.exisemail}" class="d-block w-100">
+                      <div th:if="${param.existemail}" class="d-block w-100">
                       <span
                         class="text-danger"
-                        th:text="${param.exisemail}"
+                        th:text="${param.existemail}"
                       >
                         ...
                       </span>

@@ -28,7 +28,7 @@ public class RegisterController {
         User user = new User();
         model.addAttribute("user", user);
         if (action != null && action.equals("activate")) {
-            int result = userService.updateStatusAfterActivated(Integer.parseInt(id));
+            int result = userService.activate(username, id);
             if (result == 1) {
                 return "activate-account-success";
             } else {
@@ -74,11 +74,11 @@ public class RegisterController {
 
             User existUser = userService.findByUsername(user.getUsername());
             if (existUser != null) {
-                return "redirect:/register?exisuser=Username is already exist!";
+                return "redirect:/register?existuser=Username is already exist!";
             }
             existUser = userService.findByEmail(user.getEmail());
             if (existUser != null) {
-                return "redirect:/register?exisemail=Email is already exist!";
+                return "redirect:/register?existemail=Email is already exist!";
             }
             User newUser = userService.save(user);
             if (newUser != null) {

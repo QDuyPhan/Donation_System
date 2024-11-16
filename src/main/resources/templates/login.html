@@ -30,7 +30,14 @@
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                   Login Account
                 </p>
-
+                <div th:if="${message}">
+                  <div
+                    class="alert alert-danger"
+                    th:text="${message}"
+                  >
+                    ...
+                  </div>
+                </div>
                 <form class="mx-1 mx-md-4" method="post" th:action="@{/Donations/login}"
                       th:object="${user}">
                   <div class="d-flex flex-row align-items-center mb-4">
@@ -48,6 +55,7 @@
                         name="username"
                         class="form-control"
                         th:field="*{username}"
+                        th:value="${username}"
                         placeholder="Username"
                       />
                       <label class="form-label" for="username"></label>
@@ -67,6 +75,7 @@
                         name="password"
                         th:field="*{password}"
                         class="form-control"
+                        th:value="${password}"
                         placeholder="Password"
                       />
                       <label class="form-label" for="password"></label>
@@ -82,9 +91,10 @@
                         class="form-check-input"
                         type="checkbox"
                         value=""
-                        id="form1Example3"
+                        id="rememberme"
+                        name="rememberme"
                       />
-                      <label class="form-check-label" for="form1Example3">
+                      <label class="form-check-label" for="rememberme">
                         Remember me
                       </label>
                     </div>
