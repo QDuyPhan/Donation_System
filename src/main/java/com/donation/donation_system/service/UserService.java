@@ -15,9 +15,9 @@ public interface UserService {
 
     User save(User user);
 
-    int activate(String username, String id);
+    boolean activate(String username, String id);
 
-    int updateStatusAfterActivated(int id);
+    boolean updateStatusAfterActivated(int id);
 
     boolean check(String username, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 

@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String name) {
         try {
             User user = userRepository.findByUsername(name);
-            System.out.println("UserRepository: " + user);
             return user;
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,7 +34,6 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         try {
             User exitsEmail = userRepository.findByEmail(email);
-            System.out.println("UserRepository: " + exitsEmail);
             return exitsEmail;
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,40 +52,42 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Transactional
     @Override
-    public int activate(String username, String id) {
+    @Transactional
+    public boolean activate(String username, String id) {
         try {
             int result = userRepository.activate(username, id);
             if (result == 1) {
-                int updateResult = updateStatusAfterActivated(Integer.parseInt(id));
-                if (updateResult == 1)
-                    return 1;
-                return 0;
+                boolean updateResult = updateStatusAfterActivated(Integer.parseInt(id));
+                if (updateResult)
+                    return true;
+                return false;
             }
-            return 1;
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return false;
         }
     }
 
-    @Transactional
     @Override
-    public int updateStatusAfterActivated(int id) {
+    @Transactional
+    public boolean updateStatusAfterActivated(int id) {
         try {
-            int resutl = userRepository.updateStatusAfterActivated(STATUS_ACTIVE, id);
-            return resutl;
+            int result = userRepository.updateStatusAfterActivated(STATUS_ACTIVE, id);
+            if (result != 0)
+                return true;
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return false;
         }
     }
 
     @Override
     public boolean check(String username, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-        int resutl = userRepository.check(username, StringAPI.encodePassword(password));
-        if (resutl > 0)
+        int result = userRepository.check(username, StringAPI.encodePassword(password));
+        if (result > 0)
             return true;
         return false;
     }

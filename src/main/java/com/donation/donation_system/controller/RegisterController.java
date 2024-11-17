@@ -4,6 +4,7 @@ import com.donation.donation_system.model.User;
 import com.donation.donation_system.service.EmailService;
 import com.donation.donation_system.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,17 +25,9 @@ public class RegisterController {
     private EmailService emailService;
 
     @GetMapping("/register")
-    public String register(Model model, HttpSession session, @RequestParam(value = "action", defaultValue = "") String action, @RequestParam(value = "username", defaultValue = "") String username, @RequestParam(value = "id", defaultValue = "") String id) {
+    public String register(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        if (action != null && action.equals("activate")) {
-            int result = userService.activate(username, id);
-            if (result == 1) {
-                return "activate-account-success";
-            } else {
-                return "activate-account-fail";
-            }
-        }
         return "register";  // Trả về trang index.html
     }
 
@@ -49,7 +42,20 @@ public class RegisterController {
     }
 
     @GetMapping("/activate-account-success")
-    public String activateAccountSuccess() {
+    public String activateAccountSuccess(Model model, HttpSession session,
+                                         @RequestParam(value = "action", defaultValue = "") String action,
+                                         @RequestParam(value = "username", defaultValue = "") String username,
+                                         @RequestParam(value = "id", defaultValue = "") String id) {
+        User user = new User();
+        model.addAttribute("user", user);
+        if (action != null && action.equals("activate")) {
+            boolean result = userService.activate(username, id);
+            if (result) {
+                return "activate-account-success";
+            } else {
+                return "activate-account-fail";
+            }
+        }
         return "activate-account-success";
     }
 
