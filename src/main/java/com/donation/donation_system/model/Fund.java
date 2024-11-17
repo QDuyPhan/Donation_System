@@ -44,10 +44,10 @@ public class Fund {
     private Date endDate;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = true)
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "foundation_id")
+    @JoinColumn(name = "foundation_id" , nullable = true)
     private Foundation foundation;
 }
