@@ -8,7 +8,7 @@ public class UserController {
 
     @GetMapping("/forgotpassword")
     public String forgotpassword() {
-        return "forgotpassword";  // Trả về trang index.html
+        return "forgotpassword";
     }
 
     @GetMapping("/changepassword")

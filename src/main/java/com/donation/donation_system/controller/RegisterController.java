@@ -64,10 +64,6 @@ public class RegisterController {
         return "activate-account-fail";
     }
 
-    @GetMapping("/home")
-    public String home() {
-        return "home";
-    }
 
     @PostMapping("/register")
     public String processRegistration(@ModelAttribute("user") User user, HttpSession session, Model model) {

@@ -37,10 +37,6 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/admin/home")
-    public String admin(Model model) {
-        return "admin/home";
-    }
 
     @PostMapping("/login")
     public String progressLogin(@RequestParam(value = "rememberme", required = false) String remember, @ModelAttribute("user") User user, Model model, HttpSession session, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
@@ -50,38 +46,38 @@ public class LoginController {
         Cookie ckUser = new Cookie("ckUser", username);
         Cookie ckPassword = new Cookie("ckPassword", password);
         HashMap<String, Object> validateResults = userService.validate(username, password);
+        user = (User) validateResults.get("user");
+        session.setAttribute("user", user);
         boolean isValidate = (boolean) validateResults.get("isValidate");
         if (!isValidate) {
             String message = (String) validateResults.get("message");
             model.addAttribute("message", message);
-            return "redirect:/Donations/login";
-        } else {
-            user = (User) validateResults.get("user");
-            session.setAttribute("user", user);
-            if (remember != null) {
-                System.out.println("cookie");
-                System.out.println(ckUser);
-                System.out.println(ckPassword);
-                ckUser = new Cookie("ckUser", username);
-                ckUser.setMaxAge(5000);
-                ckPassword = new Cookie("ckPassword", password);
-                response.addCookie(ckUser);
-                response.addCookie(ckPassword);
-            } else {
-                System.out.println("nocookie");
-                ckUser = new Cookie("ckUser", "");
-                ckUser.setMaxAge(0);
-                response.addCookie(ckUser);
-                ckPassword = new Cookie("ckPassword", "");
-                ckPassword.setMaxAge(0);
-                response.addCookie(ckPassword);
-            }
+            return "login";
+//        } else {
+//            System.out.println("Login user " + user);
+//            if (remember != null) {
+//                System.out.println("cookie");
+//                System.out.println(ckUser);
+//                System.out.println(ckPassword);
+//                ckUser = new Cookie("ckUser", username);
+//                ckUser.setMaxAge(5000);
+//                ckPassword = new Cookie("ckPassword", password);
+//                response.addCookie(ckUser);
+//                response.addCookie(ckPassword);
+//            } else {
+//                System.out.println("nocookie");
+//                ckUser = new Cookie("ckUser", "");
+//                ckUser.setMaxAge(0);
+//                response.addCookie(ckUser);
+//                ckPassword = new Cookie("ckPassword", "");
+//                ckPassword.setMaxAge(0);
+//                response.addCookie(ckPassword);
+//            }
         }
-
         if (user.getRole() == 1) {
-            return "Donations/admin/home";
+            return "redirect:/admin/home";
         } else {
-            return "Donations/home";
+            return "redirect:/home";
         }
     }
 }
