@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @GetMapping("/admin/home")
     public String admin(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        System.out.println("GetMappping " + user);
+//        User user = (User) session.getAttribute("user");
+//        System.out.println("GetMappping admin" + user);
         return "admin/home";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/dashboard")
     public String homeUser(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        System.out.println(user);
-        return "user/home";
+        System.out.println("GetMappping homeUser" + user);
+        return "user/dashboard";
     }
 }
