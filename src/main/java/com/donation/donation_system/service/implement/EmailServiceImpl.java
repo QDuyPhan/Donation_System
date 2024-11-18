@@ -14,8 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import static utils.Constants.*;
-
 @Service
 public class EmailServiceImpl implements EmailService {
     @Autowired

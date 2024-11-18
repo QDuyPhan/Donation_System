@@ -12,8 +12,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-import static utils.Constants.*;
-
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired

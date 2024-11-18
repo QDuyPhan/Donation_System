@@ -1,4 +1,4 @@
-package utils;
+package com.donation.donation_system.utils;
 
 public class Constants {
     public static final String MY_EMAIL = "phanquangduytvt@gmail.com";
