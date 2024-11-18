@@ -48,54 +48,56 @@ public class FundController {
     @PutMapping("/{id}")
     public ResponseEntity<Fund> updateFund(@PathVariable int id, @RequestBody Fund fundDetails) {
         // Tìm quỹ theo ID
-        Optional<Fund> fund = fundService.findById(id);
-        if (fund.isEmpty()) {
+        Optional<Fund> fundOptional = fundService.findById(id);
+        if (fundOptional.isEmpty()) {
             // Trả về mã lỗi 404 nếu không tìm thấy quỹ
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
+        // Lấy đối tượng fund từ Optional
+        Fund fund = fundOptional.get();
+
         // Cập nhật các thông tin của quỹ
         if (fundDetails.getName() != null) {
-            fund.get().setName(fundDetails.getName()); // Cập nhật tên quỹ
+            fund.setName(fundDetails.getName());
         }
         if (fundDetails.getDescription() != null) {
-            fund.get().setDescription(fundDetails.getDescription()); // Cập nhật mô tả
+            fund.setDescription(fundDetails.getDescription());
         }
         if (fundDetails.getContent() != null) {
-            fund.get().setContent(fundDetails.getContent()); // Cập nhật nội dung
+            fund.setContent(fundDetails.getContent());
         }
-        if (fundDetails.getImage_url() != null) {
-            fund.get().setImage_url(fundDetails.getImage_url()); // Cập nhật URL hình ảnh
+        if (fundDetails.getImageUrl() != null) {
+            fund.setImageUrl(fundDetails.getImageUrl());
         }
-        if (fundDetails.getExpectedResult() != 0) {
-            fund.get().setExpectedResult(fundDetails.getExpectedResult()); // Cập nhật kết quả mong đợi
+        if (fundDetails.getExpectedResult() != null && fundDetails.getExpectedResult() != 0) {
+            fund.setExpectedResult(fundDetails.getExpectedResult());
         }
         if (fundDetails.getStatus() != null) {
-            fund.get().setStatus(fundDetails.getStatus()); // Cập nhật trạng thái
+            fund.setStatus(fundDetails.getStatus());
         }
         if (fundDetails.getEndDate() != null) {
-            fund.get().setEndDate(fundDetails.getEndDate()); // Cập nhật ngày kết thúc
+            fund.setEndDate(fundDetails.getEndDate());
         }
-
-        // Cập nhật category và foundation nếu có
         if (fundDetails.getCategory() != null) {
-            fund.get().setCategory(fundDetails.getCategory()); // Cập nhật category
+            fund.setCategory(fundDetails.getCategory());
         }
         if (fundDetails.getFoundation() != null) {
-            fund.get().setFoundation(fundDetails.getFoundation()); // Cập nhật foundation
+            fund.setFoundation(fundDetails.getFoundation());
         }
 
         // Lưu lại quỹ đã được cập nhật
-        Fund updatedFund = fundService.save(fund.orElse(null));
+        Fund updatedFund = fundService.save(fund);
 
         // Trả về quỹ đã cập nhật với mã trạng thái 200 OK
         return ResponseEntity.ok(updatedFund);
     }
 
 
+
     // Xóa một quỹ
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFund(@PathVariable int id) {
+    public ResponseEntity<Void> deleteFund(@PathVariable Integer id) {
         try {
             fundService.deleteById(id);
             return ResponseEntity.noContent().build();  // Trả về 204 khi xóa thành công

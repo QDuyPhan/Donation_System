@@ -13,7 +13,7 @@ public interface FundService {
     List<Fund> saveAllAndFlush(Iterable<Fund> funds);
     void flush();
     void delete(Fund fund);
-    void deleteById(int id);
+    void deleteById(Integer id);
     void deleteAll();
     void deleteAllInBatch(Iterable<Fund> funds);
     Fund saveAndFlush(Fund fund);

@@ -49,7 +49,7 @@ public class FundServiceImpl implements FundService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         if (fundRepository.existsById(id)) {
             fundRepository.deleteById(id);
         } else {
