@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static utils.Constants.*;
+
 public class StringAPI {
     public static String generateStrongPassword(int length) {
         String allChars = UPPERCASE_CHARS + LOWERCASE_CHARS + NUMBERS;
