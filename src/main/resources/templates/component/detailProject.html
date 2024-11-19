@@ -17,402 +17,415 @@
 </head>
 <body>
 <section th:fragment="content">
-<main th:fragment="detailProject" class="w-full d-flex justify-content-center mt-lg-0 my-2">
-  <div class=" px-4 px-md-5" style="width:70%; ">
+  <main th:fragment="detailProject" class="w-full d-flex justify-content-center mt-lg-0 my-2">
+    <div class=" px-4 px-md-5" style="width:70%; ">
 
-    <div class="row g-3 g-md-4 scroll-m-28" id="Api">
-      <!--nội dung 1-->
-      <div class="order-2 col-12 col-md-12 order-md-1">
-        <!-- Nội dung của bạn -->
-        <h1 class="mb-3 text-xl font-weight-bold text-dark pt-3 pt-md-6">
-          Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang
-        </h1>
-        <p class="text-muted">
-          ❤️&nbsp;Trăng Khuyết sẽ hỗ trợ những túi ngủ có chất liệu chống thấm, giúp các mảnh đời có thể giữ ấm, vượt
-          qua những cơn mưa dai dẳng để vỗ về. Ngoài ra, thẻ vệ sinh sẽ được cấp cho các mảnh đời, người lao động nghèo
-          để có thể sử dụng nhà vệ sinh công cộng miễn phí, vừa đảm bảo không làm mất mỹ quan đô thị.
-        </p>
-        <div class="mt-2 d-flex align-items-center">
-          <div class="d-flex flex-column flex-md-row align-items-center text-muted">
-            <span>04/04/2023</span>
-          </div>
-        </div>
-      </div>
-
-      <!--nội dung 2-->
-      <div class="order-1 col-12 order-md-2 col-md-6 col-lg-8">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner" style="border-radius: 2%;">
-            <div class="carousel-item active">
-              <img th:src="@{/images/NguoiGia1.png}" class="d-block w-100" alt="First slide">
-            </div>
-            <div class="carousel-item">
-              <img th:src="@{/images/NguoiGia2.png}" class="d-block w-100" alt="Second slide">
-            </div>
-            <div class="carousel-item">
-              <img th:src="@{/images/NguoiGia3.png}" class="d-block w-100" alt="Third slide">
-            </div>
-          </div>
-
-          <div class="carousel-indicators position-relative mb-3 ">
-            <button class="bt_image active" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="0" aria-label="Slide 1">
-              <img th:src="@{/images/NguoiGia1.png}" alt="Image 1" class="d-block"
-                   style="width: 60px; height: 30px; border-radius: 5%">
-            </button>
-            <button class="bt_image" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                    aria-label="Slide 2">
-              <img th:src="@{/images/NguoiGia2.png}" alt="Image 2" class="d-block"
-                   style="width: 60px; height: 30px; border-radius: 5%">
-            </button>
-            <button class="bt_image" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                    aria-label="Slide 3" aria-current="true">
-              <img th:src="@{/images/NguoiGia3.png}" alt="Image 3" class="d-block"
-                   style="width: 60px; height: 30px; border-radius: 5%">
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!--nội dung 3-->
-      <div class="order-3 col-12 order-md-3 col-md-6 col-lg-4">
-
-        <!--- --->
-        <div class="col-12 ms-3">
-          <div class="mb-3 d-flex justify-content-start align-items-center mb-4">
-            <div class="text-sm font-weight-bold text-uppercase " style="color:#76c5f0; font-weight: bold; ">Thông tin
-              quyên góp
+      <div class="row g-3 g-md-4 scroll-m-28" id="Api">
+        <!--nội dung 1-->
+        <div class="order-2 col-12 col-md-12 order-md-1">
+          <!-- Nội dung của bạn -->
+          <h1 class="mb-3 text-xl font-weight-bold text-dark pt-3 pt-md-6">
+            Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang
+          </h1>
+          <p class="text-muted">
+            ❤️&nbsp;Trăng Khuyết sẽ hỗ trợ những túi ngủ có chất liệu chống thấm, giúp các mảnh đời có thể giữ ấm, vượt
+            qua những cơn mưa dai dẳng để vỗ về. Ngoài ra, thẻ vệ sinh sẽ được cấp cho các mảnh đời, người lao động
+            nghèo
+            để có thể sử dụng nhà vệ sinh công cộng miễn phí, vừa đảm bảo không làm mất mỹ quan đô thị.
+          </p>
+          <div class="mt-2 d-flex align-items-center">
+            <div class="d-flex flex-column flex-md-row align-items-center text-muted">
+              <span>04/04/2023</span>
             </div>
           </div>
         </div>
 
-        <!--- --->
-        <div class="container mt-3 rounded " style="background-color: #FAFAFA">
-          <div class="mt-4 mt-sm-6  my-2">
-            <div class="dn-detail position-absolute ">
-
-              <div class="dn-info my-3 mb-2 d-flex align-items-end">
-                <strong class="dn-value flex text-xl font-weight-bold text-gray-700">150.159.287đ</strong>
-                <span class="flex align-items-end ps-2 small text-muted">quyên góp / 150.000.000đ</span>
+        <!--nội dung 2-->
+        <div class="order-1 col-12 order-md-2 col-md-6 col-lg-8">
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" style="border-radius: 2%;">
+              <div class="carousel-item active">
+                <img th:src="@{/images/NguoiGia1.png}" class="d-block w-100" alt="First slide">
               </div>
-
-              <div class="dn-progress my-3 d-flex h-2 w-100 overflow-hidden rounded bg-light">
-                <div class="dn-progress-bar done bg-success h-2 w-100 rounded"></div>
+              <div class="carousel-item">
+                <img th:src="@{/images/NguoiGia2.png}" class="d-block w-100" alt="Second slide">
               </div>
+              <div class="carousel-item">
+                <img th:src="@{/images/NguoiGia3.png}" class="d-block w-100" alt="Third slide">
+              </div>
+            </div>
 
-              <div class="dn-time mt-2 my-3 d-flex align-items-start justify-content-between text-muted">
-                <div>
-                  <h5 class="text-secondary small">Lượt quyên góp</h5>
-                  <p class="h6 font-weight-bold text-dark small">20.484</p>
+            <div class="carousel-indicators position-relative mb-3 ">
+              <button class="bt_image active" type="button" data-bs-target="#carouselExampleIndicators"
+                      data-bs-slide-to="0" aria-label="Slide 1">
+                <img th:src="@{/images/NguoiGia1.png}" alt="Image 1" class="d-block"
+                     style="width: 60px; height: 30px; border-radius: 5%">
+              </button>
+              <button class="bt_image" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                      aria-label="Slide 2">
+                <img th:src="@{/images/NguoiGia2.png}" alt="Image 2" class="d-block"
+                     style="width: 60px; height: 30px; border-radius: 5%">
+              </button>
+              <button class="bt_image" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                      aria-label="Slide 3" aria-current="true">
+                <img th:src="@{/images/NguoiGia3.png}" alt="Image 3" class="d-block"
+                     style="width: 60px; height: 30px; border-radius: 5%">
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!--nội dung 3-->
+        <div class="order-3 col-12 order-md-3 col-md-6 col-lg-4">
+
+          <!--- --->
+          <div class="col-12 ms-3">
+            <div class="mb-3 d-flex justify-content-start align-items-center mb-4">
+              <div class="text-sm font-weight-bold text-uppercase " style="color:#76c5f0; font-weight: bold; ">Thông tin
+                quyên góp
+              </div>
+            </div>
+          </div>
+
+          <!--- --->
+          <div class="container mt-3 rounded " style="background-color: #FAFAFA">
+            <div class="mt-4 mt-sm-6  my-2">
+              <div class="dn-detail position-absolute ">
+
+                <div class="dn-info my-3 mb-2 d-flex align-items-end">
+                  <strong class="dn-value flex text-xl font-weight-bold text-gray-700">150.159.287đ</strong>
+                  <span class="flex align-items-end ps-2 small text-muted">quyên góp / 150.000.000đ</span>
                 </div>
-                <div>
-                  <h5 class="text-secondary small">Đạt được</h5>
-                  <p class="h6 font-weight-bold text-dark small">100%</p>
+
+                <div class="dn-progress my-3 d-flex h-2 w-100 overflow-hidden rounded bg-light">
+                  <div class="dn-progress-bar done bg-success h-2 w-100 rounded"></div>
                 </div>
-                <div class="text-success">
-                  <h6 class="small">Đã đạt mục tiêu</h6>
-                </div>
-              </div>
 
-              <div class="mt-6 my-5">
-                <a href="/vi-nhan-ai/tu-thien" class="w-100">
-                  <button class="btn w-100 fs-6" id="buttonQG" style="background-color: #76c5f0; color: white;">Đăng nhập để
-                    quyên góp
-                  </button>
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        </div>
-
-        <!--- --->
-
-
-      <!---Nội dung 4 -->
-      <div class="order-last top-0 start-0 w-100 border-bottom bg-white transition-opacity duration-200 opacity-100 mt-auto">
-        <div class="container mx-auto px-0 px-md-3 px-lg-3">
-          <div class="position-relative">
-            <div class="d-flex w-100 overflow-auto border-bottom ps-3 ps-md-0 border-gray-200">
-              <a href="#"
-                 class="me-3 me-md-4 text-decoration-none text-dark border-bottom border-2 border-gray-700 font-weight-bold active py-3">
-                <span>Hoàn cảnh</span>
-              </a>
-              <a href="#"
-                 class="me-3 me-md-4 text-decoration-none text-dark  font-weight-normal hover-border-gray-400 py-3">
-                <span>Câu chuyện</span>
-              </a>
-              <a href="#"
-                 class="me-3 me-md-4 text-decoration-none text-dark  font-weight-normal hover-border-gray-400 py-3">
-                <span>Nhà hảo tâm</span>
-              </a>
-              <a href="#"
-                 class="me-3 me-md-4 text-decoration-none text-dark font-weight-normal hover-border-gray-400 py-3">
-                <span>Tin tức cộng đồng</span>
-              </a>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!---Nội dung 5 -->
-      <div class="order-last order-5 px-lg-4">
-        <div class="mx-auto mt-1 w-100 mt-lg-0">
-          <div class="row ">
-
-            <!-- Nội dung cột -->
-            <div class="col-12 col-md-6 col-lg-8">
-
-              <!---- Câu chuyen -->
-              <div id="cauchuyen">
-                <h2 class="py-2 text-xl font-semibold">Câu chuyện</h2>
-                <article class="soju__prose small"><p>
-                  <strong>Khách sạn ngàn sao hứng trọn những cơn mưa</strong>
-                </p>
-
-                  <p>
-                    Với người lang thang ở Sài Gòn, khi màn đêm buông xuống chưa phải là lúc kết thúc những vất vả,
-                    khó nhọc của cuộc sống mưu sinh. Hình ảnh thường thấy ở Sài Gòn vào những buổi đêm, đó là trên các
-                    tuyến đường có cảnh những mảnh đời không nơi nương tựa. Với họ, lề đường như là chốn sống tạm, là
-                    giường để trải qua những đêm ngủ tạm.
-                  </p>
-
-                  <p>
-                    <img alt=""
-                         src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111708-638162902280435897.jpg"
-                         style="width:100%">
-                  </p>
-
-                  <p>
-                    <img alt=""
-                         src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111721-638162902417594796.jpg"
-                         style="width:100%">
-                  </p>
-
-                  <p style="text-align:center">
-                    <em>Những mảnh đời cơ cực với những đêm “ngủ tạm”</em>
-                  </p>
-
-                  <p>
-                    Mùa mưa đến, đồng nghĩa với nỗi lo của những người lao động nghèo, những mảnh đời lang thang càng
-                    thêm chồng chất. Có người may mắn chọn được chỗ có mái hiên rộng, nhờ vậy mà tránh đi được những
-                    cơn mưa bất chợt. Có người thì thấy đâu ngủ đó, mệt lúc nào dừng chân lại lúc đó, miễn là họ được
-                    ngả lưng. Nhưng những ngày Sài Gòn mưa đêm thì dù cho những mái hiên có rộng cỡ nào thì cũng chẳng
-                    thể giúp họ có thể ngon giấc. Những chốn ngủ tạm ướt hết, thậm chí bị ngập sâu, những mảnh đời
-                    càng khó tìm được nơi nào để có giấc ngủ yên bình, dù là trên vỉa hè, lề đường.
-                  </p>
-
-                  <p>
-                    Bên cạnh đó, nhu cầu đi vệ sinh cũng vô cùng bức thiết. Có nhiều mảnh đời còn không đủ tiền để lo
-                    bữa ăn nên nhu cầu tắm rửa, vệ sinh cũng rất qua loa. Người thì chọn tắm nước sông tại các kênh,
-                    cầu. Người thì chọn vài ngày tắm 1 lần mặc cho mồ hôi, bụi bẩn bám khắp người. Khổ sở nhất là các
-                    vấn đề tiêu, tiểu… làm mất mỹ quan đô thị. Bởi nhà vệ sinh công cộng cũng cần phải có tiền. Vì số
-                    tiền ít ỏi mà khó khăn mới có được, khiến các mảnh đời nhắm mắt làm ngơ.
-                  </p>
-
-                  <p>
-                    <img alt=""
-                         src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111740-638162902602438543.jpg"
-                         style="width:100%">
-                  </p>
-
-                  <p>
-                    <img alt=""
-                         src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111750-638162902705861860.jpg"
-                         style="width:100%">
-                  </p>
-
-                  <p style="text-align:center">
-                    <em>Xót xa cho những em bé còn nhỏ đã phải mưu sinh vất vả</em>
-                  </p>
-
-                  <p>
-                    <strong>Trao tặng túi ngủ, thẻ vệ sinh cho các mảnh đời</strong>
-                  </p>
-
-                  <p>
-                    Dù Trăng Khuyết có hệ thống quán trọ/mái ấm luôn hỗ trợ chỗ ăn, ở cho các mảnh đời không nơi nương
-                    tựa. Tuy nhiên số lượng mảnh đời, người lao động nghèo còn khá nhiều trên đường phố Sài Gòn. Một
-                    phần là vì các cô chú chưa đủ điều kiện như tuổi tác để vào mái ấm, một phần họ quen cuộc sống tự
-                    do hiện tại.
-                  </p>
-
-                  <p>
-                    Trước thực trạng vô cùng cấp thiết ấy, Ví MoMo phối hợp với Quỹ Từ Thiện &amp; BTXH Trăng Khuyết
-                    kêu gọi sự giúp đỡ từ các nhà hảo tâm và mạnh thường quân với hy vọng gây quỹ 150.000.000 đồng
-                    thông qua Trái Tim MoMo. Tổng kinh phí của dự án dự kiến là 750.000.000 đồng, vì vậy 600.000.000
-                    đồng còn lại sẽ được nhà tài trợ của chúng tôi quy đổi từ Heo Vàng do cộng đồng Heo Đất MoMo quyên
-                    góp.
-                  </p>
-
-                  <p>
-                    <img alt=""
-                         src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111808-638162902886248600.jpg"
-                         style="width:100%">
-                  </p>
-
-                  <p>
-                    <img alt=""
-                         src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111820-638162903005898911.jpg"
-                         style="width:100%">
-                  </p>
-
-                  <p style="text-align:center">
-                    <em>Chung tay cùng Trăng Khuyết giúp những người lao động nghèo vượt qua khó khăn sắp tới</em>
-                  </p>
-
-                  <p>
-                    Số tiền này sẽ được Trăng Khuyết sử dụng để hỗ trợ những túi ngủ có chất liệu chống thấm, giúp các
-                    mảnh đời có thể giữ ấm, vượt qua những cơn mưa dai dẳng để vỗ về. Ngoài ra, thẻ vệ sinh sẽ được
-                    cấp cho các mảnh đời, người lao động nghèo để có thể sử dụng nhà vệ sinh công cộng miễn phí, vừa
-                    đảm bảo không làm mất mỹ quan đô thị.&nbsp;
-                  </p>
-
-                  <p>
-                    Rất mong các Mạnh thường quân, các nhà hảo tâm sẽ đồng hành cùng chiến dịch lần này của MoMo và
-                    Trăng Khuyết để mang lại những bữa ăn, quà bánh, những chiếc túi ngủ chống mưa, thẻ vệ sinh cho
-                    200 mảnh đời và người lao động nghèo sự chung tay hỗ trợ của các nhà hảo tâm thông qua chương
-                    trình “Trăng Đêm Thứ 7”. Dù số tiền có là bao nhiêu cũng đều đáng trân quý, dù đóng góp nào cũng
-                    yêu thương để cùng chung tay chia sẻ những bữa ăn đến với mái ấm.&nbsp;
-                  </p>
-
-                  <p>
-                    <em>*Sau khi hoàn tất chiến dịch kêu gọi đóng góp, Trái Tim MoMo sẽ chuyển toàn bộ số tiền
-                      150.000.000 đồng đã gây quỹ gửi đến Quỹ Từ Thiện &amp; BTXH Trăng Khuyết hỗ trợ chi phí cho các
-                      bữa ăn tại các mái ấm. Chúng tôi sẽ cập nhật thêm thông tin về tiến độ dự án đến Quý vị trong
-                      thời gian sớm nhất.&nbsp;</em>
-                  </p>
-
-                  <p>
-                    <u><strong>Về Quỹ Từ Thiện &amp; BTXH Trăng Khuyết:</strong></u><br>
-                    Trăng Khuyết là một tổ chức từ thiện về nhân đạo và sự sống, nhằm kết nối cộng đồng và thực hiện
-                    các hoạt động trợ giúp trực tiếp cho các cụ già không nơi nương tựa và trẻ em bị bỏ rơi. Thông qua
-                    các hoạt động: cứu trợ khẩn cấp, cung cấp bữa ăn, chỗ ở và cải thiện cuộc sống. Trăng Khuyết hoạt
-                    động độc lập, phi tôn giáo và phi lợi nhuận trên toàn lãnh thổ Việt Nam. Thông qua pháp nhân là
-                    Quỹ Từ Thiện &amp; BTXH Trăng Khuyết, một doanh nghiệp xã hội, hoạt động 100% vì cộng đồng.&nbsp;
-                  </p>
-
-                  <p>
-                    <em>*MoMo biết rằng còn rất nhiều hoàn cảnh khó khăn trên khắp đất nước của chúng ta cần được bảo
-                      trợ. Bạn hay các công ty hãy liên hệ với chúng tôi để cùng tài trợ, giúp đỡ&nbsp; tạo nên một
-                      cộng đồng Việt Nam nhân ái nhé! <span style="color:#0066cc">donation@mservice.com.vn</span></em>
-                  </p>
-                </article>
-              </div>
-
-            </div>
-            <!---- Chương trình đang diễn ra -->
-            <div class="col-12 col-md-6 col-lg-4">
-              <!---- nha hao tam -->
-              <div id="nhahaotam">
-                <div class="mt-3 border-t border-gray-200"><h2 class="my-5 text-xl font-semibold">Nhà hảo tâm hàng
-                  đầu</h2>
-                  <div class="rounded border border-gray-200 px-4 pt-1.5 pb-3">
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Nguyễn Ngọc Hòa</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">3.000.000<!-- --> đ</div>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Phạm Gia Linh</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">3.000.000<!-- --> đ</div>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Nhà hảo tâm</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">2.000.000<!-- --> đ</div>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="mr-1 flex w-12 items-center justify-center"><span
-                              class="text-md text-gray-500">4</span></div>
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Nhà hảo tâm</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">2.000.000<!-- --> đ</div>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="mr-1 flex w-12 items-center justify-center"><span
-                              class="text-md text-gray-500">5</span></div>
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Nhà hảo tâm</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">1.000.000<!-- --> đ</div>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="mr-1 flex w-12 items-center justify-center"><span
-                              class="text-md text-gray-500">6</span></div>
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Trần Thị Thanh Huyền</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">905.000<!-- --> đ</div>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="mr-1 flex w-12 items-center justify-center"><span
-                              class="text-md text-gray-500">7</span></div>
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Nguyễn Duy Phát</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">735.000<!-- --> đ</div>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="mr-1 flex w-12 items-center justify-center"><span
-                              class="text-md text-gray-500">8</span></div>
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Ngo Hong Long</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">666.666<!-- --> đ</div>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="mr-1 flex w-12 items-center justify-center"><span
-                              class="text-md text-gray-500">9</span></div>
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Nguyen Thanh Lam</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">600.000<!-- --> đ</div>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="mr-1 flex w-12 items-center justify-center"><span
-                              class="text-md text-gray-500">10</span></div>
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1">Nguyễn Quốc Cường</div>
-                        <div class="text-xs text-gray-400"></div>
-                      </div>
-                      <div class="item-end flex justify-end">540.000<!-- --> đ</div>
-                    </div>
+                <div class="dn-time mt-2 my-3 d-flex align-items-start justify-content-between text-muted">
+                  <div>
+                    <h5 class="text-secondary small">Lượt quyên góp</h5>
+                    <p class="h6 font-weight-bold text-dark small">20.484</p>
                   </div>
-                  <div class="text-center border-radius">
-                    <button type="button"
-                            class="mt-4 rounded-full border border-gray-600 py-1 px-6 font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:text-gray-800">
-                      Xem tất cả
+                  <div>
+                    <h5 class="text-secondary small">Đạt được</h5>
+                    <p class="h6 font-weight-bold text-dark small">100%</p>
+                  </div>
+                  <div class="text-success">
+                    <h6 class="small">Đã đạt mục tiêu</h6>
+                  </div>
+                </div>
+
+                <div class="mt-6 my-5">
+                  <a href="/vi-nhan-ai/tu-thien" class="w-100">
+                    <button class="btn w-100 fs-6" id="buttonQG" style="background-color: #76c5f0; color: white;">Đăng
+                      nhập để
+                      quyên góp
                     </button>
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
 
           </div>
+        </div>
 
+        <!--- --->
+
+
+        <!---Nội dung 4 -->
+        <div
+          class="order-last top-0 start-0 w-100 border-bottom bg-white transition-opacity duration-200 opacity-100 mt-auto">
+          <div class="container mx-auto px-0 px-md-3 px-lg-3">
+            <div class="position-relative">
+              <div class="d-flex w-100 overflow-auto border-bottom ps-3 ps-md-0 border-gray-200">
+                <a href="#"
+                   class="me-3 me-md-4 text-decoration-none text-dark border-bottom border-2 border-gray-700 font-weight-bold active py-3">
+                  <span>Hoàn cảnh</span>
+                </a>
+                <a href="#"
+                   class="me-3 me-md-4 text-decoration-none text-dark  font-weight-normal hover-border-gray-400 py-3">
+                  <span>Câu chuyện</span>
+                </a>
+                <a href="#"
+                   class="me-3 me-md-4 text-decoration-none text-dark  font-weight-normal hover-border-gray-400 py-3">
+                  <span>Nhà hảo tâm</span>
+                </a>
+                <a href="#"
+                   class="me-3 me-md-4 text-decoration-none text-dark font-weight-normal hover-border-gray-400 py-3">
+                  <span>Tin tức cộng đồng</span>
+                </a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!---Nội dung 5 -->
+        <div class="order-last order-5 px-lg-4">
+          <div class="mx-auto mt-1 w-100 mt-lg-0">
+            <div class="row ">
+
+              <!-- Nội dung cột -->
+              <div class="col-12 col-md-6 col-lg-8">
+
+                <!---- Câu chuyen -->
+                <div id="cauchuyen">
+                  <h2 class="py-2 text-xl font-semibold">Câu chuyện</h2>
+                  <article class="soju__prose small"><p>
+                    <strong>Khách sạn ngàn sao hứng trọn những cơn mưa</strong>
+                  </p>
+
+                    <p>
+                      Với người lang thang ở Sài Gòn, khi màn đêm buông xuống chưa phải là lúc kết thúc những vất vả,
+                      khó nhọc của cuộc sống mưu sinh. Hình ảnh thường thấy ở Sài Gòn vào những buổi đêm, đó là trên các
+                      tuyến đường có cảnh những mảnh đời không nơi nương tựa. Với họ, lề đường như là chốn sống tạm, là
+                      giường để trải qua những đêm ngủ tạm.
+                    </p>
+
+                    <p>
+                      <img alt=""
+                           src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111708-638162902280435897.jpg"
+                           style="width:100%">
+                    </p>
+
+                    <p>
+                      <img alt=""
+                           src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111721-638162902417594796.jpg"
+                           style="width:100%">
+                    </p>
+
+                    <p style="text-align:center">
+                      <em>Những mảnh đời cơ cực với những đêm “ngủ tạm”</em>
+                    </p>
+
+                    <p>
+                      Mùa mưa đến, đồng nghĩa với nỗi lo của những người lao động nghèo, những mảnh đời lang thang càng
+                      thêm chồng chất. Có người may mắn chọn được chỗ có mái hiên rộng, nhờ vậy mà tránh đi được những
+                      cơn mưa bất chợt. Có người thì thấy đâu ngủ đó, mệt lúc nào dừng chân lại lúc đó, miễn là họ được
+                      ngả lưng. Nhưng những ngày Sài Gòn mưa đêm thì dù cho những mái hiên có rộng cỡ nào thì cũng chẳng
+                      thể giúp họ có thể ngon giấc. Những chốn ngủ tạm ướt hết, thậm chí bị ngập sâu, những mảnh đời
+                      càng khó tìm được nơi nào để có giấc ngủ yên bình, dù là trên vỉa hè, lề đường.
+                    </p>
+
+                    <p>
+                      Bên cạnh đó, nhu cầu đi vệ sinh cũng vô cùng bức thiết. Có nhiều mảnh đời còn không đủ tiền để lo
+                      bữa ăn nên nhu cầu tắm rửa, vệ sinh cũng rất qua loa. Người thì chọn tắm nước sông tại các kênh,
+                      cầu. Người thì chọn vài ngày tắm 1 lần mặc cho mồ hôi, bụi bẩn bám khắp người. Khổ sở nhất là các
+                      vấn đề tiêu, tiểu… làm mất mỹ quan đô thị. Bởi nhà vệ sinh công cộng cũng cần phải có tiền. Vì số
+                      tiền ít ỏi mà khó khăn mới có được, khiến các mảnh đời nhắm mắt làm ngơ.
+                    </p>
+
+                    <p>
+                      <img alt=""
+                           src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111740-638162902602438543.jpg"
+                           style="width:100%">
+                    </p>
+
+                    <p>
+                      <img alt=""
+                           src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111750-638162902705861860.jpg"
+                           style="width:100%">
+                    </p>
+
+                    <p style="text-align:center">
+                      <em>Xót xa cho những em bé còn nhỏ đã phải mưu sinh vất vả</em>
+                    </p>
+
+                    <p>
+                      <strong>Trao tặng túi ngủ, thẻ vệ sinh cho các mảnh đời</strong>
+                    </p>
+
+                    <p>
+                      Dù Trăng Khuyết có hệ thống quán trọ/mái ấm luôn hỗ trợ chỗ ăn, ở cho các mảnh đời không nơi nương
+                      tựa. Tuy nhiên số lượng mảnh đời, người lao động nghèo còn khá nhiều trên đường phố Sài Gòn. Một
+                      phần là vì các cô chú chưa đủ điều kiện như tuổi tác để vào mái ấm, một phần họ quen cuộc sống tự
+                      do hiện tại.
+                    </p>
+
+                    <p>
+                      Trước thực trạng vô cùng cấp thiết ấy, Ví MoMo phối hợp với Quỹ Từ Thiện &amp; BTXH Trăng Khuyết
+                      kêu gọi sự giúp đỡ từ các nhà hảo tâm và mạnh thường quân với hy vọng gây quỹ 150.000.000 đồng
+                      thông qua Trái Tim MoMo. Tổng kinh phí của dự án dự kiến là 750.000.000 đồng, vì vậy 600.000.000
+                      đồng còn lại sẽ được nhà tài trợ của chúng tôi quy đổi từ Heo Vàng do cộng đồng Heo Đất MoMo quyên
+                      góp.
+                    </p>
+
+                    <p>
+                      <img alt=""
+                           src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111808-638162902886248600.jpg"
+                           style="width:100%">
+                    </p>
+
+                    <p>
+                      <img alt=""
+                           src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111820-638162903005898911.jpg"
+                           style="width:100%">
+                    </p>
+
+                    <p style="text-align:center">
+                      <em>Chung tay cùng Trăng Khuyết giúp những người lao động nghèo vượt qua khó khăn sắp tới</em>
+                    </p>
+
+                    <p>
+                      Số tiền này sẽ được Trăng Khuyết sử dụng để hỗ trợ những túi ngủ có chất liệu chống thấm, giúp các
+                      mảnh đời có thể giữ ấm, vượt qua những cơn mưa dai dẳng để vỗ về. Ngoài ra, thẻ vệ sinh sẽ được
+                      cấp cho các mảnh đời, người lao động nghèo để có thể sử dụng nhà vệ sinh công cộng miễn phí, vừa
+                      đảm bảo không làm mất mỹ quan đô thị.&nbsp;
+                    </p>
+
+                    <p>
+                      Rất mong các Mạnh thường quân, các nhà hảo tâm sẽ đồng hành cùng chiến dịch lần này của MoMo và
+                      Trăng Khuyết để mang lại những bữa ăn, quà bánh, những chiếc túi ngủ chống mưa, thẻ vệ sinh cho
+                      200 mảnh đời và người lao động nghèo sự chung tay hỗ trợ của các nhà hảo tâm thông qua chương
+                      trình “Trăng Đêm Thứ 7”. Dù số tiền có là bao nhiêu cũng đều đáng trân quý, dù đóng góp nào cũng
+                      yêu thương để cùng chung tay chia sẻ những bữa ăn đến với mái ấm.&nbsp;
+                    </p>
+
+                    <p>
+                      <em>*Sau khi hoàn tất chiến dịch kêu gọi đóng góp, Trái Tim MoMo sẽ chuyển toàn bộ số tiền
+                        150.000.000 đồng đã gây quỹ gửi đến Quỹ Từ Thiện &amp; BTXH Trăng Khuyết hỗ trợ chi phí cho các
+                        bữa ăn tại các mái ấm. Chúng tôi sẽ cập nhật thêm thông tin về tiến độ dự án đến Quý vị trong
+                        thời gian sớm nhất.&nbsp;</em>
+                    </p>
+
+                    <p>
+                      <u><strong>Về Quỹ Từ Thiện &amp; BTXH Trăng Khuyết:</strong></u><br>
+                      Trăng Khuyết là một tổ chức từ thiện về nhân đạo và sự sống, nhằm kết nối cộng đồng và thực hiện
+                      các hoạt động trợ giúp trực tiếp cho các cụ già không nơi nương tựa và trẻ em bị bỏ rơi. Thông qua
+                      các hoạt động: cứu trợ khẩn cấp, cung cấp bữa ăn, chỗ ở và cải thiện cuộc sống. Trăng Khuyết hoạt
+                      động độc lập, phi tôn giáo và phi lợi nhuận trên toàn lãnh thổ Việt Nam. Thông qua pháp nhân là
+                      Quỹ Từ Thiện &amp; BTXH Trăng Khuyết, một doanh nghiệp xã hội, hoạt động 100% vì cộng đồng.&nbsp;
+                    </p>
+
+                    <p>
+                      <em>*MoMo biết rằng còn rất nhiều hoàn cảnh khó khăn trên khắp đất nước của chúng ta cần được bảo
+                        trợ. Bạn hay các công ty hãy liên hệ với chúng tôi để cùng tài trợ, giúp đỡ&nbsp; tạo nên một
+                        cộng đồng Việt Nam nhân ái nhé! <span style="color:#0066cc">donation@mservice.com.vn</span></em>
+                    </p>
+                  </article>
+                </div>
+
+              </div>
+              <!---- Chương trình đang diễn ra -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <!---- nha hao tam -->
+                <div id="nhahaotam">
+                  <div class="mt-3 border-t border-gray-200"><h2 class="my-5 text-xl font-semibold">Nhà hảo tâm hàng
+                    đầu</h2>
+                    <div class="rounded border border-gray-200 px-4 pt-1.5 pb-3">
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Nguyễn Ngọc Hòa</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">3.000.000<!-- --> đ</div>
+                      </div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Phạm Gia Linh</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">3.000.000<!-- --> đ</div>
+                      </div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Nhà hảo tâm</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">2.000.000<!-- --> đ</div>
+                      </div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="mr-1 flex w-12 items-center justify-center"><span
+                          class="text-md text-gray-500">4</span></div>
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Nhà hảo tâm</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">2.000.000<!-- --> đ</div>
+                      </div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="mr-1 flex w-12 items-center justify-center"><span
+                          class="text-md text-gray-500">5</span></div>
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Nhà hảo tâm</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">1.000.000<!-- --> đ</div>
+                      </div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="mr-1 flex w-12 items-center justify-center"><span
+                          class="text-md text-gray-500">6</span></div>
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Trần Thị Thanh Huyền</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">905.000<!-- --> đ</div>
+                      </div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="mr-1 flex w-12 items-center justify-center"><span
+                          class="text-md text-gray-500">7</span></div>
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Nguyễn Duy Phát</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">735.000<!-- --> đ</div>
+                      </div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="mr-1 flex w-12 items-center justify-center"><span
+                          class="text-md text-gray-500">8</span></div>
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Ngo Hong Long</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">666.666<!-- --> đ</div>
+                      </div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="mr-1 flex w-12 items-center justify-center"><span
+                          class="text-md text-gray-500">9</span></div>
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Nguyen Thanh Lam</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">600.000<!-- --> đ</div>
+                      </div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="mr-1 flex w-12 items-center justify-center"><span
+                          class="text-md text-gray-500">10</span></div>
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1">Nguyễn Quốc Cường</div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <div class="item-end flex justify-end">540.000<!-- --> đ</div>
+                      </div>
+                    </div>
+                    <div class="text-center border-radius">
+                      <button type="button"
+                              class="mt-4 rounded-full border border-gray-600 py-1 px-6 font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:text-gray-800">
+                        Xem tất cả
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
 </section>
 </body>
 </html>

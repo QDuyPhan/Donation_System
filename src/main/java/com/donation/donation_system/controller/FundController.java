@@ -12,15 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/fund")
+@RequestMapping("/Donations")
 public class FundController {
-
-    private final FundService fundService;
-
     @Autowired
-    public FundController(FundService fundService) {
-        this.fundService = fundService;
-    }
+    private FundService fundService;
 
     // Lấy tất cả các quỹ
     @GetMapping
@@ -29,7 +24,7 @@ public class FundController {
     }
 
     // Lấy quỹ theo ID
-    @GetMapping("/{id}")
+    @GetMapping("/api/fund/{id}")
     public ResponseEntity<Optional<Fund>> getFundById(@PathVariable int id) {
         Optional<Fund> fund = fundService.findById(id);
         if (fund.isEmpty()) {
@@ -45,7 +40,7 @@ public class FundController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdFund);  // Trả về 201 khi tạo thành công
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/fund/{id}")
     public ResponseEntity<Fund> updateFund(@PathVariable int id, @RequestBody Fund fundDetails) {
         // Tìm quỹ theo ID
         Optional<Fund> fundOptional = fundService.findById(id);
@@ -94,9 +89,8 @@ public class FundController {
     }
 
 
-
     // Xóa một quỹ
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/fund/{id}")
     public ResponseEntity<Void> deleteFund(@PathVariable Integer id) {
         try {
             fundService.deleteById(id);

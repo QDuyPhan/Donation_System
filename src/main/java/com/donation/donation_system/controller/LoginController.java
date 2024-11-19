@@ -1,6 +1,8 @@
 package com.donation.donation_system.controller;
 
+import com.donation.donation_system.model.Fund;
 import com.donation.donation_system.model.User;
+import com.donation.donation_system.service.FundService;
 import com.donation.donation_system.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,12 +16,16 @@ import org.springframework.web.bind.annotation.*;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping("/Donations")
 public class LoginController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FundService fundService;
 
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request) {
@@ -37,6 +43,11 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login?logout";
+    }
 
     @PostMapping("/login")
     public String progressLogin(@RequestParam(value = "rememberme", required = false) String remember, @ModelAttribute("user") User user, Model model, HttpSession session, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
@@ -75,9 +86,12 @@ public class LoginController {
 //            }
         }
         if (user.getRole() == 1) {
-            return "redirect:/admin/home";
+            return "";
         } else {
-            return "redirect:/home";
+            model.addAttribute("content", "/pages/home");
+            List<Fund> funds = fundService.FindAll();
+            model.addAttribute("funds", funds);
+            return "index";
         }
     }
 }
