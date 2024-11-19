@@ -1,8 +1,5 @@
 package com.donation.donation_system.api;
 
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-//import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -13,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import static utils.Constants.*;
+
 
 public class StringAPI {
     public static String generateStrongPassword(int length) {
