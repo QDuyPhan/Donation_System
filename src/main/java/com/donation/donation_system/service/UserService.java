@@ -25,4 +25,6 @@ public interface UserService {
             throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
 
     boolean updateUserInfo(String username, String fullname, String email, String sdt, String diachi) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
+    boolean updatePassword(String password, String username) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 }

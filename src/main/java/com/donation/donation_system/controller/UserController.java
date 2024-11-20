@@ -6,13 +6,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+
+import static com.donation.donation_system.api.StringAPI.encodePassword;
 
 @Controller
 @RequestMapping("/Donations")
@@ -25,10 +24,6 @@ public class UserController {
         return "forgotpassword";
     }
 
-    @GetMapping("/changepassword")
-    public String changepassword() {
-        return "user/changepassword";
-    }
 
     @GetMapping("/user-info")
     public String userinfo(Model model, HttpSession session) {
@@ -53,5 +48,43 @@ public class UserController {
         }
         model.addAttribute("message", message);
         return "user/userinfo";
+    }
+
+    @GetMapping("/password")
+    public String changepassword(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", user);
+        return "user/changepassword";
+    }
+
+    @PostMapping("/password")
+    public String processChangePassword(@ModelAttribute("user") User user,
+                                        @RequestParam("username") String username,
+                                        @RequestParam("oldpassword") String oldpassword,
+                                        @RequestParam("newpassword") String newpassword,
+                                        @RequestParam("confirmpassword") String confirmpassword,
+                                        Model model, HttpSession session) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
+        user = (User) session.getAttribute("user");
+        String message = "";
+        if (!user.getPassword().equals(encodePassword(oldpassword))) {
+            message = "old password is incorrect!";
+            return "redirect:/user/changepassword?error=" + message;
+        }
+        if (!newpassword.equals(confirmpassword)) {
+            message = "confirm password is incorrect!";
+            return "redirect:/user/changepassword?error=" + message;
+        }
+        if (newpassword.equals(oldpassword)) {
+            message = "newpassword is the same!";
+            return "redirect:/user/changepassword?error=" + message;
+        }
+        boolean result = userService.updatePassword(newpassword, username);
+        if (result) {
+            message = "Update new password success!";
+        } else {
+            message = "Update new password failed!";
+        }
+        model.addAttribute("message", message);
+        return "user/changepassword";
     }
 }

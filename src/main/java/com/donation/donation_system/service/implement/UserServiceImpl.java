@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import static com.donation.donation_system.api.StringAPI.encodePassword;
 import static com.donation.donation_system.utils.Constants.*;
 
 
@@ -123,6 +124,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public boolean updateUserInfo(String username, String fullname, String email, String sdt, String diachi) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         int result = userRepository.updateUserInfo(username, fullname, email, sdt, diachi);
+        if (result != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    @Transactional
+    public boolean updatePassword(String password, String username) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        int result = userRepository.updatePassword(encodePassword(password), username);
         if (result != 0) {
             return true;
         }
