@@ -4,7 +4,6 @@ import com.donation.donation_system.model.User;
 import com.donation.donation_system.service.EmailService;
 import com.donation.donation_system.service.UserService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import static com.donation.donation_system.api.StringAPI.*;
-import static utils.Constants.*;
+import static com.donation.donation_system.utils.Constants.STATUS_NOTACTIVATED;
+import static com.donation.donation_system.utils.Constants.USER_ROLE;
 //http://localhost:8080/Donations/register
 
 @Controller

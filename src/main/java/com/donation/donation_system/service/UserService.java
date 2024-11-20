@@ -23,4 +23,6 @@ public interface UserService {
 
     HashMap<String, Object> validate(String username, String password)
             throws SQLException, ClassNotFoundException, NoSuchAlgorithmException;
+
+    boolean updateUserInfo(String username, String fullname, String email, String sdt, String diachi) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 }

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{index}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div th:fragment="content" class="container mt-3 w-100">
+  <main class="m-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href=""><i
+          class="fa-solid fa-house"></i></a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thông
+          tin user
+        </li>
+      </ol>
+    </nav>
+    <form
+      class="mx-1 mx-md-4"
+      method="post"
+      th:action="@{/Donations/user-info?action='update'}"
+      th:object="${user}"
+    >
+      <div class="d-flex flex-row align-items-center mb-4 flex-column">
+        <div class="form-outline flex-fill mb-0 d-flex w-100">
+          <label class="form-label d-flex justify-content-center align-items-center" for="username">
+            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+          </label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-control"
+            placeholder="Username"
+            readonly
+            th:field="*{username}"
+          />
+        </div>
+<!--        <div th:if="${param.existuser}" class="w-100 d-flex">-->
+        <!--                      <span-->
+        <!--                        class="text-danger align-items-center"-->
+        <!--                        th:text="${param.existuser}"-->
+        <!--                      >-->
+        <!--                        ...-->
+        <!--                      </span>-->
+        <!--        </div>-->
+      </div>
+
+      <div class="d-flex flex-row align-items-center mb-4 flex-column">
+        <div
+          class="form-outline flex-fill mb-0 d-flex w-100"
+        >
+          <label class="form-label d-flex justify-content-center align-items-center" for="username">
+            <i class="fas fa-file-signature fa-lg me-3 fa-fw"></i>
+          </label>
+          <input
+            type="text"
+            id="fullname"
+            name="fullname"
+            class="form-control"
+            placeholder="Fullname"
+            th:field="*{fullName}"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="d-flex flex-row align-items-center mb-4 flex-column">
+        <div
+          class="form-outline flex-fill mb-0 d-flex w-100"
+        >
+          <label class="form-label d-flex justify-content-center align-items-center" for="username">
+            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            th:field="*{email}"
+            placeholder="Email"
+          />
+          <label class="form-label" for="email"></label>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row align-items-center mb-4">
+        <div
+          class="form-outline flex-fill mb-0 d-flex"
+        >
+          <span
+            class="d-flex justify-content-center align-items-center"
+          >
+            <i class="fas fa-phone fa-lg me-3 fa-fw"></i>
+          </span>
+          <input
+            type="text"
+            id="phone"
+            placeholder="Phone"
+            name="phone"
+            class="form-control"
+            th:field="*{sdt}"
+          />
+          <label class="form-label" for="phone"></label>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row align-items-center mb-4">
+        <label class="form-label d-flex justify-content-center align-items-center" for="username">
+          <i class="fas fa-location-dot fa-lg me-3 fa-fw"></i>
+        </label>
+        <div class="form-outline flex-fill mb-0">
+          <input
+            type="text"
+            id="address"
+            name="address"
+            class="form-control"
+            placeholder="Address"
+            th:field="*{diachi}"
+          />
+          <label class="form-label" for="address"></label>
+        </div>
+      </div>
+      <span class="form-message form-text text-muted" th:text="${message}"></span>
+      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+        <div
+          class="">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg "
+          >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Cập nhật
+          </button>
+        </div>
+        <div
+          class="">
+          <a id="btn-Cancel" href="" class="btn btn-primary"><i class="fa-solid fa-rotate-left"></i> Quay lại</a>
+        </div>
+      </div>
+
+    </form>
+  </main>
+</div>
+</body>
+</html>

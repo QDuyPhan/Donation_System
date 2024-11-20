@@ -64,26 +64,26 @@ public class LoginController {
             String message = (String) validateResults.get("message");
             model.addAttribute("message", message);
             return "login";
-//        } else {
-//            System.out.println("Login user " + user);
-//            if (remember != null) {
-//                System.out.println("cookie");
-//                System.out.println(ckUser);
-//                System.out.println(ckPassword);
-//                ckUser = new Cookie("ckUser", username);
-//                ckUser.setMaxAge(5000);
-//                ckPassword = new Cookie("ckPassword", password);
-//                response.addCookie(ckUser);
-//                response.addCookie(ckPassword);
-//            } else {
-//                System.out.println("nocookie");
-//                ckUser = new Cookie("ckUser", "");
-//                ckUser.setMaxAge(0);
-//                response.addCookie(ckUser);
-//                ckPassword = new Cookie("ckPassword", "");
-//                ckPassword.setMaxAge(0);
-//                response.addCookie(ckPassword);
-//            }
+        } else {
+            System.out.println("Login user " + user);
+            if (remember != null) {
+                System.out.println("cookie");
+                System.out.println(ckUser);
+                System.out.println(ckPassword);
+                ckUser = new Cookie("ckUser", username);
+                ckUser.setMaxAge(5000);
+                ckPassword = new Cookie("ckPassword", password);
+                response.addCookie(ckUser);
+                response.addCookie(ckPassword);
+            } else {
+                System.out.println("nocookie");
+                ckUser = new Cookie("ckUser", "");
+                ckUser.setMaxAge(0);
+                response.addCookie(ckUser);
+                ckPassword = new Cookie("ckPassword", "");
+                ckPassword.setMaxAge(0);
+                response.addCookie(ckPassword);
+            }
         }
         if (user.getRole() == 1) {
             return "";
@@ -91,6 +91,7 @@ public class LoginController {
             model.addAttribute("content", "/pages/home");
             List<Fund> funds = fundService.FindAll();
             model.addAttribute("funds", funds);
+            model.addAttribute("client", user);
             return "index";
         }
     }

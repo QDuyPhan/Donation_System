@@ -12,7 +12,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-import static utils.Constants.*;
+import static com.donation.donation_system.utils.Constants.*;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -59,8 +60,7 @@ public class UserServiceImpl implements UserService {
             int result = userRepository.activate(username, id);
             if (result == 1) {
                 boolean updateResult = updateStatusAfterActivated(Integer.parseInt(id));
-                if (updateResult)
-                    return true;
+                if (updateResult) return true;
                 return false;
             }
             return true;
@@ -75,8 +75,7 @@ public class UserServiceImpl implements UserService {
     public boolean updateStatusAfterActivated(int id) {
         try {
             int result = userRepository.updateStatusAfterActivated(STATUS_ACTIVE, id);
-            if (result != 0)
-                return true;
+            if (result != 0) return true;
             return false;
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,8 +86,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean check(String username, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         int result = userRepository.check(username, StringAPI.encodePassword(password));
-        if (result > 0)
-            return true;
+        if (result > 0) return true;
         return false;
     }
 
@@ -119,5 +117,15 @@ public class UserServiceImpl implements UserService {
         bindingResults.put("isValidate", true);
         bindingResults.put("user", user);
         return bindingResults;
+    }
+
+    @Override
+    @Transactional
+    public boolean updateUserInfo(String username, String fullname, String email, String sdt, String diachi) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        int result = userRepository.updateUserInfo(username, fullname, email, sdt, diachi);
+        if (result != 0) {
+            return true;
+        }
+        return false;
     }
 }
