@@ -17,5 +17,5 @@ public interface FundService {
     void deleteAll();
     void deleteAllInBatch(Iterable<Fund> funds);
     Fund saveAndFlush(Fund fund);
-
+    List<Fund>  getAllBySearch(String search);
 }

@@ -6,6 +6,7 @@ import com.donation.donation_system.service.FundService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,5 +71,11 @@ public class FundServiceImpl implements FundService {
     @Override
     public Fund saveAndFlush(Fund fund) {
         return fundRepository.saveAndFlush(fund);
+    }
+
+    @Override
+    public List<Fund> getAllBySearch(String search) {
+
+        return fundRepository.getAllBySearch(search);
     }
 }
