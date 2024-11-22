@@ -115,22 +115,15 @@
         </div>
       </div>
       <span class="form-message form-text text-muted" th:text="${message}"></span>
-      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-        <div
-          class="">
-          <button
-            type="submit"
-            class="btn btn-primary btn-lg "
-          >
-            <i class="fa-solid fa-floppy-disk"></i>
-            Cập nhật
-          </button>
-        </div>
-        <div
-          class="">
-          <a id="btn-Cancel" href="/Donations/home" class="btn btn-primary"><i class="fa-solid fa-rotate-left"></i> Quay
+
+      <div class="form-group">
+        <button id="btn-Save" type="submit" class="btn btn-success mx-1">
+          <i class="fa-solid fa-floppy-disk"></i> Cập nhật
+        </button>
+        <button id="btn-Cancel" type="button" class="btn btn-primary mx-1">
+          <a href="/Donations/home" class=""><i class="fa-solid fa-rotate-left"></i> Quay
             lại</a>
-        </div>
+        </button>
       </div>
 
     </form>

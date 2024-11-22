@@ -50,7 +50,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String progressLogin(@RequestParam(value = "rememberme", required = false) String remember, @ModelAttribute("user") User user, Model model, HttpSession session, HttpServletResponse response) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+    public String progressLogin(@RequestParam(value = "rememberme", required = false) String remember,
+                                @ModelAttribute("user") User user, Model model, HttpSession session,
+                                HttpServletResponse response
+    ) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
         model.addAttribute("user", new User());
         String username = user.getUsername();
         String password = user.getPassword();
@@ -66,22 +69,23 @@ public class LoginController {
             return "login";
         } else {
             System.out.println("Login user " + user);
-            if (remember != null) {
+            if (remember != null && remember.equals("on")) {
                 System.out.println("cookie");
                 System.out.println(ckUser);
                 System.out.println(ckPassword);
                 ckUser = new Cookie("ckUser", username);
-                ckUser.setMaxAge(5000);
                 ckPassword = new Cookie("ckPassword", password);
+                ckUser.setMaxAge(60 * 60 * 24);
+                ckPassword.setMaxAge(60 * 60 * 24);
                 response.addCookie(ckUser);
                 response.addCookie(ckPassword);
             } else {
                 System.out.println("nocookie");
                 ckUser = new Cookie("ckUser", "");
-                ckUser.setMaxAge(0);
-                response.addCookie(ckUser);
                 ckPassword = new Cookie("ckPassword", "");
+                ckUser.setMaxAge(0);
                 ckPassword.setMaxAge(0);
+                response.addCookie(ckUser);
                 response.addCookie(ckPassword);
             }
         }
