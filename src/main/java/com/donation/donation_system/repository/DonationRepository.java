@@ -22,5 +22,8 @@ public interface DonationRepository extends JpaRepository<Donation, Integer> {
             "WHERE d.fund.id = :fundId")
     Integer countDonationsByFund(@Param("fundId") int fundId);
 
-
+    @Query("SELECT d " +
+            "FROM Donation d "+
+            "WHERE d.fund.id = :fundId ")
+    List<Donation> findDonationByFund(@Param("fundId") int fundId);
 }

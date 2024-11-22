@@ -13,8 +13,10 @@ import java.util.Optional;
 @Repository
 public interface FundRepository extends JpaRepository<Fund, Integer> {
 
-    @Query("SELECT f FROM Fund f WHERE LOWER(f.name) LIKE LOWER(CONCAT('%', :search, '%'))")
+    @Query(value = "SELECT * FROM Fund f WHERE LOWER(CONVERT(f.name USING utf8)) LIKE LOWER(CONCAT('%', :search, '%'))", nativeQuery = true)
     List<Fund> getAllBySearch(@Param("search") String search);
 
+    @Query(value = "SELECT f FROM Fund f WHERE f.category.id = :categoryId")
+    List<Fund> getByCategoryId(@Param("categoryId") int categoryId);
 
 }

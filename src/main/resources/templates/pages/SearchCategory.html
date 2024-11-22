@@ -5,19 +5,19 @@
   <title>Title</title>
 </head>
 <body th:fragment="content">
-<main  th:fragment="searchFragment">
+<main  th:fragment="categoryFragment">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a
               href="${pageContext.request.contextPath}/home"><i
               class="fa-solid fa-house"></i></a></li>
       <li class="breadcrumb-item active"><a
-              href="${pageContext.request.contextPath}/home">Quỹ Từ Thiện</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Tìm kiếm</li>
+              href="/Donations/home">Quỹ Từ Thiện</a></li>
+      <li class="breadcrumb-item active" aria-current="page" th:text="${category?.name}"></li>
     </ol>
   </nav>
   <div class="content-header">
-    <h3 class="content-title display-5 text-center" th:text="'Kết quả tìm kiếm cho từ khóa ' + ${param.keyword}"
+    <h3 class="content-title display-5 text-center" th:text="'Kết quả tìm kiếm cho từ khóa ' + ${category.name}"
     > </h3>
     <hr class="content-title-underline">
   </div>

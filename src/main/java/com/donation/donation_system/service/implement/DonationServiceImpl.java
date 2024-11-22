@@ -1,8 +1,11 @@
 package com.donation.donation_system.service.implement;
 
+import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.repository.DonationRepository;
 import com.donation.donation_system.service.DonationService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DonationServiceImpl implements DonationService {
@@ -27,6 +30,11 @@ public class DonationServiceImpl implements DonationService {
         Integer Donations = donationRepository.countDonationsByFund(id);
         System.out.println(" sum : " + Donations);
         return Donations != null ? Donations : 0; // Nếu không có kết quả, trả về 0
+    }
+
+    @Override
+    public List<Donation> findDonationById(int id) {
+        return donationRepository.findDonationByFund(id);
     }
 
 }

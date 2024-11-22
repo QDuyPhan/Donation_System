@@ -25,7 +25,6 @@ import java.util.Map;
 public class HomeController {
 
     private final FundService fundService;
-
     private final DonationService donationService;
     private final CategoryService categoryService;
     @Autowired
@@ -63,9 +62,5 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/detailFragment")
-    public String detailProject(Model model) {
-        model.addAttribute("content", "/component/detailProject"); // Nạp fragment home
-        return "index";
-    }
+
 }

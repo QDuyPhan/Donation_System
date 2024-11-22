@@ -59,23 +59,19 @@ public class FundServiceImpl implements FundService {
     }
 
     @Override
-    public void deleteAll() {
-        fundRepository.deleteAll();
-    }
-
-    @Override
-    public void deleteAllInBatch(Iterable<Fund> funds) {
-        fundRepository.deleteAllInBatch(funds);
-    }
-
-    @Override
-    public Fund saveAndFlush(Fund fund) {
-        return fundRepository.saveAndFlush(fund);
-    }
-
-    @Override
     public List<Fund> getAllBySearch(String search) {
 
         return fundRepository.getAllBySearch(search);
+    }
+
+    @Override
+    public List<Fund> getByCategoryId(int categoryId)
+    {
+        return fundRepository.getByCategoryId(categoryId);
+    }
+
+    @Override
+    public Fund getFundById(int id){
+        return fundRepository.getReferenceById(id);
     }
 }

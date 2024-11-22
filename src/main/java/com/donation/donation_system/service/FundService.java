@@ -14,8 +14,7 @@ public interface FundService {
     void flush();
     void delete(Fund fund);
     void deleteById(Integer id);
-    void deleteAll();
-    void deleteAllInBatch(Iterable<Fund> funds);
-    Fund saveAndFlush(Fund fund);
+    Fund getFundById(int id);
     List<Fund>  getAllBySearch(String search);
+    List<Fund> getByCategoryId (int categoryId);
 }

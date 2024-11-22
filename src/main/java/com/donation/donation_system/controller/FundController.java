@@ -1,25 +1,36 @@
 package com.donation.donation_system.controller;
 
+import com.donation.donation_system.model.Category;
+import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.Fund;
+import com.donation.donation_system.service.CategoryService;
+import com.donation.donation_system.service.DonationService;
 import com.donation.donation_system.service.FundService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/fund")
+@Controller
+@RequestMapping("/Donations")
 public class FundController {
 
     private final FundService fundService;
-
+    private final DonationService donationService;
+    private final CategoryService categoryService;
     @Autowired
-    public FundController(FundService fundService) {
+    public FundController(FundService fundService , DonationService donationService, CategoryService categoryService) {
         this.fundService = fundService;
+        this.donationService = donationService;
+        this.categoryService = categoryService;
     }
 
     // Lấy tất cả các quỹ
@@ -104,5 +115,32 @@ public class FundController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // Trả về 404 nếu không tìm thấy quỹ
         }
+    }
+
+    @GetMapping("/detailFund")
+    public String detailFund(@RequestParam(name = "id", required = false, defaultValue = "")  int id, Model model) {
+        Fund fund = fundService.getFundById(id);
+        List<Donation> donationFund = donationService.findDonationById(id);
+        List<Category> categories = categoryService.FindAll();
+        Map<Integer, Integer> totalDonations = new HashMap<>();
+        Map<Integer, Integer> sumDonations = new HashMap<>();
+
+        Integer  total = donationService.findTotalDonationsByFund(fund.getId());
+        Integer  sumdonation = donationService.countDonationsByFund(fund.getId());
+        totalDonations.put(fund.getId(), total);
+        sumDonations.put(fund.getId(),sumdonation);
+        double percentAchieved = 0;
+        if (totalDonations.containsKey(fund.getId()) && fund.getExpectedResult() > 0) {
+            percentAchieved = (int) (100.0 * totalDonations.get(fund.getId()) / fund.getExpectedResult());
+        }
+        fund.setPercentAchieved(percentAchieved);
+        model.addAttribute("categories", categories);
+        model.addAttribute("donationFund", donationFund);
+        System.out.println("danh sach quyen gop "+ donationFund);
+        model.addAttribute("fund", fund);
+        model.addAttribute("totalDonations", totalDonations);
+        model.addAttribute("sumDonations", sumDonations);
+        model.addAttribute("content","/component/detailProject");
+        return "index";
     }
 }

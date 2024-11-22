@@ -52,6 +52,7 @@ public class Fund {
 
     @Setter
     @Getter
+    @Transient
     private double percentAchieved;
 
 }

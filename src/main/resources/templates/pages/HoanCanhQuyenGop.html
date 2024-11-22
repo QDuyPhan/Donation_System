@@ -46,7 +46,7 @@
                       <div class="text-sm font-weight-bold text-dark" th:text="${fund.percentAchieved} + '%'"></div>
                     </div>
                     <div class="position-relative">
-                      <a href="detailFragment" class="btn btn-outline-info">Xem chi tiết</a>
+                      <a th:href="@{/Donations/detailFund(id=${fund.id})}" class="btn btn-outline-info">Xem chi tiết</a>
                     </div>
                   </div>
                 </div>
