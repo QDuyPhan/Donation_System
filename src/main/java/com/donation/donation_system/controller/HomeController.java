@@ -24,15 +24,12 @@ import java.util.Map;
 @RequestMapping("/Donations")
 public class HomeController {
 
-    private final FundService fundService;
-    private final DonationService donationService;
-    private final CategoryService categoryService;
     @Autowired
-    public HomeController(FundService fundService,DonationService donationService,CategoryService categoryService) {
-        this.fundService = fundService;
-        this.donationService = donationService;
-        this.categoryService = categoryService;
-    }
+    private FundService fundService;
+    @Autowired
+    private DonationService donationService;
+    @Autowired
+    private CategoryService categoryService;
 
 
     @GetMapping("/home")
@@ -44,11 +41,11 @@ public class HomeController {
         Map<Integer, Integer> sumDonations = new HashMap<>();
         for (Fund fund : funds) {
 
-           Integer  total = donationService.findTotalDonationsByFund(fund.getId());
-            Integer  sumdonation = donationService.countDonationsByFund(fund.getId());
+            Integer total = donationService.findTotalDonationsByFund(fund.getId());
+            Integer sumdonation = donationService.countDonationsByFund(fund.getId());
             System.out.println("Total donations for fund ID " + fund.getId() + ": " + total);
             totalDonations.put(fund.getId(), total);
-            sumDonations.put(fund.getId(),sumdonation);
+            sumDonations.put(fund.getId(), sumdonation);
             double percentAchieved = 0;
             if (totalDonations.containsKey(fund.getId()) && fund.getExpectedResult() > 0) {
                 percentAchieved = (int) (100.0 * totalDonations.get(fund.getId()) / fund.getExpectedResult());

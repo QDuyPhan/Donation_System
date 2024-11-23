@@ -14,136 +14,234 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
+  <script th:src="@{/js/fundDetail.js}"></script>
 </head>
 <body>
 <section th:fragment="content">
-<main th:fragment="detailProject" class="w-full d-flex justify-content-center mt-lg-0 my-2">
-  <div class=" px-4 px-md-5" style="width:70%; ">
+  <main th:fragment="detailProject" class="w-full d-flex justify-content-center mt-lg-0 my-2">
+    <div class=" px-4 px-md-5" style="width:70%; ">
 
-    <div class="row g-3 g-md-4 scroll-m-28" id="Api">
-      <!--nội dung 1-->
-      <div class="order-2 col-12 col-md-12 order-md-1">
-        <!-- Nội dung của bạn -->
-        <h1 class="mb-3 text-xl font-weight-bold text-dark pt-3 pt-md-6" th:text="${fund.name}">
-        </h1>
-        <p class="text-muted" th:text="${fund.description}">
-        </p>
-      </div>
-
-      <!--nội dung 2-->
-      <div class="order-1 col-12 order-md-2 col-md-6 col-lg-8">
-        <img th:src="${fund.imageUrl}" class="d-block w-100" alt="Hình ảnh quỹ">
-      </div>
-
-      <!--nội dung 3-->
-      <div class="order-3 col-12 order-md-3 col-md-6 col-lg-4">
-
-        <!--- --->
-        <div class="col-12 ms-3">
-          <div class="mb-3 d-flex justify-content-start align-items-center mb-4">
-            <div class="text-sm font-weight-bold text-uppercase " style="color:#76c5f0; font-weight: bold; ">Thông tin
-              quyên góp
-            </div>
-          </div>
+      <div class="row g-3 g-md-4 scroll-m-28" id="Api">
+        <!--nội dung 1-->
+        <div class="order-2 col-12 col-md-12 order-md-1">
+          <!-- Nội dung của bạn -->
+          <h1 class="mb-3 text-xl font-weight-bold text-dark pt-3 pt-md-6" th:text="${fund.name}">
+          </h1>
+          <p class="text-muted" th:text="${fund.description}">
+          </p>
         </div>
 
-        <!--- --->
-        <div class="container mt-3 rounded " style="background-color: #FAFAFA">
-          <div class="mt-4 mt-sm-6  my-2">
-            <div class="dn-detail position-absolute ">
+        <!--nội dung 2-->
+        <div class="order-1 col-12 order-md-2 col-md-6 col-lg-8">
+          <img th:src="${fund.imageUrl}" class="d-block w-100" alt="Hình ảnh quỹ">
+        </div>
 
-              <div class="dn-info my-3 mb-2 d-flex align-items-end">
-                <strong class="dn-value flex text-xl font-weight-bold text-gray-700" th:text="${totalDonations[fund.id]} +  ' quyên góp' + '/'"></strong>
-                <span class="flex align-items-end ps-2 small text-muted" th:text="${fund.expectedResult} + ' đ'"></span>
-              </div>
+        <!--nội dung 3-->
+        <div class="order-3 col-12 order-md-3 col-md-6 col-lg-4">
 
-              <div class="dn-progress my-3 d-flex h-2 w-100 overflow-hidden rounded bg-light">
-                <div class="dn-progress-bar done bg-success h-2 w-100 rounded"></div>
-              </div>
-
-              <div class="dn-time mt-2 my-3 d-flex align-items-start justify-content-between text-muted">
-                <div>
-                  <h5 class="text-secondary small">Lượt quyên góp</h5>
-                  <p class="h6 font-weight-bold text-dark small" th:text="${sumDonations[fund.id]}"></p>
-                </div>
-                <div>
-                  <h5 class="text-secondary small">Đạt được</h5>
-                  <p class="h6 font-weight-bold text-dark small" th:text="${fund.percentAchieved} + '%'"></p>
-                </div>
-                <div class="text-success" th:if="${fund.status} == 'Opening'">
-                  <h6 class="small"> Đang diễn ra </h6>
-                </div>
-                <div class="text-success" th:if="${fund.status} == 'Finish'">
-                  <h6 class="small"> Đã hoàn thành </h6>
-                </div>
-              </div>
-
-              <div class="mt-6 my-5">
-                <a href="/vi-nhan-ai/tu-thien" class="w-100">
-                  <button class="btn w-100 fs-6" id="buttonQG" style="background-color: #76c5f0; color: white;">Đăng nhập để
-                    quyên góp
-                  </button>
-                </a>
+          <!--- --->
+          <div class="col-12 ms-3">
+            <div class="mb-3 d-flex justify-content-start align-items-center mb-4">
+              <div class="text-sm font-weight-bold text-uppercase " style="color:#76c5f0; font-weight: bold; ">Thông tin
+                quyên góp
               </div>
             </div>
           </div>
 
+          <!--- --->
+          <div class="container mt-3 rounded " style="background-color: #FAFAFA">
+            <div class="mt-4 mt-sm-6  my-2">
+              <div class="dn-detail position-absolute ">
+
+                <div class="dn-info my-3 mb-2 d-flex align-items-end">
+                  <strong class="dn-value flex text-xl font-weight-bold text-gray-700"
+                          th:text="${totalDonations[fund.id]} +  ' quyên góp' + '/'"></strong>
+                  <span class="flex align-items-end ps-2 small text-muted"
+                        th:text="${fund.expectedResult} + ' đ'"></span>
+                </div>
+
+                <div class="dn-progress my-3 d-flex h-2 w-100 overflow-hidden rounded bg-light">
+                  <div class="dn-progress-bar done bg-success h-2 w-100 rounded"></div>
+                </div>
+
+                <div class="dn-time mt-2 my-3 d-flex align-items-start justify-content-between text-muted">
+                  <div>
+                    <h5 class="text-secondary small">Lượt quyên góp</h5>
+                    <p class="h6 font-weight-bold text-dark small" th:text="${sumDonations[fund.id]}"></p>
+                  </div>
+                  <div>
+                    <h5 class="text-secondary small">Đạt được</h5>
+                    <p class="h6 font-weight-bold text-dark small" th:text="${fund.percentAchieved} + '%'"></p>
+                  </div>
+                  <div class="text-success" th:if="${fund.status} == 'Opening'">
+                    <h6 class="small"> Đang diễn ra </h6>
+                    <div class="mt-6 my-5" th:unless="${session.user}">
+                      <a th:href="@{/Donation/login}" class="w-100">
+                        <button class="btn w-100 fs-6" id="btn-LoginToDonate"
+                                style="background-color: #76c5f0; color: white;">
+                         Đăng nhập để quyên góp
+                        </button>
+                      </a>
+                    </div>
+
+                    <div class="mt-6 my-5" th:if="${session.user}">
+                      <button id="btn-Donate" type="button"
+                              class="btn btn-danger  mx-auto inline-block"
+                              data-toggle="modal" data-target="#modalDonate">Quyên góp
+                      </button>
+                      <!--                      Model-->
+                      <div class="modal fade" id="modalDonate" tabindex="-1"
+                           role="dialog" aria-labelledby="exampleModalLabel"
+                           aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Thông
+                                tin quyên góp</h5>
+                              <button type="button" class="close" data-dismiss="modal"
+                                      aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+
+                            <form id="frm-SendDonate" method="post">
+                              <div class="modal-body">
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">Quỹ quyên góp</span>
+                                  </div>
+                                  <input id="fund-id" type="hidden" name="fund-id" th:value="${fund.id}">
+                                  <input type="text"
+                                         class="form-control"
+                                         id="fund-name"
+                                         name="fund-name"
+                                         aria-describedby="basic-addon3"
+                                         th:value="${fund.name}"
+                                         readonly>
+                                </div>
+
+                                <div class="form-group">
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="tienquyengop">Tiền	quyên góp</span>
+                                    </div>
+                                    <input type="text" class="form-control"
+                                           id="donation-amount" name="donation-amount"
+                                           aria-describedby="tienquyengop">
+                                    <div class="input-group-append">
+                                      <span class="input-group-text">.vnd</span>
+                                    </div>
+                                  </div>
+                                  <span class="form-message form-text text-muted"></span>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+																<span class="input-group-text" id="message">Lời
+																	nhắn</span>
+                                  </div>
+                                  <input type="text" class="form-control"
+                                         id="donation-message" name="donation-message"
+                                         aria-describedby="message" list="sample-message">
+                                  <datalist id="sample-message">
+                                    <option>Chúc chương trình nhận được nhiều quyên góp</option>
+                                    <option>Mọi người ơi hãy mau giúp đỡ hoàn cảnh đáng thương
+                                      này
+                                    </option>
+                                    <option>Mình có một chút tấm lòng nhỏ mong chương trình
+                                      nhận
+                                    </option>
+                                    <option>Mỗi người chung tay quyên góp vì một tương lai tốt
+                                      đẹp hơn
+                                    </option>
+                                    <option>Chúc chương trình này sớm được hoàn thành</option>
+                                    <option>Giữ gìn truyền nét đẹp truyền thống Lá lành đùm lá
+                                      rách
+                                    </option>
+                                  </datalist>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Close
+                                </button>
+                                <button id="btn-SendDonate" type="submit"
+                                        class="btn btn-danger">Gửi quyên góp
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-success" th:if="${fund.status} == 'Finish'">
+                    <h6 class="small"> Đã hoàn thành </h6>
+                  </div>
+                </div>
+                <div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
-        </div>
 
-      <!---Nội dung  -->
-      <div class="order-last order-5 px-lg-4">
-        <div class="mx-auto mt-1 w-100 mt-lg-0">
-          <div class="row ">
+        <!---Nội dung  -->
+        <div class="order-last order-5 px-lg-4">
+          <div class="mx-auto mt-1 w-100 mt-lg-0">
+            <div class="row ">
 
-            <!-- Nội dung cột -->
-            <div class="col-12 col-md-6 col-lg-8">
+              <!-- Nội dung cột -->
+              <div class="col-12 col-md-6 col-lg-8">
 
-              <!---- Câu chuyen -->
-              <div id="cauchuyen">
+                <!---- Câu chuyen -->
+                <div id="cauchuyen">
                   <p th:utext="${fund.content}">
                   </p>
+                </div>
+
               </div>
+              <!---- Chương trình đang diễn ra -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <!-- Nhà hảo tâm hàng đầu -->
+                <div id="nhahaotam">
+                  <div class="mt-3 border-t border-gray-200">
+                    <h2 class="my-5 text-xl font-semibold">Nhà hảo tâm hàng đầu</h2>
+                    <div class="rounded border border-gray-200 px-4 pt-1.5 pb-3"
+                         th:each="donation : ${donationFund}">
 
-            </div>
-            <!---- Chương trình đang diễn ra -->
-            <div class="col-12 col-md-6 col-lg-4">
-              <!-- Nhà hảo tâm hàng đầu -->
-              <div id="nhahaotam">
-                <div class="mt-3 border-t border-gray-200">
-                  <h2 class="my-5 text-xl font-semibold">Nhà hảo tâm hàng đầu</h2>
-                  <div class="rounded border border-gray-200 px-4 pt-1.5 pb-3" th:each="donation : ${donationFund}">
-
-                    <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
-                      <div class="flex-1 text-left">
-                        <div class="mb-1 pt-1" th:text="${donation.user?.username ?: 'Anonymous'}"></div>
-                        <div class="text-xs text-gray-400"></div>
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                        <div class="flex-1 text-left">
+                          <div class="mb-1 pt-1" th:text="${donation.user?.username ?: 'Anonymous'}"></div>
+                          <div class="text-xs text-gray-400"></div>
+                        </div>
+                        <!-- Hiển thị số tiền quyên góp với 'đ' -->
+                        <div class="item-end flex justify-end" th:text="${donation.donationAmount + 'đ'}"></div>
                       </div>
-                      <!-- Hiển thị số tiền quyên góp với 'đ' -->
-                      <div class="item-end flex justify-end" th:text="${donation.donationAmount + 'đ'}"></div>
+
+                    </div>
+
+                    <!-- Nút Xem tất cả -->
+                    <div class="text-center border-radius">
+                      <button type="button"
+                              class="mt-4 rounded-full border border-gray-600 py-1 px-6 font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:text-gray-800">
+                        Xem tất cả
+                      </button>
                     </div>
 
                   </div>
-
-                  <!-- Nút Xem tất cả -->
-                  <div class="text-center border-radius">
-                    <button type="button"
-                            class="mt-4 rounded-full border border-gray-600 py-1 px-6 font-semibold text-gray-700 transition-all hover:bg-gray-50 hover:text-gray-800">
-                      Xem tất cả
-                    </button>
-                  </div>
-
                 </div>
               </div>
+              <div th:if="${#lists.isEmpty(donationFund)}">Không có quyên góp nào.</div>
             </div>
-            <div th:if="${#lists.isEmpty(donationFund)}">Không có quyên góp nào.</div>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
 </section>
 </body>
 </html>
