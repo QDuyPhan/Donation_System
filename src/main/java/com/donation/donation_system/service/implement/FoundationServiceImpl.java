@@ -8,6 +8,7 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FoundationServiceImpl implements FoundationService {
@@ -20,7 +21,12 @@ public class FoundationServiceImpl implements FoundationService {
     }
 
     @Override
-    public List<Foundation> getAllFoundation() {
+    public Foundation save(Foundation foundation) {
+        return null;
+    }
+
+    @Override
+    public List<Foundation> GetAll() {
         return foundationRepository.findAll();
     }
 
@@ -38,5 +44,15 @@ public class FoundationServiceImpl implements FoundationService {
     @Override
     public void DeleteFoundation(Foundation f) {
         foundationRepository.delete(f);
+    }
+
+    @Override
+    public void DeleteById(int id) {
+
+    }
+
+    @Override
+    public Optional<Foundation> findById(int id) {
+        return Optional.empty();
     }
 }

@@ -1,0 +1,14 @@
+@charset "UTF-8";
+main {
+    padding: 12px;
+}
+.content-header {
+    margin-top: 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-align: center;
+}
+
+.content-title-underline {
+    border: 1px solid black;
+    width: 50%;
+}
