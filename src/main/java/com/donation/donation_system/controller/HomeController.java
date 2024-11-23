@@ -1,13 +1,10 @@
 package com.donation.donation_system.controller;
 
 import com.donation.donation_system.model.Category;
-import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.Fund;
-import com.donation.donation_system.model.User;
 import com.donation.donation_system.service.CategoryService;
 import com.donation.donation_system.service.DonationService;
 import com.donation.donation_system.service.FundService;
-import com.donation.donation_system.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +54,12 @@ public class HomeController {
         model.addAttribute("totalDonations", totalDonations);
         model.addAttribute("sumDonations", sumDonations);
         return "index";
+
     }
 
+    @GetMapping("admin/home")
+    public String adminHome(Model model, HttpSession session) {
+        return "admin/home/index";
+    }
 
 }
