@@ -29,54 +29,59 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/Donations/home">
-              <i class="fa-solid fa-house"></i> Trang chủ
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="categoryDropdownList" data-toggle="dropdown" aria-haspopup="true"
-               aria-expanded="false" href="#">
-              <i class="fa-solid fa-layer-group"></i> Danh mục
-            </a>
-            <div class="dropdown-menu" aria-labelledby="categoryDropdownList" style="width: auto">
-              <ul>
-                <li>
-                  <a class="dropdown-item"
-                  >Danh mục</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/foundation}">
-              <i class="fa-solid fa-people-group"></i> Nhà tổ chức
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa-sharp fa-solid fa-address-card"></i> Liên hệ
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa-solid fa-circle-info"></i> Về chúng tôi
-            </a>
-          </li>
-        </ul>
-        <div class="position-absolute end-0 gap-2  d-flex my-2 me-1 my-lg-0 ">
-          <input id="keyword" type="text" class="form-control" placeholder="Tìm kiếm quỹ quyên góp"
-                 aria-label="Recipient's username" aria-describedby="basic-addon2" th:value="${param.keyword}">
-          <div class="input-group-append">
-            <button class="input-group-text" id="basic-addon2">
-              <i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm
-            </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/Donations/home}">
+            <i class="fa-solid fa-house"></i> Trang chủ
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="categoryDropdownList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+            <i class="fa-solid fa-layer-group"></i> Danh mục
+          </a>
+          <div class="dropdown-menu" aria-labelledby="categoryDropdownList" style="width: auto">
+            <ul th:each=" categories : ${categories}" >
+              <li >
+                <a class="dropdown-item" th:href="@{/Donations/category(id=${categories.id})}" th:text="${categories.name}"
+                ></a>
+              </li>
+            </ul>
           </div>
-        </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/Donations/foundation}">
+            <i class="fa-solid fa-people-group"></i> Nhà tổ chức
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fa-sharp fa-solid fa-address-card"></i> Liên hệ
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fa-solid fa-circle-info"></i> Về chúng tôi
+          </a>
+        </li>
+      </ul>
+      <div class="position-absolute end-0  d-flex my-2 me-1 my-lg-0">
+        <!-- Thêm form để gửi từ khóa -->
+        <form th:action="@{/Donations/search}" method="get" class="d-flex gap-2">
+          <!-- Input chứa từ khóa -->
+          <input id="keyword" name="keyword" type="text" class="form-control"
+                 placeholder="Tìm kiếm quỹ quyên góp"
+                 aria-label="Recipient's username" aria-describedby="basic-addon2"
+                 th:value="${param.keyword}">
+          <!-- Nút tìm kiếm -->
+          <button type="submit" class="input-group-text" id="basic-addon2">
+            <i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm
+          </button>
+        </form>
       </div>
-    </nav>
+
+    </div>
+  </nav>
   </div>
 </header>
 

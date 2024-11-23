@@ -8,38 +8,37 @@ import com.donation.donation_system.service.FundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/Donations")
-public class CategoryController {
+public class SearchController {
 
     private final FundService fundService;
     private final DonationService donationService;
     private final CategoryService categoryService;
     @Autowired
-    public CategoryController(FundService fundService,DonationService donationService,CategoryService categoryService) {
+    public SearchController(FundService fundService,DonationService donationService,CategoryService categoryService) {
         this.fundService = fundService;
         this.donationService = donationService;
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/category")
-    public String showCategory(@RequestParam(name = "id", required = false, defaultValue = "")  int id, Model model) {
 
-        List<Fund> fundList = fundService.getByCategoryId(id);
-        Optional<Category> categoryOptional = categoryService.FindById(id);
+    @GetMapping("/search")
+    public String search(@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword, Model model) {
+        model.addAttribute("content", "/pages/SearchResult");
+        model.addAttribute("keyword", keyword);
         List<Category> categories = categoryService.FindAll();
         Map<Integer, Integer> totalDonations = new HashMap<>();
         Map<Integer, Integer> sumDonations = new HashMap<>();
+        // Thực hiện logic tìm kiếm (gọi service, query database)
+        List<Fund> fundList = fundService.getAllBySearch(keyword);
+
         for (Fund fund : fundList) {
 
             Integer  total = donationService.findTotalDonationsByFund(fund.getId());
@@ -54,16 +53,19 @@ public class CategoryController {
             fund.setPercentAchieved(percentAchieved);
         }
         model.addAttribute("categories", categories);
-        model.addAttribute("fundList", fundList);
-        if (categoryOptional.isPresent()) {
-            model.addAttribute("category", categoryOptional.get());
-        } else {
-            model.addAttribute("category", null);
-        }
-        model.addAttribute("totalDonations", totalDonations);
         model.addAttribute("sumDonations", sumDonations);
-        model.addAttribute("content", "/pages/SearchCategory");
-        return "index";
+        model.addAttribute("totalDonations", totalDonations);
+        model.addAttribute("fundList", fundList);
 
+
+        return "index";
+    }
+
+    @GetMapping("/searchTest")
+    @ResponseBody
+    public List<Fund> getAllBySearch(@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword) {
+        return fundService.getAllBySearch(keyword);
     }
 }
+
+
