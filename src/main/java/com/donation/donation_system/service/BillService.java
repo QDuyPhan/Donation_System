@@ -1,4 +1,7 @@
 package com.donation.donation_system.service;
 
-public class BillService {
+import org.springframework.stereotype.Service;
+
+@Service
+public interface BillService {
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{index}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div th:fragment="content" class="container mt-3 w-100">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/Donations/home"><i
+        class="fa-solid fa-house"></i></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Lịch sử quyên góp
+      </li>
+    </ol>
+  </nav>
+
+  <table
+    class="table table-bordered table-striped table-responsive-md"
+  >
+    <thead class="table-dark">
+    <tr>
+      <th scope="col">Tên quỹ quyên góp</th>
+      <th scope="col">Tiền quyên góp</th>
+      <th scope="col">Lời nhắn</th>
+      <th scope="col">Thời gian</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item: ${donationList}">
+      <td style="vertical-align: middle"  th:text="${item.fund.name}"></td>
+      <td style="vertical-align: middle"  th:text="${item.donationAmount}"></td>
+      <td style="vertical-align: middle"  th:text="${item.donationMessage}"></td>
+      <td style="vertical-align: middle"  th:text="${item.createdDate}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <th:block th:each="page : ${#numbers.sequence(1, totalPages)}">
+        <li th:class="${page == param.page} ? 'page-item active' : 'page-item'">
+          <a class="page-link" th:href="@{'/donationhistory?page=' + ${page}}">
+            <span th:text="${page}">Page</span>
+          </a>
+        </li>
+      </th:block>
+    </ul>
+  </nav>
+</div>
+</body>
+</html>
