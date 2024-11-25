@@ -20,12 +20,12 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `donations`
 --
-
 -- --------------------------------------------------------
 
 --
 -- Cấu trúc bảng cho bảng `bills`
 --
+
 
 CREATE TABLE `bills` (
   `id` int(11) NOT NULL,
