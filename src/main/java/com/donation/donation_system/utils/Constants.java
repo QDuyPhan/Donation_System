@@ -19,5 +19,7 @@ public class Constants {
     public static final String MAIL_TEMPLATE_PREFIX = "/templates/";
     public static final String MAIL_TEMPLATE_SUFFIX = ".html";
     public static final String UTF_8 = "UTF-8";
+    public static final String STATUS_ENABLE ="Enable";
+    public static final String STATUS_DISABLE="Disable";
 
 }
