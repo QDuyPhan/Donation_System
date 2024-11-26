@@ -21,14 +21,11 @@ import java.util.Map;
 public class FoundationController {
 
     private final FoundationService foundationService;
-    private final FundService fundService;
-    private final DonationService donationService;
     private final CategoryService categoryService;
     @Autowired
-    public FoundationController(FoundationService foundationService, FundService fundService, DonationService donationService, CategoryService categoryService) {
+    public FoundationController(FoundationService foundationService, CategoryService categoryService) {
         this.foundationService = foundationService;
-        this.fundService = fundService;
-        this.donationService = donationService;
+
         this.categoryService = categoryService;
     }
 
