@@ -5,6 +5,7 @@ import com.donation.donation_system.model.Fund;
 import com.donation.donation_system.service.CategoryService;
 import com.donation.donation_system.service.DonationService;
 import com.donation.donation_system.service.FundService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,5 +66,10 @@ public class CategoryController {
         model.addAttribute("content", "/pages/SearchCategory");
         return "index";
 
+    }
+
+    @GetMapping("admin/category")
+    public String adminHome(Model model, HttpSession session) {
+        return "admin/category";
     }
 }

@@ -119,4 +119,39 @@ public class UserController {
         model.addAttribute("totalPages", totalPages);
         return "user/donationhistory";
     }
+
+    @PostMapping
+    @ResponseBody
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    public User updateUser(@PathVariable int id, @RequestBody User user) {
+        return userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public void deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+    }
+
+    @PutMapping("/lock/{id}")
+    @ResponseBody
+    public User lockOrUnlockUser(@PathVariable int id, @RequestParam String status) {
+        return userService.lockOrUnlockUser(id, status);
+    }
+
+    @GetMapping
+    @ResponseBody
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+    @GetMapping("/search")
+    @ResponseBody
+    public User findByUsername(@RequestParam String username) {
+        return userService.findByUsername(username);
+    }
 }

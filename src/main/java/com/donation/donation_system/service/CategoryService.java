@@ -11,4 +11,8 @@ public interface CategoryService {
 
     List<Category> FindAll();
     Optional<Category> FindById(int id);
+    Category createCategory(Category category);
+    Category updateCategory(int id, Category category);
+    void deleteCategory(int id);
+    List<Category> searchCategories(String name);
 }

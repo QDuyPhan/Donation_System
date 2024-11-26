@@ -33,7 +33,7 @@
 </head>
 <body>
 <div th:replace="layout/client-header :: header"></div>
-<main th:replace="~{${content}::content}"></main>
+<div th:replace="~{${content} :: content}"></div>
 <div th:replace="layout/client-footer :: footer"></div>
 </body>
 </html>

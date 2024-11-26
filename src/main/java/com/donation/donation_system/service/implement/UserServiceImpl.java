@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import static com.donation.donation_system.api.StringAPI.encodePassword;
 import static com.donation.donation_system.utils.Constants.*;
@@ -155,5 +156,62 @@ public class UserServiceImpl implements UserService {
             return result;
         }
         return 0;
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<User> findById(int id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+    @Override
+    public User updateUser(int id, User user) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setFullName(user.getFullName()); // Sửa lỗi đúng với thuộc tính fullName
+        existingUser.setEmail(user.getEmail());
+        existingUser.setSdt(user.getSdt());
+        existingUser.setDiachi(user.getDiachi());
+        existingUser.setStatus(user.getStatus());
+
+        return userRepository.save(existingUser);
+    }
+
+
+    @Override
+    public void deleteUser(int id) {
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("User not found");
+        }
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<User> searchUsers(String keyword) {
+        return userRepository.findByUsernameContainingOrFullnameContaining(keyword, keyword);
+    }
+
+    @Override
+    public User lockOrUnlockUser(int id, String status) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setStatus(status);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
