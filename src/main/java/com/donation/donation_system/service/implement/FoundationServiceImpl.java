@@ -1,10 +1,9 @@
 package com.donation.donation_system.service.implement;
 
+import com.donation.donation_system.service.FoundationService;
 import com.donation.donation_system.model.Foundation;
 import com.donation.donation_system.repository.FoundationRepository;
-import com.donation.donation_system.service.FoundationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,47 +11,35 @@ import java.util.Optional;
 
 @Service
 public class FoundationServiceImpl implements FoundationService {
+
+    private final FoundationRepository foundationRepository;
+
     @Autowired
-    private FoundationRepository foundationRepository;
-
-    @Override
-    public Foundation getFoundation(int foudation_id) {
-        return foundationRepository.getFoundationById(foudation_id);
+    public FoundationServiceImpl(FoundationRepository foundationRepository) {
+        this.foundationRepository = foundationRepository;
     }
 
     @Override
-    public Foundation save(Foundation foundation) {
-        return null;
-    }
-
-    @Override
-    public List<Foundation> GetAll() {
+    public List<Foundation> findAll() {
+        // Lấy danh sách tất cả các Foundation từ cơ sở dữ liệu
         return foundationRepository.findAll();
     }
 
     @Override
-    public List<Foundation> searchList(String keyword) {
-        return foundationRepository.findByName(keyword);
-    }
-
-    @Override
-    public void SaveFoundation(Foundation f)
-    {
-        foundationRepository.save(f);
-    }
-
-    @Override
-    public void DeleteFoundation(Foundation f) {
-        foundationRepository.delete(f);
-    }
-
-    @Override
-    public void DeleteById(int id) {
-
-    }
-
-    @Override
     public Optional<Foundation> findById(int id) {
-        return Optional.empty();
+        // Tìm Foundation theo ID
+        return foundationRepository.findById(id);
+    }
+
+    @Override
+    public Foundation save(Foundation foundation) {
+        // Lưu hoặc cập nhật Foundation vào cơ sở dữ liệu
+        return foundationRepository.save(foundation);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        // Xóa Foundation theo ID
+        foundationRepository.deleteById(id);
     }
 }

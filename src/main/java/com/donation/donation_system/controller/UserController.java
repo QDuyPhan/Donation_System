@@ -1,5 +1,6 @@
 package com.donation.donation_system.controller;
 
+import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.User;
 import com.donation.donation_system.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.List;
 
 import static com.donation.donation_system.api.StringAPI.encodePassword;
+import static com.donation.donation_system.utils.Constants.TOTAL_ITEMS_PER_PAGE;
 
 @Controller
 @RequestMapping("/Donations")
@@ -28,6 +31,9 @@ public class UserController {
     @GetMapping("/user-info")
     public String userinfo(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "login";
+        }
         model.addAttribute("user", user);
         return "user/userinfo";
     }
@@ -53,6 +59,9 @@ public class UserController {
     @GetMapping("/password")
     public String changepassword(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "login";
+        }
         model.addAttribute("user", user);
         return "user/changepassword";
     }
@@ -66,17 +75,21 @@ public class UserController {
                                         Model model, HttpSession session) throws NoSuchAlgorithmException, SQLException, ClassNotFoundException {
         user = (User) session.getAttribute("user");
         String message = "";
+        String error = "";
         if (!user.getPassword().equals(encodePassword(oldpassword))) {
-            message = "old password is incorrect!";
-            return "redirect:/user/changepassword?error=" + message;
+            error = "old password is incorrect!";
+            model.addAttribute("error", error);
+            return "user/changepassword";
         }
         if (!newpassword.equals(confirmpassword)) {
-            message = "confirm password is incorrect!";
-            return "redirect:/user/changepassword?error=" + message;
+            error = "confirm password is incorrect!";
+            model.addAttribute("error", error);
+            return "user/changepassword";
         }
         if (newpassword.equals(oldpassword)) {
-            message = "newpassword is the same!";
-            return "redirect:/user/changepassword?error=" + message;
+            error = "newpassword is the same!";
+            model.addAttribute("error", error);
+            return "user/changepassword";
         }
         boolean result = userService.updatePassword(newpassword, username);
         if (result) {
@@ -86,5 +99,24 @@ public class UserController {
         }
         model.addAttribute("message", message);
         return "user/changepassword";
+    }
+
+    @GetMapping("/donationhistory")
+    public String donationhistory(Model model, HttpSession session) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+        User user = (User) session.getAttribute("user");
+        int page = 1;
+        if (user == null) {
+            return "login";
+        }
+
+        List<Donation> donationList = userService.getPageDonationListByUser(page, user.getId());
+        System.out.println("Donation List:" + donationList);
+        System.out.println("Donation List by user :" + donationList.size());
+        int totalItems = userService.getTotalDonationByUser(user.getId());
+        int totalPages = (int) Math.ceil((double) totalItems / TOTAL_ITEMS_PER_PAGE);
+
+        model.addAttribute("donationList", donationList);
+        model.addAttribute("totalPages", totalPages);
+        return "user/donationhistory";
     }
 }

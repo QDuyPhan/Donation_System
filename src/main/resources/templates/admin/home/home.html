@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/home/index}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+      body {
+          font-family: 'Roboto Condensed', sans-serif;;
+      }
+
+      #content {
+          position: relative;
+          background-image: url("/images/admin-background.jpg");
+          height: 700px;
+          width: 100%;
+          background-size: cover;
+          color: white;
+          padding: 20px;
+      }
+  </style>
+</head>
+<body>
+<div id="content" th:fragment="content">
+  <h3>Chào mừng đến với website quản lý dự án từ thiện</h3>
+  <p>Chọn chức năng từ menu để tiếp tục.</p>
+</div>
+</body>
+</html>

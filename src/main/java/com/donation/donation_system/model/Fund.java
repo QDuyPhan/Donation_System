@@ -1,9 +1,7 @@
 package com.donation.donation_system.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
@@ -51,4 +49,10 @@ public class Fund {
     @ManyToOne
     @JoinColumn(name = "foundation_id", nullable = true) // Foreign key to Foundation
     private Foundation foundation;
+
+    @Setter
+    @Getter
+    @Transient
+    private double percentAchieved;
+
 }

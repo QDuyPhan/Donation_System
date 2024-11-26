@@ -1,6 +1,7 @@
 package com.donation.donation_system.service.implement;
 
 import com.donation.donation_system.api.StringAPI;
+import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.User;
 import com.donation.donation_system.repository.UserRepository;
 import com.donation.donation_system.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.donation.donation_system.api.StringAPI.encodePassword;
 import static com.donation.donation_system.utils.Constants.*;
@@ -138,5 +140,20 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Donation> getPageDonationListByUser(int page, int userId) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        int offset = (page - 1) * TOTAL_ITEMS_PER_PAGE;
+        return userRepository.getPageDonationListByUser(userId, TOTAL_ITEMS_PER_PAGE, offset);
+    }
+
+    @Override
+    public int getTotalDonationByUser(int id) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        int result = userRepository.getTotalDonationByUser(id);
+        if (result != 0) {
+            return result;
+        }
+        return 0;
     }
 }

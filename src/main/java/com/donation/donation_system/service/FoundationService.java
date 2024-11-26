@@ -6,16 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FoundationService {
-    Foundation getFoundation(int foundation_id);
-    Foundation save(Foundation foundation);
-    List<Foundation> GetAll();
-
-    List<Foundation> searchList(String keyword);
-
-    void SaveFoundation(Foundation f);
-
-    void DeleteFoundation(Foundation f);
-    void DeleteById(int id);
+    List<Foundation> findAll();
     Optional<Foundation> findById(int id);
+    Foundation save(Foundation foundation);
+    void deleteById(int id);
 }
-
