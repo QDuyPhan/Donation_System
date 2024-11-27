@@ -197,10 +197,6 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    @Override
-    public List<User> searchUsers(String keyword) {
-        return userRepository.findByUsernameContainingOrFullnameContaining(keyword, keyword);
-    }
 
     @Override
     public User lockOrUnlockUser(int id, String status) {

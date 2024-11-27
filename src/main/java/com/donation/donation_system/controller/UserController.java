@@ -120,36 +120,36 @@ public class UserController {
         return "user/donationhistory";
     }
 
-    @PostMapping
+    @PostMapping("admin/user")
     @ResponseBody
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("admin/user/update/{id}")
     @ResponseBody
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("admin/user/update//{id}")
     @ResponseBody
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
     }
 
-    @PutMapping("/lock/{id}")
+    @PutMapping("admin/user/lock/{id}")
     @ResponseBody
     public User lockOrUnlockUser(@PathVariable int id, @RequestParam String status) {
         return userService.lockOrUnlockUser(id, status);
     }
 
-    @GetMapping
+    @GetMapping("admin/user")
     @ResponseBody
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-    @GetMapping("/search")
+    @GetMapping("admin/user/search")
     @ResponseBody
     public User findByUsername(@RequestParam String username) {
         return userService.findByUsername(username);

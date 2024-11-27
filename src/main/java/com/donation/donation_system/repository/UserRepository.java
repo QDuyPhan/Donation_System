@@ -40,6 +40,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "select count(*) from Donation where id = :id", nativeQuery = true)
     int getTotalDonationByUser(int id);
 
-    List<User> findByStatus(String status);
-    List<User> findByUsernameContainingOrFullnameContaining(String username, String fullname);
 }

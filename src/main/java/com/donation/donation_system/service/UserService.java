@@ -42,7 +42,6 @@ public interface UserService {
     User createUser(User user);
     User updateUser(int id, User user);
     void deleteUser(int id);
-    List<User> searchUsers(String keyword);
     User lockOrUnlockUser(int id, String status);
     List<User> getAllUsers();
 }
