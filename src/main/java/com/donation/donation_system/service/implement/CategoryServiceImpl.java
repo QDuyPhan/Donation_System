@@ -45,9 +45,9 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAllByNameOrID(query, pageable);
     }
 
-//    @Override
-//    public Category findById(int id) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-//        return categoryRepository.findById(id);
-//    }
+    @Override
+    public Category save(Category category) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return categoryRepository.save(category);
+    }
 
 }

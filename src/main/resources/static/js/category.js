@@ -9,7 +9,7 @@ $(document).ready(function () {
     });
     $("#btn-Add").on("click", function () {
         var pathS = window.location.pathname.split("/");
-        window.location.replace("/" + pathS[1] + "/admin/category?action=add");
+        window.location.replace("/" + pathS[1] + "/admin/category/add");
     })
     $(".btn-edit").on("click", function () {
         var pathS = window.location.pathname.split("/");
