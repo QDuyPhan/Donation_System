@@ -3,9 +3,14 @@ package com.donation.donation_system.service.implement;
 import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.repository.DonationRepository;
 import com.donation.donation_system.service.DonationService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class DonationServiceImpl implements DonationService {
@@ -35,6 +40,13 @@ public class DonationServiceImpl implements DonationService {
     @Override
     public List<Donation> findDonationById(int id) {
         return donationRepository.findDonationByFund(id);
+    }
+
+    @Override
+    public Page<Donation> getPage(String id, String username, String fundName, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+
+//        return donationRepository.findByIdContainingAndUser_UsernameContainingAndFund_NameContaining(id, username, fundName, pageable);
+        return donationRepository.getPage(id, username, fundName, pageable);
     }
 
 }

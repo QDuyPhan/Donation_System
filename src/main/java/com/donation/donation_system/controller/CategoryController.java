@@ -73,24 +73,6 @@ public class CategoryController {
                                     @RequestParam(required = false, value = "action", defaultValue = "") String action
     )
             throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
-
-//        Optional<Category> category = categoryService.FindById(Integer.parseInt(id));
-        if (action != null && action.equals("add")) {
-            List<String> statusList = Arrays.asList("Enable", "Disable");
-            model.addAttribute("statusList", statusList);
-            model.addAttribute("action", action);
-            return "admin/category/category-form";
-        } else if (action != null && action.equals("edit")) {
-            Optional<Category> category = categoryService.FindById(Integer.parseInt(id));
-            if (category.isPresent())
-                model.addAttribute("category", category.get());
-            else
-                model.addAttribute("category", null);
-            List<String> statusList = Arrays.asList("Enable", "Disable");
-            model.addAttribute("statusList", statusList);
-            model.addAttribute("action", action);
-            return "admin/category/category-form";
-        }
         if (id == null) id = "";
         if (name == null) name = "";
         Pageable pageable = PageRequest.of(page, TOTAL_ITEMS_PER_PAGE);
@@ -108,19 +90,38 @@ public class CategoryController {
         return "admin/category/category";
     }
 
-    @PostMapping("/admin/category")
-    public String processCategory(@ModelAttribute("category") Category category,
-                                  @RequestParam(required = false, value = "action", defaultValue = "") String action,
-                                  @RequestParam("id") String id,
-                                  @RequestParam("name") String name,
-                                  @RequestParam("description") String description,
-                                  @RequestParam("status") String status) {
-        if (action != null && action.equals("add")) {
-            System.out.println("id" + id);
-            System.out.println("name" + name);
-            System.out.println("description" + description);
-            System.out.println("status" + status);
-        }
-        return "admin/category/category";
+    @GetMapping("/admin/category/add")
+    public String showCategoryAdminAddForm(Model model) {
+        Category category = new Category();
+        model.addAttribute("category", category);
+        List<String> statusList = Arrays.asList("Enable", "Disable");
+        model.addAttribute("statusList", statusList);
+        return "admin/category/category-form-add";
+    }
+
+    @PostMapping("/admin/category/add")
+    public String processCategory(@ModelAttribute("category") Category category) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+        String error = "Helloo";
+        String message = "";
+        System.out.println("Name: " + category.getName());
+        System.out.println("Description: " + category.getDescription());
+        System.out.println("Status: " + category.getStatus());
+//        if (category.getName().isEmpty()) {
+//            error = "Category name cannot be empty";
+//            return "redirect:/admin/category/add?error=" + error;
+//        }
+//        if (category.getDescription().isEmpty()) {
+//            error = "Category description cannot be empty";
+//            return "redirect:/admin/category/add?error=" + error;
+//        }
+//        Category result = categoryService.save(category);
+//        if (result != null) {
+//            message = "Category added successfully";
+//            return "redirect:/admin/category/add?message=" + message;
+//        } else {
+//            message = "Category added failed";
+//            return "redirect:/admin/category/add?message=" + message;
+//        }
+        return "redirect:/admin/category/add";
     }
 }
