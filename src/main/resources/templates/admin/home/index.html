@@ -15,7 +15,6 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
   />
-  <meta charset="UTF-8">
   <!-- Tự động chuyển hướng đến /home ngay lập tức -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
@@ -26,10 +25,23 @@
           crossorigin="anonymous"></script>
   <!-- jQuery (yêu cầu cho Bootstrap's JavaScript) -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <!-- Bootstrap JavaScript -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" th:href="@{/js/admin-header.js}">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"
+    rel="stylesheet">
+  <link th:href="@{/css/body-content.css}" rel="stylesheet" type="text/css"/>
+  <script th:src="@{/js/admin-header.js}"></script>
+  <script th:src="@{/js/category.js}"></script>
   <meta charset="UTF-8">
   <style>
       .dropdown-menu {
@@ -45,9 +57,64 @@
   <title>Home</title>
 </head>
 <body>
-<div th:replace="admin/layout/admin-header :: header"></div>
-<main th:replace="~{${content}::content}">
-</main>
-<div th:replace="admin/layout/admin-footer :: footer"></div>
+<header
+  class="d-md-flex flex-md-row justify-content-between align-items-center mx-md-5 ">
+  <img th:src="@{/images/clientlogo.png}" alt="" style="width: 300px">
+  <h1 style="color: #42727c;" class="text-md-center">MANAGEMENT SYSTEM</h1>
+  <div th:unless="${session.user}">
+    <a th:href="@{/Donations/login}">Đăng nhập</a>
+  </div>
+  <div class="dropdown" th:if="${session.user}">
+    <button class="btn dropdown-toggle" type="button"
+            id="userDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+      <img th:src="@{/images/icon1.png}" style="width: 50px" alt="">
+      <span>Welcome <b th:text="${session.user.username}"></b></span>
+    </button>
+    <div class=" dropdown-menu" aria-labelledby="userDropdownMenu">
+      <a class="dropdown-item" style="width: 100%;" th:href="@{#}">Thay đổi mật
+        khẩu</a>
+      <a class="dropdown-item" th:href="@{/Donations/login(logout)}">Đăng xuất</a>
+    </div>
+  </div>
+
+</header>
+<nav id="admin-header-nav"
+     class="navbar navbar-expand-lg navbar-dark bg-info p-2">
+  <a class="navbar-brand" href="#">MENU</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto ">
+      <li class="nav-item "><a class="nav-link"
+                               href="/Donations/admin/home"><i
+        class="fa-solid fa-house"></i> Home </a></li>
+      <li class="nav-item"><a class="nav-link"
+                              href="/Donations/admin/category"><i
+        class="fa-solid fa-layer-group"></i></i> Danh mục</a></li>
+      <li class="nav-item"><a class="nav-link"
+                              href="/Donations1/admin/foundation"><i
+        class="fa-solid fa-people-group"></i> Nhà tổ chức</a></li>
+      <li class="nav-item"><a class="nav-link "
+                              href="#"><i
+        class="fa-solid fa-sack-dollar"></i> Quỹ quyên góp</a></li>
+      <li class="nav-item"><a class="nav-link "
+                              href="#"><i
+        class="fa-solid fa-hand-holding-heart"></i> Lượt Quyên Góp</a></li>
+      <li class="nav-item"><a class="nav-link "
+                              href="#"> <i
+        class="fa-solid fa-user"></i> Tài khoản
+      </a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="" th:replace="~{${contentAdmin}::contentAdmin}">
+</div>
 </body>
 </html>

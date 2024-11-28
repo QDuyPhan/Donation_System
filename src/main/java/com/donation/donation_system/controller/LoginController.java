@@ -100,9 +100,10 @@ public class LoginController {
             }
         }
         if (user.getRole() == 1) {
-            return "";
+            model.addAttribute("contentAdmin", "/admin/home/home");
+            return "admin/home/index";
         } else {
-            model.addAttribute("content", "/pages/home"); // Nạp fragment home
+            model.addAttribute("content", "/pages/home");
             List<Fund> funds = fundService.FindAll();
             List<Category> categories = categoryService.FindAll();
             Map<Integer, Integer> totalDonations = new HashMap<>();

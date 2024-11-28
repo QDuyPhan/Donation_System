@@ -19,4 +19,6 @@ public interface FundRepository extends JpaRepository<Fund, Integer> {
     @Query(value = "SELECT f FROM Fund f WHERE f.category.id = :categoryId")
     List<Fund> getByCategoryId(@Param("categoryId") int categoryId);
 
+    @Query(value = "SELECT f FROM Fund f WHERE f.foundation.id = :foundationId")
+    List<Fund> getByFoundationId(@Param("foundationId") int foundationId);
 }

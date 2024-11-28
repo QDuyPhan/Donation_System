@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{admin/home/index}" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+  />
+  <meta charset="UTF-8">
+  <title>Category</title>
+</head>
+<body>
+<div id="content" th:fragment="contentAdmin">
+  <div id="content-header">
+    <h4 class="m-10 d-block">Quản Lý Danh Mục</h4>
+    <div id="table-filter" class="d-flex justify-content-end mb-2">
+      <input id="filter-id" type="text" placeholder="Search by ID..."
+             class="form-control h-50 d-inline-block w-25 mx-1" th:value="${id}">
+      <input
+        id="filter-name" type="search" placeholder="Search by name..."
+        class="form-control h-50 d-inline-block w-25 mx-1" th:value="${name}">
+      <button id="btn-Search"
+              class="btn btn-success btn-sm mx-1">
+        <i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm
+      </button>
+      <button id="btn-Add" type="button"
+              class="btn btn-primary btn-sm mx-1 d-block">
+        <i class="fa-solid fa-plus"></i> Thêm mới
+      </button>
+    </div>
+  </div>
+
+  <table
+    class="table table-bordered table-striped table-responsive-md"
+  >
+    <thead class="table-dark">
+    <tr>
+      <th>
+        <button type="button" class="btn btn-danger btn-sm "
+                id="btn-SelectedDelete">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </th>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Status</th>
+      <th scope="col">Function</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${categoryList}">
+      <td style="width: 30px; vertical-align: middle"><input type="checkbox"></td>
+      <td class="category-id" style="vertical-align: middle" th:text="${item.id}"></td>
+      <td class="category-name" style="vertical-align: middle" th:text="${item.name}"></td>
+      <td class="category-description" style="vertical-align: middle" th:text="${item.description}"></td>
+      <td class="category-status" style="vertical-align: middle">
+        <span th:if="${item.status == 'Enable'}" class="badge text-bg-success">Enable</span>
+        <span th:if="${item.status == 'Disable'}" class="badge text-bg-warning">Disable</span>
+      </td>
+      <td>
+        <button type="button" class="btn btn-warning btn-sm btn-edit">Edit</button>
+        <button type="button" class="btn btn-danger btn-sm btn-delete">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+        <div th:if="${i == currentPage}">
+          <div th:if="${id != null or name != null}">
+            <li class="page-item active"><a class="page-link"
+                                            th:href="@{/Donations/admin/category(page=${i}, id=${id}, name=${name})}"
+                                            th:text="${i}"></a></li>
+          </div>
+          <div th:unless="${id != null or name != null}">
+            <li class="page-item active"><a class="page-link"
+                                            th:href="@{/Donations/admin/category(page=${i})}"
+                                            th:text="${i}"></a></li>
+          </div>
+        </div>
+        <div th:unless="${i == currentPage}">
+          <div th:if="${id != null or name != null}">
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{/Donations/admin/category(page=${i}, id=${id}, name=${name})}"
+                                     th:text="${i}"></a></li>
+          </div>
+          <div th:unless="${id != null or name != null }">
+            <li class="page-item"><a class="page-link"
+                                     th:href="@{/Donations/admin/category(page=${i})}"
+                                     th:text="${i}"></a></li>
+          </div>
+        </div>
+      </th:block>
+    </ul>
+  </nav>
+</div>
+</body>
+</html>

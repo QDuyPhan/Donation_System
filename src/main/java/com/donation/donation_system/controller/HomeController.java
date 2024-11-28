@@ -59,6 +59,7 @@ public class HomeController {
 
     @GetMapping("admin/home")
     public String adminHome(Model model, HttpSession session) {
+        model.addAttribute("contentAdmin", "/admin/home/home");
         return "admin/home/index";
     }
 
