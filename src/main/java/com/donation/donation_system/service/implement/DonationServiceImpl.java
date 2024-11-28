@@ -49,4 +49,9 @@ public class DonationServiceImpl implements DonationService {
         return donationRepository.getPage(id, username, fundName, pageable);
     }
 
+    @Override
+    public Donation save(Donation donation) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return donationRepository.save(donation);
+    }
+
 }

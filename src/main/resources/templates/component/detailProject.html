@@ -79,7 +79,7 @@
                       <a th:href="@{/Donation/login}" class="w-100">
                         <button class="btn w-100 fs-6" id="btn-LoginToDonate"
                                 style="background-color: #76c5f0; color: white;">
-                         Đăng nhập để quyên góp
+                          Đăng nhập để quyên góp
                         </button>
                       </a>
                     </div>
@@ -96,15 +96,14 @@
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Thông
-                                tin quyên góp</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Thông tin quyên góp</h5>
                               <button type="button" class="close" data-dismiss="modal"
                                       aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
 
-                            <form id="frm-SendDonate" method="post">
+                            <form id="frm-SendDonate" method="post" th:action="@{/Donations/pay}">
                               <div class="modal-body">
                                 <div class="input-group mb-3">
                                   <div class="input-group-prepend">
@@ -137,8 +136,8 @@
 
                                 <div class="input-group mb-3">
                                   <div class="input-group-prepend">
-																<span class="input-group-text" id="message">Lời
-																	nhắn</span>
+                                    <span class="input-group-text"
+                                          id="message">Lời nhắn</span>
                                   </div>
                                   <input type="text" class="form-control"
                                          id="donation-message" name="donation-message"

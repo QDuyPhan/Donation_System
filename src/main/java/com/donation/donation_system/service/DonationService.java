@@ -18,4 +18,6 @@ public interface DonationService {
     List<Donation> findDonationById(int id);
 
     Page<Donation> getPage(String id, String username, String fundName, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
+    Donation save(Donation donation) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 }

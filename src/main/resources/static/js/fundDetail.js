@@ -14,10 +14,10 @@ function validateDonateForm() {
     var regexNumber = /^\d+$/;
     if (donationAmount == "") {
         isValidate = false;
-        $("#donation-amount").parent().siblings(".form-message").text("This field is required!")
+        $("#donation-amount").parent().siblings(".form-message").text("Vui lòng nhập số tiền cần quyên góp!")
     } else if (!regexNumber.test(donationAmount)) {
         isValidate = false;
-        $("#donation-amount").parent().siblings(".form-message").text("Donation amount must be number!");
+        $("#donation-amount").parent().siblings(".form-message").text("Chỉ được nhập số ở ô tiền quyên góp!");
     } else {
         $("#donation-amount").parent().siblings(".form-message").text("");
     }
