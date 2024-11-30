@@ -38,6 +38,11 @@
                     ...
                   </div>
                 </div>
+                <div th:if="${param.logout}">
+                  <div class="alert alert-info">
+                    You have been logged out
+                  </div>
+                </div>
                 <form class="mx-1 mx-md-4" method="post" th:action="@{/Donations/login}"
                       th:object="${user}">
                   <div class="d-flex flex-row align-items-center mb-4">

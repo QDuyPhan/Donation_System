@@ -13,7 +13,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.Map;
 
-import static utils.Constants.*;
+import static com.donation.donation_system.utils.Constants.*;
 
 @Service
 public class ThymeleafServiceImpl implements ThymeleafService {

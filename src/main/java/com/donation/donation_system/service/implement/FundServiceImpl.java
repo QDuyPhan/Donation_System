@@ -18,6 +18,7 @@ public class FundServiceImpl implements FundService {
     public FundServiceImpl(FundRepository fundRepository) {
         this.fundRepository = fundRepository;
     }
+
     @Override
     public List<Fund> FindAll() {
         return fundRepository.findAll();

@@ -3,19 +3,21 @@ package com.donation.donation_system.service.implement;
 import com.donation.donation_system.model.Category;
 import com.donation.donation_system.repository.CategoryRepository;
 import com.donation.donation_system.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository categoryRepository;
-
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<Category> FindAll() {
@@ -26,5 +28,26 @@ public class CategoryServiceImpl implements CategoryService {
     public Optional<Category> FindById(int id) {
         return categoryRepository.findById(id);
     }
+
+    @Override
+    public int getTotalItems(String id, String name) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        int count = categoryRepository.getTotalItems(id, name);
+        return count;
+    }
+
+    @Override
+    public Page<Category> getPage(String id, String name, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return categoryRepository.getPage(id, name, pageable);
+    }
+
+    @Override
+    public Page<Category> findAllByNameOrID(String query, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return categoryRepository.findAllByNameOrID(query, pageable);
+    }
+
+//    @Override
+//    public Category findById(int id) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+//        return categoryRepository.findById(id);
+//    }
 
 }

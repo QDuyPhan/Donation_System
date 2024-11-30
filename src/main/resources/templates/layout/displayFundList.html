@@ -2,22 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" th:href="@{/client/css/displayFundCard.css}">
+  <link rel="stylesheet" th:href="@{/css/displayFundCard.css}">
   <title>Danh sách quỹ</title>
 </head>
-<body >
-<div  th:fragment="displayFundListFragment" class="container mt-4">
+<body>
+<div th:fragment="displayFundListFragment" class="container mt-4">
 
   <div class="row" th:if="${fundList != null}">
 
     <!----->
-    <div class="col-md-4" th:each="fund : ${fundList}" >
-      <a  class="text-decoration-none" style="color: black;">
+    <div class="col-md-4" th:each="fund : ${fundList}">
+      <a class="text-decoration-none" style="color: black;">
 
-        <div class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
+        <div
+          class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
           <div class="dn-img d-flex">
             <span class="position-relative w-100" style="display:block; ">
-                <img  alt="Hình ảnh quỹ" class="img-fluid" th:src="${fund.imageUrl}" >
+                <img alt="Hình ảnh quỹ" class="img-fluid" th:src="${fund.imageUrl}">
             </span>
           </div>
           <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
@@ -30,7 +31,8 @@
             </div>
             <div class="dn-detail">
               <div class="dn-money mb-2 d-flex align-items-end">
-                <strong class="item-end d-flex align-items-center text-dark" th:text="${totalDonations[fund.id]} + 'đ/'"></strong>
+                <strong class="item-end d-flex align-items-center text-dark"
+                        th:text="${totalDonations[fund.id]} + 'đ/'"></strong>
                 <span class="pl-2 text-xs text-muted" th:text="${fund.expectedResult} + 'đ'"></span>
               </div>
 

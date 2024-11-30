@@ -1,6 +1,7 @@
 package com.donation.donation_system.service.implement;
 
 import com.donation.donation_system.api.StringAPI;
+import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.User;
 import com.donation.donation_system.repository.UserRepository;
 import com.donation.donation_system.service.UserService;
@@ -11,8 +12,11 @@ import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
-import static utils.Constants.*;
+import static com.donation.donation_system.api.StringAPI.encodePassword;
+import static com.donation.donation_system.utils.Constants.*;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -59,8 +63,7 @@ public class UserServiceImpl implements UserService {
             int result = userRepository.activate(username, id);
             if (result == 1) {
                 boolean updateResult = updateStatusAfterActivated(Integer.parseInt(id));
-                if (updateResult)
-                    return true;
+                if (updateResult) return true;
                 return false;
             }
             return true;
@@ -75,8 +78,7 @@ public class UserServiceImpl implements UserService {
     public boolean updateStatusAfterActivated(int id) {
         try {
             int result = userRepository.updateStatusAfterActivated(STATUS_ACTIVE, id);
-            if (result != 0)
-                return true;
+            if (result != 0) return true;
             return false;
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,8 +89,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean check(String username, String password) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         int result = userRepository.check(username, StringAPI.encodePassword(password));
-        if (result > 0)
-            return true;
+        if (result > 0) return true;
         return false;
     }
 
@@ -119,5 +120,40 @@ public class UserServiceImpl implements UserService {
         bindingResults.put("isValidate", true);
         bindingResults.put("user", user);
         return bindingResults;
+    }
+
+    @Override
+    @Transactional
+    public boolean updateUserInfo(String username, String fullname, String email, String sdt, String diachi) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        int result = userRepository.updateUserInfo(username, fullname, email, sdt, diachi);
+        if (result != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    @Transactional
+    public boolean updatePassword(String password, String username) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        int result = userRepository.updatePassword(encodePassword(password), username);
+        if (result != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Donation> getPageDonationListByUser(int page, int userId) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        int offset = (page - 1) * TOTAL_ITEMS_PER_PAGE;
+        return userRepository.getPageDonationListByUser(userId, TOTAL_ITEMS_PER_PAGE, offset);
+    }
+
+    @Override
+    public int getTotalDonationByUser(int id) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        int result = userRepository.getTotalDonationByUser(id);
+        if (result != 0) {
+            return result;
+        }
+        return 0;
     }
 }

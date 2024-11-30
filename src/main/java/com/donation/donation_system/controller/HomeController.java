@@ -1,13 +1,10 @@
 package com.donation.donation_system.controller;
 
 import com.donation.donation_system.model.Category;
-import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.Fund;
-import com.donation.donation_system.model.User;
 import com.donation.donation_system.service.CategoryService;
 import com.donation.donation_system.service.DonationService;
 import com.donation.donation_system.service.FundService;
-import com.donation.donation_system.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,19 +21,16 @@ import java.util.Map;
 @RequestMapping("/Donations")
 public class HomeController {
 
-    private final FundService fundService;
-    private final DonationService donationService;
-    private final CategoryService categoryService;
     @Autowired
-    public HomeController(FundService fundService,DonationService donationService,CategoryService categoryService) {
-        this.fundService = fundService;
-        this.donationService = donationService;
-        this.categoryService = categoryService;
-    }
+    private FundService fundService;
+    @Autowired
+    private DonationService donationService;
+    @Autowired
+    private CategoryService categoryService;
 
 
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
         model.addAttribute("content", "/pages/home"); // Nạp fragment home
         List<Fund> funds = fundService.FindAll();
         List<Category> categories = categoryService.FindAll();
@@ -44,11 +38,11 @@ public class HomeController {
         Map<Integer, Integer> sumDonations = new HashMap<>();
         for (Fund fund : funds) {
 
-           Integer  total = donationService.findTotalDonationsByFund(fund.getId());
-            Integer  sumdonation = donationService.countDonationsByFund(fund.getId());
+            Integer total = donationService.findTotalDonationsByFund(fund.getId());
+            Integer sumdonation = donationService.countDonationsByFund(fund.getId());
             System.out.println("Total donations for fund ID " + fund.getId() + ": " + total);
             totalDonations.put(fund.getId(), total);
-            sumDonations.put(fund.getId(),sumdonation);
+            sumDonations.put(fund.getId(), sumdonation);
             double percentAchieved = 0;
             if (totalDonations.containsKey(fund.getId()) && fund.getExpectedResult() > 0) {
                 percentAchieved = (int) (100.0 * totalDonations.get(fund.getId()) / fund.getExpectedResult());
@@ -60,7 +54,13 @@ public class HomeController {
         model.addAttribute("totalDonations", totalDonations);
         model.addAttribute("sumDonations", sumDonations);
         return "index";
+
     }
 
+    @GetMapping("admin/home")
+    public String adminHome(Model model, HttpSession session) {
+        model.addAttribute("contentAdmin", "/admin/home/home");
+        return "admin/home/index";
+    }
 
 }

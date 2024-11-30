@@ -14,7 +14,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import static utils.Constants.*;
+import static com.donation.donation_system.utils.Constants.MY_EMAIL;
+import static com.donation.donation_system.utils.Constants.STATUS_ACTIVE;
+
 
 @Service
 public class EmailServiceImpl implements EmailService {

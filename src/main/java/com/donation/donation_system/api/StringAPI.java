@@ -1,8 +1,5 @@
 package com.donation.donation_system.api;
 
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-//import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -12,7 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static utils.Constants.*;
+import static com.donation.donation_system.utils.Constants.*;
+
 
 public class StringAPI {
     public static String generateStrongPassword(int length) {
@@ -23,7 +21,7 @@ public class StringAPI {
         // Đảm bảo có ít nhất một ký tự từ mỗi loại
         password.append(getRandomChar(UPPERCASE_CHARS, random));
         password.append(getRandomChar(LOWERCASE_CHARS, random));
-        password.append(getRandomChar(String.valueOf(NUMBERS), random));
+//        password.append(getRandomChar(String.valueOf(NUMBERS), random));
 //        password.append(getRandomChar(SPECIAL_CHARS, random));
 
         // Tạo các ký tự còn lại ngẫu nhiên
