@@ -28,21 +28,16 @@ import java.util.*;
 import static com.donation.donation_system.utils.Constants.TOTAL_ITEMS_PER_PAGE;
 
 @Controller
-@RequestMapping("/Donations1")
+@RequestMapping("Donations")
 public class FoundationController {
 
-    private final FoundationService foundationService;
-    private final FundService fundService;
-    private final DonationService donationService;
-    private final CategoryService categoryService;
-
     @Autowired
-    public FoundationController(FoundationService foundationService, FundService fundService, DonationService donationService,CategoryService categoryService) {
-        this.foundationService = foundationService;
-        this.fundService = fundService;
-        this.donationService = donationService;
-        this.categoryService = categoryService;
-    }
+    private FundService fundService;
+    @Autowired
+    private DonationService donationService;
+    @Autowired
+    private FoundationService foundationService;
+
     @GetMapping("/foundation")
     public String ShowFoundations(@RequestParam(name = "id",required = false,defaultValue = "")int id, Model model)
     {
@@ -77,71 +72,7 @@ public class FoundationController {
         model.addAttribute("content", "/pages/SearchFoundation");
         return "index";
     }
-//    public String showFoundations(Model model) {
-//        List<Foundation> foundations = foundationService.findAll();
-//        model.addAttribute("foundations", foundations);
-//        model.addAttribute("categories", categoryService.FindAll());
-//        model.addAttribute("content", "/pages/FoundationList");
-//        return "index";
-//    }
 
-    // Hiển thị chi tiết Foundation
-//    @GetMapping("/{id}")
-//    public String showFoundationDetails(@PathVariable("id") int id, Model model) {
-//        Optional<Foundation> foundationOptional = foundationService.findById(id);
-//        if (foundationOptional.isPresent()) {
-//            Foundation foundation = foundationOptional.get();
-//            model.addAttribute("foundation", foundation);
-//            model.addAttribute("funds", fundService.findById(id));  // Lấy danh sách Quỹ liên kết với Foundation
-//            model.addAttribute("content", "/pages/FoundationDetail");  // Trang hiển thị chi tiết Foundation
-//        } else {
-//            model.addAttribute("error", "Foundation not found");
-//        }
-//        return "index";
-//    }
-    @PostMapping("/amdin/foundation")
-    public String processFoundation(@ModelAttribute("foundation") Foundation foundation,
-                                  @RequestParam(required = false, value = "action", defaultValue = "") String action,
-                                  @RequestParam("id") String id,
-                                  @RequestParam("name") String name,
-                                  @RequestParam("description") String description,
-                                  @RequestParam("email")String email,
-                                  @RequestParam("status") String status) {
-        if (action != null && action.equals("add")) {
-            System.out.println("id" + id);
-            System.out.println("name" + name);
-            System.out.println("description" + description);
-            System.out.println("email" + email);
-            System.out.println("status" + status);
-        }
-        return "admin/foundation/foundation";
-    }
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Optional<Foundation>>GetFoundationById(@PathVariable int id)
-//    {
-//        Optional<Foundation> foundation = foundationService.findById(id);
-//        if(foundation.isEmpty())
-//        {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-//        return ResponseEntity.ok(foundation);
-//    }
-
-    // Thêm mới Foundation
-//    @GetMapping("/Foundation/Add")
-//    public String showCreateFoundationForm(Model model) {
-//        model.addAttribute("foundation", new Foundation());  // Tạo đối tượng Foundation mới để hiển thị trong form
-//        model.addAttribute("categories", categoryService.FindAll());  // Cung cấp các category nếu cần
-//        model.addAttribute("content", "/pages/FoundationCreate");  // Đường dẫn tới trang tạo mới Foundation
-//        return "index";
-//    }
-
-//    @PostMapping("/foundation")
-//    public String createFoundation(@ModelAttribute Foundation foundation, Model model) {
-//        Foundation createdFoundation = foundationService.save(foundation);
-//        model.addAttribute("foundation", createdFoundation);  // Hiển thị Foundation vừa tạo
-//        return "redirect:/Donations/foundation";
-//    }
     @GetMapping("/admin/foundation")
     public String showFoundationAdmin(Model model, HttpSession session,
                                     @RequestParam(required = false, defaultValue = "0") int page,
@@ -181,43 +112,83 @@ public class FoundationController {
         model.addAttribute("name", name);
         return "admin/foundation/foundation";
     }
-    // Cập nhật Foundation
-//    @GetMapping("/foundation/edit/{id}")
-//    public String showEditFoundationForm(@PathVariable("id") int id, Model model) {
-//        Optional<Foundation> foundationOptional = foundationService.findById(id);
-//        if (foundationOptional.isPresent()) {
-//            model.addAttribute("foundation", foundationOptional.get());
-//            model.addAttribute("categories", categoryService.FindAll());
-//            model.addAttribute("content", "/pages/FoundationEdit");
-//        } else {
-//            model.addAttribute("error", "Foundation not found");
-//        }
-//        return "index";
-//    }
-//
-//    @PostMapping("/foundation/update/{id}")
-//    public String updateFoundation(@PathVariable("id") int id, @ModelAttribute Foundation foundation, Model model) {
-//        Optional<Foundation> foundationOptional = foundationService.findById(id);
-//        if (foundationOptional.isPresent()) {
-//            foundation.setId(id);
-//            foundationService.save(foundation);
-//            return "redirect:/Donations/foundation";
-//        } else {
-//            model.addAttribute("error", "Foundation not found");
-//            return "index";
-//        }
-//    }
+    @GetMapping("/admin/foundation/add")
+    public String showFoundationAdminAddForm(Model model) {
+        Foundation foundation = new Foundation();
+        model.addAttribute("foundation", foundation);
+        List<String> statusList = Arrays.asList("Enable", "Disable");
+        model.addAttribute("statusList", statusList);
+        return "admin/foundation/foundation-form-add";
+    }
+    @PostMapping("/admin/foundation/add")
+    public String processFoundation(@ModelAttribute("foundation") Foundation foundation, Model model) {
+        try {
+            // Validate dữ liệu (nếu cần)
+            if (foundation.getName() == null || foundation.getName().isEmpty()) {
+                model.addAttribute("error", "Foundation name cannot be empty.");
+                List<String> statusList = Arrays.asList("Enable", "Disable");
+                model.addAttribute("statusList", statusList);
+                return "admin/foundation/foundation-form-add";
+            }
 
-    // Xóa Foundation-
-//    @DeleteMapping("/foundation/{id}")
-//    public String deleteFoundation(@PathVariable("id") int id, Model model) {
-//        Optional<Foundation> foundationOptional = foundationService.findById(id);
-//        if (foundationOptional.isPresent()) {
-//            foundationService.deleteById(id);  // Xóa Foundation theo ID
-//            return "redirect:/Donations/foundation";  // Sau khi xóa xong, chuyển hướng về danh sách Foundation
-//        } else {
-//            model.addAttribute("error", "Foundation not found");
-//            return "index";
-//        }
-//    }
+            // Lưu Foundation vào database
+            foundationService.save(foundation);
+
+            // Redirect về trang danh sách với thông báo thành công
+            model.addAttribute("success", "Foundation added successfully!");
+            return "redirect:/admin/foundation";
+        } catch (Exception e) {
+            // Xử lý lỗi và thông báo
+            model.addAttribute("error", "Error occurred while saving the foundation: " + e.getMessage());
+            List<String> statusList = Arrays.asList("Enable", "Disable");
+            model.addAttribute("statusList", statusList);
+            return "admin/foundation/foundation-form-add";
+        }
+    }
+    @GetMapping("/admin/foundation/edit")
+    public String showEditFoundationForm(@RequestParam("id") int id, Model model) {
+        Optional<Foundation> foundation = foundationService.findById(id);
+        if (foundation == null) {
+            model.addAttribute("error", "Foundation not found!");
+            return "redirect:/admin/foundation";
+        }
+
+        model.addAttribute("foundation", foundation.get());
+
+        List<String> statusList = Arrays.asList("Enable", "Disable");
+        model.addAttribute("statusList", statusList);
+
+        return "admin/foundation/foundation-form-edit";
+    }
+    @PostMapping("/admin/foundation/edit")
+    public ResponseEntity<String> updateFoundation(@RequestBody Foundation foundation) {
+        boolean result = foundationService.updateFoundation(
+                foundation.getName(),
+                foundation.getEmail(),
+                foundation.getDescription(),
+                foundation.getStatus(),
+                foundation.getId()
+        );
+
+        if (result) {
+            return ResponseEntity.ok("Foundation updated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Failed to update foundation");
+        }
+    }
+    @PostMapping("/admin/foundation/delete")
+    public ResponseEntity<String> deleteFoundation(@RequestParam("foundation-id") int foundationId) {
+        boolean result = foundationService.deleteFoundation(foundationId);
+        if (result) {
+            return ResponseEntity.ok("Foundation deleted successfully!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Foundation not found or could not be deleted.");
+        }
+    }
+
+
+
+
 }

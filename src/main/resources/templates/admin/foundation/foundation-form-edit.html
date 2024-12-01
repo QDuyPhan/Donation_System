@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{admin/home/index}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <meta charset="UTF-8">
+    <title>Edit Foundation</title>
+</head>
+<body>
+<div th:if="${message}">
+    <script th:inline="text">
+        alert("[(${message})]");
+    </script>
+</div>
+<div id="contentF" th:fragment="contentAdmin">
+    <div id="content-headerF">
+        <h4>Edit Foundation</h4>
+    </div>
+    <div th:if="${error}" class="w-100 d-flex">
+        <span
+                class="text-danger align-items-center"
+                th:text="${error}">
+        </span>
+    </div>
+    <div th:if="${message}" class="w-100 d-flex">
+        <span
+                class="text-success align-items-center"
+                th:text="${message}">
+        </span>
+    </div>
+    <form class="create-form" th:action="@{/Donations/admin/foundation/edit}" method="post" th:object="${foundation}">
+        <!-- Hidden ID -->
+        <div class="form-group">
+            <input id="foundation-id" type="hidden" class="form-control" readonly name="id" th:field="*{id}">
+        </div>
+        <!-- Name -->
+        <div class="form-group mt-2">
+            <label class="form-label">Name</label>
+            <input id="foundation-name" type="text" class="form-control" name="name" th:field="*{name}" required>
+        </div>
+        <!-- Email -->
+        <div class="form-group mt-2">
+            <label class="form-label">Email</label>
+            <input id="foundation-email" type="email" class="form-control" name="email" th:field="*{email}" required>
+        </div>
+        <!-- Description -->
+        <div class="form-group mt-2">
+            <label class="form-label">Description</label>
+            <textarea id="foundation-description" class="form-control" name="description" th:field="*{description}" rows="3" required></textarea>
+        </div>
+        <!-- Status -->
+        <div class="form-group mt-2">
+            <label class="form-label">Status</label>
+            <select id="foundation-status" class="form-select" name="status" th:field="*{status}" required>
+                <option th:each="status : ${statusList}" th:text="${status}" th:value="${status}"
+                        th:selected="${foundation.status == status}">Default Option</option>
+            </select>
+        </div>
+        <!-- Buttons -->
+        <div class="form-group mt-3">
+            <button id="btn-SaveF-Update" type="submit" class="btn btn-success mx-1">
+                <i class="fa-solid fa-floppy-disk"></i> Save
+            </button>
+            <!-- Nút cancel sẽ sử dụng JavaScript để chuyển hướng -->
+            <button id="btn-CancelF" type="button" class="btn btn-primary mx-1">
+                <i class="fa-solid fa-rotate-left"></i> Cancel
+            </button>
+        </div>
+    </form>
+</div>
+<!-- JavaScript -->
+<script>
+    // Thêm sự kiện vào nút Cancel để chuyển trang
+    document.getElementById('btn-CancelF').addEventListener('click', function () {
+        const foundationId = document.getElementById('foundation-id').value; // Lấy ID
+        if (foundationId) {
+            const baseUrl = window.location.origin; // URL gốc
+            window.location.href = baseUrl + "/admin/foundation/edit?id=" + foundationId;
+        } else {
+            alert("No Foundation ID found!");
+        }
+    });
+</script>
+</body>
+</html>

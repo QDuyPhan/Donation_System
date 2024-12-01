@@ -3,6 +3,7 @@ package com.donation.donation_system.service.implement;
 import com.donation.donation_system.service.FoundationService;
 import com.donation.donation_system.model.Foundation;
 import com.donation.donation_system.repository.FoundationRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,13 +16,13 @@ import java.util.Optional;
 
 @Service
 public class FoundationServiceImpl implements FoundationService {
-
-    private final FoundationRepository foundationRepository;
-
     @Autowired
-    public FoundationServiceImpl(FoundationRepository foundationRepository) {
-        this.foundationRepository = foundationRepository;
-    }
+    private FoundationRepository foundationRepository;
+
+//    @Autowired
+//    public FoundationServiceImpl(FoundationRepository foundationRepository) {
+//        this.foundationRepository = foundationRepository;
+//    }
 
     @Override
     public List<Foundation> findAll() {
@@ -58,5 +59,22 @@ public class FoundationServiceImpl implements FoundationService {
     public void deleteById(int id) {
         // Xóa Foundation theo ID
         foundationRepository.deleteById(id);
+    }
+    @Override
+    @Transactional
+    public boolean updateFoundation(String name,String email,String description,String status,int id) {
+        int result= foundationRepository.updateFoundationInfo(name,email,description,status,id);
+        if (result!=0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteFoundation(int id) {
+        if(foundationRepository.existsById(id)) {
+            foundationRepository.deleteById(id);
+        }
+        return false;
     }
 }
