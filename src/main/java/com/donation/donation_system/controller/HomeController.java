@@ -40,41 +40,46 @@ public class HomeController {
     public String home(Model model, HttpSession session) {
         model.addAttribute("content", "/pages/home"); // Nạp fragment home
         List<Fund> funds = fundService.FindAll();
-        List<Fund> openingFunds = funds.stream()
-                .filter(fund -> "Opening".equalsIgnoreCase(fund.getStatus()))
-                .toList();
 
-// Danh sách các quỹ đã hoàn thành
-        List<Fund> finishedFunds = funds.stream()
-                .filter(fund -> "Finish".equalsIgnoreCase(fund.getStatus()))
-                .toList();
-        List<Donation> donationList = donationService.findTop3ByOrderByFieldAsc();
-        List<Category> categories = categoryService.FindAll();
+        // Tính toán percentAchieved cho từng fund
         Map<Integer, Integer> totalDonations = new HashMap<>();
         Map<Integer, Integer> sumDonations = new HashMap<>();
         for (Fund fund : funds) {
-
             Integer total = donationService.findTotalDonationsByFund(fund.getId());
             Integer sumdonation = donationService.countDonationsByFund(fund.getId());
 
             totalDonations.put(fund.getId(), total);
             sumDonations.put(fund.getId(), sumdonation);
+
             double percentAchieved = 0;
             if (totalDonations.containsKey(fund.getId()) && fund.getExpectedResult() > 0) {
                 percentAchieved = (int) (100.0 * totalDonations.get(fund.getId()) / fund.getExpectedResult());
             }
             fund.setPercentAchieved(percentAchieved);
         }
+
+        // Chia danh sách quỹ theo percentAchieved
+        List<Fund> under100Funds = funds.stream()
+                .filter(fund -> fund.getPercentAchieved() < 100)
+                .toList();
+
+        List<Fund> atLeast100Funds = funds.stream()
+                .filter(fund -> fund.getPercentAchieved() >= 100)
+                .toList();
+
+        List<Donation> donationList = donationService.findTop3ByOrderByFieldAsc();
+        List<Category> categories = categoryService.FindAll();
+
         model.addAttribute("donationList", donationList);
         model.addAttribute("categories", categories);
         model.addAttribute("funds", funds);
-        model.addAttribute("openingFunds", openingFunds);
-        model.addAttribute("finishedFunds", finishedFunds);
+        model.addAttribute("under100Funds", under100Funds); // Thêm danh sách percentAchieved < 100
+        model.addAttribute("atLeast100Funds", atLeast100Funds); // Thêm danh sách percentAchieved >= 100
         model.addAttribute("totalDonations", totalDonations);
         model.addAttribute("sumDonations", sumDonations);
         return "index";
-
     }
+
 
     @GetMapping("/test-donations")
     public ResponseEntity<List<Donation>> getDonations() {
