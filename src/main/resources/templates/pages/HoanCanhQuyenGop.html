@@ -33,6 +33,13 @@
                          th:text="${fund.foundation.name.length() > 40 ? #strings.concat(fund.foundation.name.substring(0, 40), '...') : fund.foundation.name}">
                     </div>
                   </div>
+
+                  <div class="mb-3 d-flex align-items-center">
+                    <div class="flex-grow-1 text-xs text-muted"
+                         th:text="${'Ngày kết thúc: ' + fund.endDate}">
+                    </div>
+                  </div>
+
                   <div class="dn-detail">
                     <div class="dn-money mb-2 d-flex align-items-end">
                       <strong class="item-end d-flex align-items-center text-dark"

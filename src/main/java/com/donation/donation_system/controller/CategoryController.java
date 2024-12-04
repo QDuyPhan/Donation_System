@@ -18,7 +18,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.*;
 
-import static com.donation.donation_system.utils.Constants.TOTAL_ITEMS_PER_PAGE;
+import static utils.Constants.TOTAL_ITEMS_PER_PAGE;
+
 
 @Controller
 @RequestMapping("/Donations")

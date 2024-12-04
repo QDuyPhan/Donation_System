@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.donation.donation_system.configuration.VNPayConfig.*;
-import static com.donation.donation_system.utils.Constants.*;
+import static utils.Constants.*;
 
 @Service
 public class VNPayService {

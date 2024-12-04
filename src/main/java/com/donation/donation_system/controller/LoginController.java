@@ -1,6 +1,7 @@
 package com.donation.donation_system.controller;
 
 import com.donation.donation_system.model.Category;
+import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.Fund;
 import com.donation.donation_system.model.User;
 import com.donation.donation_system.service.CategoryService;
@@ -110,6 +111,13 @@ public class LoginController {
         } else {
             model.addAttribute("content", "/pages/home");
             List<Fund> funds = fundService.FindAll();
+            List<Fund> openingFunds = funds.stream()
+                    .filter(fund -> "Opening".equalsIgnoreCase(fund.getStatus()))
+                    .toList();
+            List<Fund> finishedFunds = funds.stream()
+                    .filter(fund -> "Finish".equalsIgnoreCase(fund.getStatus()))
+                    .toList();
+            List<Donation> donationList = donationService.findTop3ByOrderByFieldAsc();
             List<Category> categories = categoryService.FindAll();
             Map<Integer, Integer> totalDonations = new HashMap<>();
             Map<Integer, Integer> sumDonations = new HashMap<>();
@@ -117,7 +125,7 @@ public class LoginController {
 
                 Integer total = donationService.findTotalDonationsByFund(fund.getId());
                 Integer sumdonation = donationService.countDonationsByFund(fund.getId());
-                System.out.println("Total donations for fund ID " + fund.getId() + ": " + total);
+
                 totalDonations.put(fund.getId(), total);
                 sumDonations.put(fund.getId(), sumdonation);
                 double percentAchieved = 0;
@@ -126,8 +134,11 @@ public class LoginController {
                 }
                 fund.setPercentAchieved(percentAchieved);
             }
+            model.addAttribute("donationList", donationList);
             model.addAttribute("categories", categories);
             model.addAttribute("funds", funds);
+            model.addAttribute("openingFunds", openingFunds);
+            model.addAttribute("finishedFunds", finishedFunds);
             model.addAttribute("totalDonations", totalDonations);
             model.addAttribute("sumDonations", sumDonations);
             return "index";
@@ -192,8 +203,6 @@ public class LoginController {
         if (user == null) {
             model.addAttribute("error", "Invalid token");
             return "resetPassword";
-//            return "error";
-//            return "redirect:/resetPassword?error=Invalid token";
         } else {
             try {
                 userService.updatePassword(user, password);
@@ -202,8 +211,6 @@ public class LoginController {
             }
             model.addAttribute("message", "Change password successfully");
             return "resetPassword";
-//            return "redirect:/resetPassword?message=Change password successfully";
         }
-//        return "message";
     }
 }

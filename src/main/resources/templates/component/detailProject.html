@@ -71,9 +71,10 @@
                   </div>
                   <div>
                     <h5 class="text-secondary small">Đạt được</h5>
-                    <p class="h6 font-weight-bold text-dark small" th:text="${fund.percentAchieved < 100 ? fund.percentAchieved + '%' : '100%'}"></p>
+                    <p class="h6 font-weight-bold text-dark small"
+                       th:text="${fund.percentAchieved < 100 ? fund.percentAchieved + '%' : '100%'}"></p>
                   </div>
-                  </div>
+                </div>
                 <div class="text-success" th:if="${fund.status} == 'Opening'">
                   <h6 class="small"> Đang diễn ra </h6>
                 </div>
@@ -84,15 +85,15 @@
             </div>
 
           </div>
-          <div class="col-10" style="margin-top: 70%" >
-          <div class="mt-6 my-5" th:unless="${session.user}">
-            <a th:href="@{/Donation/login}" class="w-100">
-              <button class="btn w-100 fs-6 " id="btn-LoginToDonate"
-                      style="background-color: #76c5f0; color: white;">
-                Đăng nhập để quyên góp
-              </button>
-            </a>
-          </div>
+          <div class="col-10" style="margin-top: 70%">
+            <div class="mt-6 my-5" th:unless="${session.user}">
+              <a th:href="@{/Donation/login}" class="w-100">
+                <button class="btn w-100 fs-6 " id="btn-LoginToDonate"
+                        style="background-color: #76c5f0; color: white;">
+                  Đăng nhập để quyên góp
+                </button>
+              </a>
+            </div>
 
             <div class="mt-6 my-5" th:if="${session.user}">
               <button id="btn-Donate" type="button"
@@ -114,7 +115,7 @@
                       </button>
                     </div>
 
-                    <form id="frm-SendDonate" method="post">
+                    <form id="frm-SendDonate" th:action="@{/Donations/pay}" method="post">
                       <div class="modal-body">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
@@ -211,8 +212,10 @@
 
                     <h2 class="my-5 text-xl font-semibold">Nhà hảo tâm hàng đầu</h2>
 
-                    <div class="rounded border border-gray-200 my-2 px-4 pt-1.5 pb-3" th:each="donation : ${limitedDonations}">
-                      <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                    <div class="rounded border border-gray-200 my-2 px-4 pt-1.5 pb-3"
+                         th:each="donation : ${limitedDonations}">
+                      <div
+                        class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
                         <div class="flex-1 text-left">
                           <div class="mb-1 pt-1" th:text="${donation.user?.username ?: 'Anonymous'}"></div>
                           <div class="text-xs text-gray-400"></div>
@@ -223,8 +226,10 @@
 
                     <!-- Các nhà hảo tâm ẩn (hiển thị khi nhấn "Xem tất cả") -->
                     <div id="extraDonations" style="display:none;">
-                      <div class="rounded border border-gray-200 my-2 px-4 pt-1.5 pb-3" th:each="donation : ${allDonations}">
-                        <div class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
+                      <div class="rounded border border-gray-200 my-2 px-4 pt-1.5 pb-3"
+                           th:each="donation : ${allDonations}">
+                        <div
+                          class="flex items-center justify-between border-b border-gray-100 py-2 text-sm font-semibold text-gray-700 last:border-0">
                           <div class="flex-1 text-left">
                             <div class="mb-1 pt-1" th:text="${donation.user?.username ?: 'Anonymous'}"></div>
                             <div class="text-xs text-gray-400"></div>
@@ -244,7 +249,7 @@
                     </div>
 
                     <script>
-                        document.getElementById("showAllBtn").addEventListener("click", function() {
+                        document.getElementById("showAllBtn").addEventListener("click", function () {
                             var extraDonations = document.getElementById("extraDonations");
                             var showAllBtn = document.getElementById("showAllBtn");
 

@@ -10,7 +10,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-import static com.donation.donation_system.utils.Constants.*;
+import static utils.Constants.vnp_HashSecret;
+
 
 public class VNPayConfig {
     public static String md5(String message) {

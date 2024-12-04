@@ -110,6 +110,5 @@ public class PaymentController {
         } else {
             return paymentStatus == 0 ? "user/paymentfail" : "user/paymentsuccess";
         }
-//        return paymentStatus == 1 ? "user/paymentsuccess" : "user/paymentfail";
     }
 }

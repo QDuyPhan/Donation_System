@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static com.donation.donation_system.utils.Constants.*;
+import static utils.Constants.*;
 
 
 public class StringAPI {
