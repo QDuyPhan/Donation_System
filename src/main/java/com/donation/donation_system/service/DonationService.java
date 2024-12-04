@@ -22,4 +22,7 @@ public interface DonationService {
     Page<Donation> getPage(int id, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 
     Donation save(Donation donation) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
+    List<Donation> findTop3ByOrderByFieldAsc();
+
 }

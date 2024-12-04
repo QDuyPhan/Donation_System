@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.donation.donation_system.api.StringAPI.encodePassword;
-import static com.donation.donation_system.utils.Constants.TOTAL_ITEMS_PER_PAGE;
+import static utils.Constants.TOTAL_ITEMS_PER_PAGE;
 
 @Controller
 @RequestMapping("/Donations")

@@ -9,26 +9,29 @@
       <div class="container mt-4">
         <!-- Tab Navigation -->
         <!-- Tab Content -->
-        <div class="row">
-
+        <div id="fund-container" class="row">
           <!----->
-          <div class="col-md-4" th:each="fund : ${funds}" th:if="${fund.status} == 'Opening'">
-            <a class="text-decoration-none" style="color: black;">
 
+          <div class="col-md-4 mb-2" th:each="fund, iterStat : ${openingFunds}">
+            <a class="text-decoration-none" style="color: black;">
               <div
                 class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
+                <!-- Nội dung quỹ -->
                 <div class="dn-img d-flex">
-            <span class="position-relative w-100" style="display:block; ">
-                <img alt="Hình ảnh quỹ" class="img-fluid" th:src="${fund.imageUrl}">
-            </span>
+          <span class="position-relative w-100" style="display:block;">
+            <img alt="Hình ảnh quỹ" class="img-fluid" th:src="${fund.imageUrl}">
+          </span>
                 </div>
                 <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
-                  <div class="dn-title h5 font-weight-bold" th:text="${fund.name}"></div>
+                  <div class="dn-title h5 font-weight-bold"
+                       th:text="${fund.name.length() > 40 ? #strings.concat(fund.name.substring(0, 40), '...') : fund.name}">
+                  </div>
                 </div>
                 <div class="dn-footer mb-4 px-4 pt-0">
                   <div class="mb-3 d-flex align-items-center">
-                    <div class="flex-grow-1 text-xs text-muted" th:text="${fund.foundation.name}">t</div>
-                    <div class="shrink-0"></div>
+                    <div class="flex-grow-1 text-xs text-muted"
+                         th:text="${fund.foundation.name.length() > 40 ? #strings.concat(fund.foundation.name.substring(0, 40), '...') : fund.foundation.name}">
+                    </div>
                   </div>
                   <div class="dn-detail">
                     <div class="dn-money mb-2 d-flex align-items-end">
@@ -36,8 +39,6 @@
                               th:text="${totalDonations[fund.id]} + 'đ/'"></strong>
                       <span class="pl-2 text-xs text-muted" th:text="${fund.expectedResult} + 'đ'"></span>
                     </div>
-
-
                     <div class="mt-3 d-flex justify-content-between align-items-center">
                       <div class="flex-grow-1">
                         <div class="text-xs text-muted">Lượt quyên góp</div>
@@ -58,6 +59,59 @@
             </a>
           </div>
 
+          <div class="text-center mt-3">
+            <button id="load-more-btn" class="btn btn-primary">Xem thêm</button>
+          </div>
+
+          <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                  const funds = document.querySelectorAll("#fund-container .col-md-4"); // Tất cả phần tử quỹ
+                  const loadMoreBtn = document.getElementById("load-more-btn");
+                  const increment = 3; // Hiển thị thêm 3 phần tử mỗi lần nhấn
+                  const initialCount = 3; // Số lượng phần tử ban đầu được hiển thị
+                  let visibleCount = initialCount; // Số phần tử hiện đang hiển thị
+
+                  // Ẩn tất cả phần tử trừ các phần tử ban đầu
+                  funds.forEach((fund, index) => {
+                      if (index >= initialCount) {
+                          fund.style.display = "none";
+                      }
+                  });
+
+                  // Xử lý khi nhấn nút "Xem thêm" hoặc "Ẩn bớt"
+                  loadMoreBtn.addEventListener("click", function () {
+                      if (visibleCount < funds.length) {
+                          // Hiển thị thêm các phần tử
+                          const hiddenFunds = Array.from(funds).filter((fund) => fund.style.display === "none");
+                          for (let i = 0; i < increment && i < hiddenFunds.length; i++) {
+                              hiddenFunds[i].style.display = "block";
+                          }
+
+                          // Cập nhật số lượng phần tử hiển thị
+                          visibleCount += increment;
+
+                          // Nếu hiển thị hết, đổi nút thành "Ẩn bớt"
+                          if (visibleCount >= funds.length) {
+                              loadMoreBtn.textContent = "Ẩn bớt";
+                          }
+                      } else {
+                          // Ẩn bớt các phần tử
+                          funds.forEach((fund, index) => {
+                              if (index >= initialCount) {
+                                  fund.style.display = "none";
+                              }
+                          });
+
+                          // Cập nhật lại số lượng phần tử hiển thị và đổi nút thành "Xem thêm"
+                          visibleCount = initialCount;
+                          loadMoreBtn.textContent = "Xem thêm";
+                      }
+                  });
+              });
+
+
+          </script>
+
         </div>
 
       </div>
@@ -70,11 +124,10 @@
       <div class="container mt-4">
         <!-- Tab Navigation -->
         <!-- Tab Content -->
-        <div class="row">
+        <div id="fund-container1" class="  row">
 
-          <div class="col-md-4" th:each="fund : ${funds}" th:if="${fund.status} == 'Finish'">
+          <div class="col-md-4 mb-2" th:each="fund, iterStat : ${finishedFunds}">
             <a class="text-decoration-none" style="color: black;">
-
               <div
                 class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
                 <div class="dn-img d-flex">
@@ -85,11 +138,14 @@
             </span>
                 </div>
                 <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
-                  <div class="dn-title h5 font-weight-bold" th:text="${fund.name}"></div>
+                  <div class="dn-title h5 font-weight-bold"
+                       th:text="${fund.name.length() > 40 ? #strings.concat(fund.name.substring(0, 40), '...') : fund.name}"></div>
+
                 </div>
                 <div class="dn-footer mb-4 px-4 pt-0">
                   <div class="mb-3 d-flex align-items-center">
-                    <div class="flex-grow-1 text-xs text-muted" th:text="${fund.foundation.name}">t</div>
+                    <div class="flex-grow-1 text-xs text-muted"
+                         th:text="${fund.foundation.name.length() > 40 ? #strings.concat(fund.foundation.name.substring(0, 40), '...') : fund.foundation.name}"></div>
                     <div class="shrink-0"></div>
                   </div>
                   <div class="dn-detail">
@@ -107,7 +163,7 @@
                       </div>
                       <div class="flex-grow-1">
                         <div class="text-xs text-muted">Đạt được</div>
-                        <div class="text-sm font-weight-bold text-dark" th:text="${fund.percentAchieved} + '%'"></div>
+                        <div class="text-sm font-weight-bold text-dark" th:text=" '100%'"></div>
                       </div>
                       <div class="position-relative">
                         <a class="btn btn-secondary">Đã hoàn thành</a>
@@ -118,8 +174,59 @@
               </div>
             </a>
           </div>
+          <div class="text-center mt-3">
+            <button id="load-more-btn2" class="btn btn-primary">Xem thêm</button>
+          </div>
 
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const funds = document.querySelectorAll("#fund-container1 .col-md-4"); // Tất cả phần tử quỹ
+                const loadMoreBtn = document.getElementById("load-more-btn2");
+                const increment = 3; // Hiển thị thêm 3 phần tử mỗi lần nhấn
+                const initialCount = 3; // Số lượng phần tử ban đầu được hiển thị
+                let visibleCount = initialCount; // Số phần tử hiện đang hiển thị
+
+                // Ẩn tất cả phần tử trừ các phần tử ban đầu
+                funds.forEach((fund, index) => {
+                    if (index >= initialCount) {
+                        fund.style.display = "none";
+                    }
+                });
+
+                // Xử lý khi nhấn nút "Xem thêm" hoặc "Ẩn bớt"
+                loadMoreBtn.addEventListener("click", function () {
+                    if (visibleCount < funds.length) {
+                        // Hiển thị thêm các phần tử
+                        const hiddenFunds = Array.from(funds).filter((fund) => fund.style.display === "none");
+                        for (let i = 0; i < increment && i < hiddenFunds.length; i++) {
+                            hiddenFunds[i].style.display = "block";
+                        }
+
+                        // Cập nhật số lượng phần tử hiển thị
+                        visibleCount += increment;
+
+                        // Nếu hiển thị hết, đổi nút thành "Ẩn bớt"
+                        if (visibleCount >= funds.length) {
+                            loadMoreBtn.textContent = "Ẩn bớt";
+                        }
+                    } else {
+                        // Ẩn bớt các phần tử
+                        funds.forEach((fund, index) => {
+                            if (index >= initialCount) {
+                                fund.style.display = "none";
+                            }
+                        });
+
+                        // Cập nhật lại số lượng phần tử hiển thị và đổi nút thành "Xem thêm"
+                        visibleCount = initialCount;
+                        loadMoreBtn.textContent = "Xem thêm";
+                    }
+                });
+            });
+
+
+        </script>
       </div>
     </div>
   </div>

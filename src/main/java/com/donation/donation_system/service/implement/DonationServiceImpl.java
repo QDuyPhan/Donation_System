@@ -4,10 +4,13 @@ import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.repository.DonationRepository;
 import com.donation.donation_system.service.DonationService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -41,6 +44,11 @@ public class DonationServiceImpl implements DonationService {
     public List<Donation> findDonationById(int id) {
         return donationRepository.findDonationByFund(id);
     }
+    @Override
+    public List<Donation> findTop3ByOrderByFieldAsc (){
+       // Lấy trang đầu tiên, 3 kết quả
+        return donationRepository.findLast3Donations();
+    };
 
     @Override
     public Page<Donation> getPage(String id, String username, String fundName, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {

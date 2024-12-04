@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 @Repository
@@ -41,5 +43,11 @@ public interface DonationRepository extends JpaRepository<Donation, Integer> {
                            Pageable pageable);
 
     Page<Donation> findByUserId(int userId, Pageable pageable);
+
+
+    @Query(value = "SELECT * FROM donation ORDER BY created_date DESC LIMIT 3", nativeQuery = true)
+    List<Donation> findLast3Donations();
+
+
 
 }

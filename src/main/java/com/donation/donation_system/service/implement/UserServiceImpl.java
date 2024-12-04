@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.donation.donation_system.api.StringAPI.encodePassword;
-import static com.donation.donation_system.utils.Constants.*;
+import static utils.Constants.*;
 
 
 @Service
