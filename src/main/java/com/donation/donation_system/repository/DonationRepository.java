@@ -39,4 +39,7 @@ public interface DonationRepository extends JpaRepository<Donation, Integer> {
                            @Param("username") String username,
                            @Param("fundName") String fundName,
                            Pageable pageable);
+
+    Page<Donation> findByUserId(int userId, Pageable pageable);
+
 }

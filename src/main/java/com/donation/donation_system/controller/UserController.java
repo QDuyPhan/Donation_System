@@ -1,17 +1,27 @@
 package com.donation.donation_system.controller;
 
+import com.donation.donation_system.model.Category;
 import com.donation.donation_system.model.Donation;
+import com.donation.donation_system.model.Fund;
 import com.donation.donation_system.model.User;
+import com.donation.donation_system.service.CategoryService;
+import com.donation.donation_system.service.DonationService;
+import com.donation.donation_system.service.FundService;
 import com.donation.donation_system.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.donation.donation_system.api.StringAPI.encodePassword;
 import static com.donation.donation_system.utils.Constants.TOTAL_ITEMS_PER_PAGE;
@@ -21,6 +31,12 @@ import static com.donation.donation_system.utils.Constants.TOTAL_ITEMS_PER_PAGE;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private FundService fundService;
+    @Autowired
+    private DonationService donationService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/forgotpassword")
     public String forgotpassword() {
@@ -102,21 +118,39 @@ public class UserController {
     }
 
     @GetMapping("/donationhistory")
-    public String donationhistory(Model model, HttpSession session) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+    public String donationhistory(Model model, HttpSession session,
+                                  @RequestParam(required = false, defaultValue = "0") int page,
+                                  @RequestParam(required = false, defaultValue = "") String id
+    ) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
         User user = (User) session.getAttribute("user");
-        int page = 1;
+        Pageable pageable = PageRequest.of(page, TOTAL_ITEMS_PER_PAGE);
         if (user == null) {
-            return "login";
+            model.addAttribute("content", "/pages/home");
+            List<Fund> funds = fundService.FindAll();
+            List<Category> categories = categoryService.FindAll();
+            Map<Integer, Integer> totalDonations = new HashMap<>();
+            Map<Integer, Integer> sumDonations = new HashMap<>();
+            model.addAttribute("categories", categories);
+            model.addAttribute("funds", funds);
+            model.addAttribute("totalDonations", totalDonations);
+            model.addAttribute("sumDonations", sumDonations);
+            return "index";
         }
-
-        List<Donation> donationList = userService.getPageDonationListByUser(page, user.getId());
-        System.out.println("Donation List:" + donationList);
-        System.out.println("Donation List by user :" + donationList.size());
-        int totalItems = userService.getTotalDonationByUser(user.getId());
-        int totalPages = (int) Math.ceil((double) totalItems / TOTAL_ITEMS_PER_PAGE);
+        if (id == null) id = "";
+        Page<Donation> donationList = donationService.getPage(user.getId(), pageable);
+        System.out.println("donationList: " + donationList);
+        System.out.println("size: " + donationList.getSize());
+        System.out.println("totalPages: " + donationList.getTotalPages());
+        System.out.println("totalElements: " + donationList.getTotalElements());
+        System.out.println("currentPage: " + page);
 
         model.addAttribute("donationList", donationList);
-        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", donationList.getSize());
+        model.addAttribute("totalPages", donationList.getTotalPages());
+        model.addAttribute("totalElements", donationList.getTotalElements());
+        model.addAttribute("currentPage", page);
+
+
         return "user/donationhistory";
     }
 }

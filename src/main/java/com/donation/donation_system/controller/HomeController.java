@@ -37,7 +37,6 @@ public class HomeController {
         Map<Integer, Integer> totalDonations = new HashMap<>();
         Map<Integer, Integer> sumDonations = new HashMap<>();
         for (Fund fund : funds) {
-
             Integer total = donationService.findTotalDonationsByFund(fund.getId());
             Integer sumdonation = donationService.countDonationsByFund(fund.getId());
             System.out.println("Total donations for fund ID " + fund.getId() + ": " + total);

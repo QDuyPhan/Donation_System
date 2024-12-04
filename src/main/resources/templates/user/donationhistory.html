@@ -36,17 +36,65 @@
     </tbody>
   </table>
 
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <th:block th:each="page : ${#numbers.sequence(1, totalPages)}">
-        <li th:class="${page == param.page} ? 'page-item active' : 'page-item'">
-          <a class="page-link" th:href="@{'/donationhistory?page=' + ${page}}">
-            <span th:text="${page}">Page</span>
-          </a>
+  <div
+    class="d-flex justify-content-end align-items-center"
+    th:if="${totalPages > 0}"
+  >
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li
+          th:class="${currentPage == 0 ? 'page-item disabled' : 'page-item'}"
+        >
+          <a
+            th:href="@{/Donations/donationhistory(page=0)}"
+            class="page-link"
+          >First</a
+          >
         </li>
-      </th:block>
-    </ul>
-  </nav>
+        <li
+          th:class="${currentPage == 0 ? 'page-item disabled' : 'page-item'}"
+        >
+          <a
+            th:href="@{/Donations/donationhistory(page=${currentPage - 1})}"
+            class="page-link"
+          >Previous</a
+          >
+        </li>
+        <th:block
+          th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+        >
+          <li
+            th:class="${currentPage == i ? 'page-item active' : 'page-item'}"
+          >
+            <a
+              th:href="@{/Donations/donationhistory(page=${i})}"
+              class="page-link"
+              th:text="${i + 1}"
+            ></a>
+          </li>
+        </th:block>
+        <li
+          th:class="${currentPage == totalPages - 1 ? 'page-item disabled' : 'page-item'}"
+        >
+          <a
+            th:href="@{/Donations/donationhistory(page=${currentPage + 1})}"
+            class="page-link"
+          >Next</a
+          >
+        </li>
+        <li
+          th:class="${currentPage == totalPages - 1 ? 'page-item disabled' : 'page-item'}"
+        >
+          <a
+            th:href="@{/Donations/donationhistory(page=${totalPages - 1})}"
+            class="page-link"
+          >Last</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+
 </div>
 </body>
 </html>

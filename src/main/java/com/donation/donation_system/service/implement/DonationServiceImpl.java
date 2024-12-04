@@ -44,9 +44,14 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public Page<Donation> getPage(String id, String username, String fundName, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-
 //        return donationRepository.findByIdContainingAndUser_UsernameContainingAndFund_NameContaining(id, username, fundName, pageable);
         return donationRepository.getPage(id, username, fundName, pageable);
+    }
+
+    @Override
+    public Page<Donation> getPage(int id, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+//        return donationRepository.getPage(id, pageable);
+        return donationRepository.findByUserId(id, pageable);
     }
 
     @Override

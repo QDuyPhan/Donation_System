@@ -36,11 +36,6 @@ public class DonationController {
         Pageable pageable = PageRequest.of(page, TOTAL_ITEMS_PER_PAGE);
         Page<Donation> donationList = donationService.getPage(id, username, fundName, pageable);
 
-        System.out.println("id: " + id);
-        System.out.println("username: " + username);
-        System.out.println("fundName: " + fundName);
-
-
         model.addAttribute("donationList", donationList);
         model.addAttribute("size", donationList.getSize());
         model.addAttribute("totalPages", donationList.getTotalPages());
