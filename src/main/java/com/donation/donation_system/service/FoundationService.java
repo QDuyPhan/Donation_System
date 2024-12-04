@@ -12,13 +12,24 @@ import java.util.Optional;
 
 public interface FoundationService {
     List<Foundation> findAll();
+
     Optional<Foundation> findById(int id);
+
     Foundation save(Foundation foundation);
+
     int getTotalItems(String id, String name) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
     void deleteById(int id);
-    Page<Foundation>getPage(String id, String name, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
+    Page<Foundation> getPage(String id, String name, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
     Page<Foundation> findAllByNameOrID(String query, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
-    boolean updateFoundation(String name,String email,String description,String status,int id);
+
+    boolean updateFoundation(String name, String email, String description, String status, int id);
+
     boolean deleteFoundation(int id);
 
+    List<Foundation> search(String foundationName) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
+    Foundation findByName(String foundationName);
 }

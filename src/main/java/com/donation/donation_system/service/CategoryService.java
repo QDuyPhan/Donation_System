@@ -26,4 +26,8 @@ public interface CategoryService {
     Category save(Category category) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 
     List<Category> search(String categoryName) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
+    List<Category> findAll() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
+    Category findByName(String categoryName);
 }

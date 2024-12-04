@@ -35,11 +35,13 @@ public class FoundationServiceImpl implements FoundationService {
         // Tìm Foundation theo ID
         return foundationRepository.findById(id);
     }
+
     @Override
     public int getTotalItems(String id, String name) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         int count = foundationRepository.getTotalItems(id, name);
         return count;
     }
+
     @Override
     public Page<Foundation> getPage(String id, String name, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         return foundationRepository.getPage(id, name, pageable);
@@ -49,6 +51,7 @@ public class FoundationServiceImpl implements FoundationService {
     public Page<Foundation> findAllByNameOrID(String query, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         return foundationRepository.findAllByNameOrID(query, pageable);
     }
+
     @Override
     public Foundation save(Foundation foundation) {
         // Lưu hoặc cập nhật Foundation vào cơ sở dữ liệu
@@ -60,11 +63,12 @@ public class FoundationServiceImpl implements FoundationService {
         // Xóa Foundation theo ID
         foundationRepository.deleteById(id);
     }
+
     @Override
     @Transactional
-    public boolean updateFoundation(String name,String email,String description,String status,int id) {
-        int result= foundationRepository.updateFoundationInfo(name,email,description,status,id);
-        if (result!=0) {
+    public boolean updateFoundation(String name, String email, String description, String status, int id) {
+        int result = foundationRepository.updateFoundationInfo(name, email, description, status, id);
+        if (result != 0) {
             return true;
         }
         return false;
@@ -72,9 +76,19 @@ public class FoundationServiceImpl implements FoundationService {
 
     @Override
     public boolean deleteFoundation(int id) {
-        if(foundationRepository.existsById(id)) {
+        if (foundationRepository.existsById(id)) {
             foundationRepository.deleteById(id);
         }
         return false;
+    }
+
+    @Override
+    public List<Foundation> search(String foundationName) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return foundationRepository.findByNameContaining(foundationName);
+    }
+
+    @Override
+    public Foundation findByName(String foundationName) {
+        return foundationRepository.findByName(foundationName);
     }
 }

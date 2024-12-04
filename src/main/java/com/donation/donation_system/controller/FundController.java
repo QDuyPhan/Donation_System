@@ -1,11 +1,9 @@
 package com.donation.donation_system.controller;
 
-import com.donation.donation_system.model.Category;
-import com.donation.donation_system.model.Donation;
-import com.donation.donation_system.model.Fund;
-import com.donation.donation_system.model.User;
+import com.donation.donation_system.model.*;
 import com.donation.donation_system.service.CategoryService;
 import com.donation.donation_system.service.DonationService;
+import com.donation.donation_system.service.FoundationService;
 import com.donation.donation_system.service.FundService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
@@ -20,7 +18,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,16 +33,15 @@ import static utils.Constants.TOTAL_ITEMS_PER_PAGE;
 @RequestMapping("/Donations")
 public class FundController {
 
-    private final FundService fundService;
-    private final DonationService donationService;
-    private final CategoryService categoryService;
-
     @Autowired
-    public FundController(FundService fundService, DonationService donationService, CategoryService categoryService) {
-        this.fundService = fundService;
-        this.donationService = donationService;
-        this.categoryService = categoryService;
-    }
+    private FundService fundService;
+    @Autowired
+    private DonationService donationService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private FoundationService foundationService;
+
 
     // Lấy tất cả các quỹ
     @GetMapping
@@ -194,8 +196,45 @@ public class FundController {
     }
 
     @GetMapping("admin/fund/add")
-    public String showFormFundAdd(Model model) {
+    public String showFormFundAdd(Model model) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+        Fund fund = new Fund();
+        List<String> statusList = Arrays.asList("Opening", "Waiting", "Close", "Finish", "Disable");
+//        List<Category> categoryList = categoryService.search("");
+//        List<Foundation> foundationList = foundationService.search("");
+        List<Category> categoryList = categoryService.findAll();
+        List<Foundation> foundationList = foundationService.findAll();
 
+        model.addAttribute("fund", fund);
+        model.addAttribute("statusList", statusList);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("foundationList", foundationList);
         return "admin/fund/fundAdd";
     }
+
+//    @GetMapping("/admin/fund/add")
+//    public String createFund(@ModelAttribute("fund") Fund fund, Model model, HttpSession session) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+//        LocalDateTime currentDateTime = LocalDateTime.now();
+//        Timestamp timestamp = Timestamp.valueOf(currentDateTime);
+//
+//        Fund f = new Fund();
+//        f.setName(fund.getName());
+//        f.setContent(fund.getContent());
+//        f.setImageUrl(fund.getImageUrl());
+//        f.setDescription(fund.getDescription());
+//        f.setExpectedResult(fund.getExpectedResult());
+//        f.setStatus(fund.getStatus());
+//        f.setCreatedDate(timestamp.toLocalDateTime());
+//        f.setEndDate(fund.getEndDate());
+//        Foundation foundation = foundationService.findByName(fund.getName());
+//        Category category = categoryService.findByName(fund.getName());
+//        f.setCategory(category);
+//        f.setFoundation(foundation);
+//
+//        Fund returnFund = fundService.save(f);
+//        if (returnFund != null) {
+//            return "redirect:/admin/fund?message=Add Fund Successfully";
+//        } else {
+//            return "redirect:/admin/fund?error=Add Fund Failed";
+//        }
+//    }
 }

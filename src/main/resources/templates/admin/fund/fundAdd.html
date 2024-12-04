@@ -23,7 +23,117 @@
   <div id="content-header">
     <h4>Create Fund</h4>
   </div>
+  <div th:if="${param.error}">
+    <div
+      class="alert alert-danger"
+      th:text="${param.error}"
+    >
+      ...
+    </div>
+  </div>
+  <div th:if="${param.message}">
+    <div
+      class="alert alert-success"
+      th:text="${param.message}"
+    >
+      ...
+    </div>
+  </div>
 
+  <form class="create-form" method="post" th:action="@{/Donations/admin/fund/add}" th:object="${fund}">
+
+    <div class="form-group">
+      <label class="form-label">ID</label>
+      <input id="fund-id" type="text" class="form-control" readonly name="id" th:value="${fund.id}">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Name</label>
+      <input id="fund-name" type="text" class="form-control" name="name" th:value="${fund.name}">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea id="fund-description" rows="3" class="form-control" name="description"
+                th:text="${fund.description}"></textarea>
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Content</label>
+      <textarea rows="5" id="fund-content" name="content" class="ckeditor form-control"
+                th:text="${fund.content}"></textarea>
+      <span class="form-message"></span>
+    </div>
+
+
+    <div class="form-group">
+      <label class="form-label">Image URL</label>
+      <input id="fund-image-url" type="text" class="form-control" name="image_url" th:value="${fund.imageUrl}">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Expected Result</label>
+      <input id="fund-expected-result" type="text" class="form-control" name="expected-result"
+             th:value="${fund.expectedResult}">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Status</label>
+      <select id="fund-status" class="form-select" name="status">
+        <option th:each="status : ${statusList}" th:selected="${status == fund.status}" th:text="${status}"></option>
+      </select>
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Created Date</label>
+      <input id="fund-created-date" type="date" class="form-control" name="created_date" readonly
+             th:value="${fund.createdDate}">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">End Date</label>
+      <input id="fund-end-date" type="date" class="form-control" name="end_date" th:value="${fund.endDate}">
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select id="fund-category" class="form-select" name="category-name">
+        <option>Category</option>
+        <option th:each="category : ${categoryList}" th:selected="${category?.name == fund?.category?.name}"
+                th:text="${category?.name}"></option>
+      </select>
+      <span class="form-message"></span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Foundation</label>
+      <select id="fund-foundation" class="form-select" name="foundation-name">
+        <option>Foundation</option>
+        <option th:each="foundation : ${foundationList}" th:selected="${foundation?.name == fund?.foundation?.name}"
+                th:text="${foundation?.name}"></option>
+      </select>
+      <span class="form-message"></span>
+    </div>
+
+
+    <div class="form-group">
+      <button id="btn-Save" type="submit" class="btn btn-success mx-1">
+        <i class="fa-solid fa-floppy-disk"></i> Save
+      </button>
+      <button id="btn-Cancel" type="button" class="btn btn-primary mx-1">
+        <i class="fa-solid fa-rotate-left"></i> Cancel
+      </button>
+    </div>
+
+  </form>
 </div>
 </body>
 </html>
