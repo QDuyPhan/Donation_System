@@ -14,3 +14,12 @@ spring:
         debug: true
     test-connection: false
     protocol: smtp
+  spring:
+    datasource:
+      url: jdbc:mysql://localhost:3306/donations
+      username: root
+      password: 1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+      hibernate:
+        ddl-auto: update

@@ -26,4 +26,6 @@ public interface FundService {
     List<Fund> getAllBySearch(String search);
 
     List<Fund> getByCategoryId(int categoryId);
+
+    List<Fund> getByFoundationId(int foundationId);
 }

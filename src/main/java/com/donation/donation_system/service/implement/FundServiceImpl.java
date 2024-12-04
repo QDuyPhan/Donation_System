@@ -70,6 +70,8 @@ public class FundServiceImpl implements FundService {
     {
         return fundRepository.getByCategoryId(categoryId);
     }
+    @Override
+    public List<Fund> getByFoundationId(int foundationId){return fundRepository.getByFoundationId(foundationId);}
 
     @Override
     public Fund getFundById(int id){
