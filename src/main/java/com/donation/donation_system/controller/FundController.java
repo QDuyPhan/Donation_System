@@ -16,10 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/Donations")
@@ -136,10 +134,21 @@ public class FundController {
         if (totalDonations.containsKey(fund.getId()) && fund.getExpectedResult() > 0) {
             percentAchieved = (int) (100.0 * totalDonations.get(fund.getId()) / fund.getExpectedResult());
         }
+        List<Donation> limitedDonations = donationFund.stream().limit(2).collect(Collectors.toList());
+        List<Donation> allDonations = new ArrayList<>(); // Khởi tạo danh sách trống mặc định
+
+        if (donationFund.size() > 2) {
+            allDonations = donationFund.subList(2, donationFund.size());
+        }
+
+        System.out.println(limitedDonations);
+        model.addAttribute("limitedDonations", limitedDonations); // Gửi mảng ít
+        model.addAttribute("allDonations", allDonations); // Gửi mảng nhiều
+
         fund.setPercentAchieved(percentAchieved);
         model.addAttribute("categories", categories);
-        model.addAttribute("donationFund", donationFund);
-        System.out.println("danh sach quyen gop " + donationFund);
+       // model.addAttribute("donationFund", donationFund);
+
         model.addAttribute("fund", fund);
         model.addAttribute("totalDonations", totalDonations);
         model.addAttribute("sumDonations", sumDonations);

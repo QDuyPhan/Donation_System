@@ -3,8 +3,11 @@ package com.donation.donation_system.service.implement;
 import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.repository.DonationRepository;
 import com.donation.donation_system.service.DonationService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 @Service
@@ -36,5 +39,10 @@ public class DonationServiceImpl implements DonationService {
     public List<Donation> findDonationById(int id) {
         return donationRepository.findDonationByFund(id);
     }
+    @Override
+    public List<Donation> findTop3ByOrderByFieldAsc (){
+       // Lấy trang đầu tiên, 3 kết quả
+        return donationRepository.findLast3Donations();
+    };
 
 }

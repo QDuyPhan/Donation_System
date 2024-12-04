@@ -10,4 +10,6 @@ public interface DonationService {
     Integer findTotalDonationsByFund(int id);
     Integer countDonationsByFund(int id);
     List<Donation> findDonationById(int id);
+    List<Donation> findTop3ByOrderByFieldAsc();
+
 }

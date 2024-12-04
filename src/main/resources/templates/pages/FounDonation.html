@@ -45,7 +45,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a th:href="@{/home}">
-          <i class="fa-solid fa-house"></i>
+          <i class="fa-solid fa-house  text-dark"></i>
         </a>
       </li>
       <li class="breadcrumb-item active" aria-current="page">Danh sách nhà tổ chức gây quỹ</li>
@@ -59,7 +59,7 @@
       <div class="col-md-4 d-flex align-items-stretch mb-4" th:each="foundation : ${foundation}">
         <div class="card" style="width: 100%">
           <div class="card-header">
-            <a href="#" th:text="${foundation.name}"></a>
+            <a  th:text="${foundation.name}"></a>
           </div>
           <div class="card-body">
             <p class="card-text card-description" th:text="${foundation.description}"></p>
