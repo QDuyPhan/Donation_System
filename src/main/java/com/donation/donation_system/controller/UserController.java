@@ -149,8 +149,48 @@ public class UserController {
         model.addAttribute("totalPages", donationList.getTotalPages());
         model.addAttribute("totalElements", donationList.getTotalElements());
         model.addAttribute("currentPage", page);
-
-
         return "user/donationhistory";
+    }
+
+    @GetMapping("/admin/user")
+    public String showAdminUser(Model model, HttpSession session,
+                                @RequestParam(required = false, defaultValue = "0") int page,
+                                @RequestParam(required = false, defaultValue = "") String username,
+                                @RequestParam(required = false, defaultValue = "") String phone,
+                                @RequestParam(required = false, defaultValue = "") String email,
+                                @RequestParam(required = false, defaultValue = "") String role,
+                                @RequestParam(required = false, value = "action", defaultValue = "") String action) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+
+        User user = new User();
+        if (username == null) username = "";
+        if (phone == null) phone = "";
+        if (email == null) email = "";
+        Pageable pageable = PageRequest.of(page, TOTAL_ITEMS_PER_PAGE);
+        Page<User> userList = userService.getPage(username, phone, email, Integer.parseInt(role), pageable);
+
+        String roles[] = {"Admin", "User"};
+        model.addAttribute("userList", userList);
+        model.addAttribute("size", userList.getSize());
+        model.addAttribute("totalPages", userList.getTotalPages());
+        model.addAttribute("totalElements", userList.getTotalElements());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("username", username);
+        model.addAttribute("phone", phone);
+        model.addAttribute("email", email);
+        model.addAttribute("roles", roles);
+        model.addAttribute("role", role);
+        model.addAttribute("user", user);
+        return "admin/user/user";
+    }
+
+    @GetMapping("/admin/user/add")
+    public String showAdminUserAdd(Model model, @ModelAttribute("user") User user) {
+        String statusList[] = {"NotActivated", "Active", "Inactive", "Banned"};
+        int roleList[] = {1, 2};
+
+
+        model.addAttribute("statusList", statusList);
+        model.addAttribute("roleList", roleList);
+        return "admin/user/addUserForm";
     }
 }

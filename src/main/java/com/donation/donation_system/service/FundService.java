@@ -1,8 +1,11 @@
 package com.donation.donation_system.service;
 
 import com.donation.donation_system.model.Fund;
-import com.donation.donation_system.repository.FundRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,4 +31,6 @@ public interface FundService {
     List<Fund> getByCategoryId(int categoryId);
 
     List<Fund> getByFoundationId(int foundationId);
+
+    Page<Fund> getPage(String id, String name, String foundation, String category, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 }

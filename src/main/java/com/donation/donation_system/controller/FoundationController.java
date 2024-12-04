@@ -40,11 +40,10 @@ public class FoundationController {
     private FoundationService foundationService;
 
     @GetMapping("/foundation")
-    public String ShowFoundations(@RequestParam(name = "id",required = false,defaultValue = "")int id, Model model)
-    {
+    public String ShowFoundations(@RequestParam(name = "id", required = false, defaultValue = "") int id, Model model) {
         List<Fund> fundList = fundService.getByFoundationId(id);
         Optional<Foundation> foundationOptional = foundationService.findById(id);
-        List<Foundation>foundations=foundationService.findAll();
+        List<Foundation> foundations = foundationService.findAll();
         Map<Integer, Integer> totalDonations = new HashMap<>();
         Map<Integer, Integer> sumDonations = new HashMap<>();
         for (Fund fund : fundList) {
@@ -60,13 +59,12 @@ public class FoundationController {
             }
             fund.setPercentAchieved(percentAchieved);
         }
-        model.addAttribute("foundations",foundations);
-        model.addAttribute("fundList",fundList);
-        if(foundationOptional.isPresent()){
-            model.addAttribute("foundation",foundationOptional.get());
-        }
-        else{
-            model.addAttribute("foundation",null);
+        model.addAttribute("foundations", foundations);
+        model.addAttribute("fundList", fundList);
+        if (foundationOptional.isPresent()) {
+            model.addAttribute("foundation", foundationOptional.get());
+        } else {
+            model.addAttribute("foundation", null);
         }
         model.addAttribute("totalDonations", totalDonations);
         model.addAttribute("sumDonations", sumDonations);
@@ -76,10 +74,10 @@ public class FoundationController {
 
     @GetMapping("/admin/foundation")
     public String showFoundationAdmin(Model model, HttpSession session,
-                                    @RequestParam(required = false, defaultValue = "0") int page,
-                                    @RequestParam(required = false, defaultValue = "") String id,
-                                    @RequestParam(required = false, defaultValue = "") String name,
-                                    @RequestParam(required = false, value = "action", defaultValue = "") String action
+                                      @RequestParam(required = false, defaultValue = "0") int page,
+                                      @RequestParam(required = false, defaultValue = "") String id,
+                                      @RequestParam(required = false, defaultValue = "") String name,
+                                      @RequestParam(required = false, value = "action", defaultValue = "") String action
     )
             throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
 
@@ -89,7 +87,7 @@ public class FoundationController {
             model.addAttribute("action", action);
             return "admin/foundation/foundation-form";
         } else if (action != null && action.equals("edit")) {
-            Optional<Foundation>foundation = foundationService.findById(Integer.parseInt(id));
+            Optional<Foundation> foundation = foundationService.findById(Integer.parseInt(id));
             if (foundation.isPresent())
                 model.addAttribute("foundation", foundation.get());
             else
@@ -113,6 +111,7 @@ public class FoundationController {
         model.addAttribute("name", name);
         return "admin/foundation/foundation";
     }
+
     @GetMapping("/admin/foundation/add")
     public String showFoundationAdminAddForm(Model model) {
         Foundation foundation = new Foundation();
@@ -121,6 +120,7 @@ public class FoundationController {
         model.addAttribute("statusList", statusList);
         return "admin/foundation/foundation-form-add";
     }
+
     @PostMapping("/admin/foundation/add")
     public String processFoundation(@ModelAttribute("foundation") Foundation foundation, Model model) {
         try {
@@ -146,6 +146,7 @@ public class FoundationController {
             return "admin/foundation/foundation-form-add";
         }
     }
+
     @GetMapping("/admin/foundation/edit")
     public String showEditFoundationForm(@RequestParam("id") int id, Model model) {
         Optional<Foundation> foundation = foundationService.findById(id);
@@ -161,6 +162,7 @@ public class FoundationController {
 
         return "admin/foundation/foundation-form-edit";
     }
+
     @PostMapping("/admin/foundation/edit")
     public ResponseEntity<String> updateFoundation(@RequestBody Foundation foundation) {
         boolean result = foundationService.updateFoundation(
@@ -178,6 +180,7 @@ public class FoundationController {
                     .body("Failed to update foundation");
         }
     }
+
     @PostMapping("/admin/foundation/delete")
     public ResponseEntity<String> deleteFoundation(@RequestParam("foundation-id") int foundationId) {
         boolean result = foundationService.deleteFoundation(foundationId);
@@ -188,8 +191,6 @@ public class FoundationController {
                     .body("Foundation not found or could not be deleted.");
         }
     }
-
-
 
 
 }

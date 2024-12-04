@@ -24,4 +24,6 @@ public interface CategoryService {
     Page<Category> findAllByNameOrID(String query, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 
     Category save(Category category) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
+    List<Category> search(String categoryName) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 }

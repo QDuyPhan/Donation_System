@@ -10,14 +10,21 @@ import com.donation.donation_system.service.FundService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static utils.Constants.TOTAL_ITEMS_PER_PAGE;
 
 @Controller
 @RequestMapping("/Donations")
@@ -106,7 +113,6 @@ public class FundController {
     }
 
 
-
     // Xóa một quỹ
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFund(@PathVariable Integer id) {
@@ -154,5 +160,42 @@ public class FundController {
         model.addAttribute("sumDonations", sumDonations);
         model.addAttribute("content", "/component/detailProject");
         return "index";
+    }
+
+    @GetMapping("/admin/fund")
+    public String adminFund(Model model, HttpSession session,
+                            @RequestParam(required = false, defaultValue = "0") int page,
+                            @RequestParam(required = false, defaultValue = "") String id,
+                            @RequestParam(required = false, defaultValue = "") String name,
+                            @RequestParam(required = false, defaultValue = "") String foundation,
+                            @RequestParam(name = "filter-category", required = false, defaultValue = "") String category,
+                            @RequestParam(required = false, value = "action", defaultValue = "") String action) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+        if (id == null) id = "";
+        if (name == null) name = "";
+        if (foundation == null) foundation = "";
+
+        category = (category == null) ? "" : category;
+        Pageable pageable = PageRequest.of(page, TOTAL_ITEMS_PER_PAGE);
+        Page<Fund> fundList = fundService.getPage(id, name, foundation, category, pageable);
+        List<Category> categoryList = categoryService.search("");
+
+
+        model.addAttribute("fundList", fundList);
+        model.addAttribute("size", fundList.getSize());
+        model.addAttribute("totalPages", fundList.getTotalPages());
+        model.addAttribute("totalElements", fundList.getTotalElements());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("id", id);
+        model.addAttribute("name", name);
+        model.addAttribute("foundation", foundation);
+        model.addAttribute("category", category);
+        model.addAttribute("categoryList", categoryList);
+        return "admin/fund/fund";
+    }
+
+    @GetMapping("admin/fund/add")
+    public String showFormFundAdd(Model model) {
+
+        return "admin/fund/fundAdd";
     }
 }

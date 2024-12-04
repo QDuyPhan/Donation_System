@@ -44,6 +44,10 @@
   <script th:src="@{/js/foundation.js}"></script>
   <script th:src="@{/js/category.js}"></script>
   <script th:src="@{/js/donation.js}"></script>
+  <script th:src="@{/js/user.js}"></script>
+  <script th:src="@{/js/user-submit.js}"></script>
+  <script th:src="@{/js/fund.js}"></script>
+  <script th:src="@{/js/fund-submit.js}"></script>
   <meta charset="UTF-8">
   <style>
       .dropdown-menu {
@@ -66,16 +70,16 @@
   <div th:unless="${session.user}">
     <a th:href="@{/Donations/login}">Đăng nhập</a>
   </div>
-    <button class="btn dropdown-toggle" type="button"
-            id="userDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-      <img th:src="@{/images/icon1.png}" style="width: 50px" alt="">
-      <span>Welcome <b th:text="${session.user.username}"></b></span>
-    </button>
-    <div class=" dropdown-menu" aria-labelledby="userDropdownMenu">
-      <a class="dropdown-item" style="width: 100%;" th:href="@{#}">Thay đổi mật khẩu</a>
-      <a class="dropdown-item" th:href="@{/Donations/login(logout)}">Đăng xuất</a>
-    </div>
+  <button class="btn dropdown-toggle" type="button"
+          id="userDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+    <img th:src="@{/images/icon1.png}" style="width: 50px" alt="">
+    <span>Welcome <b th:text="${session.user.username}"></b></span>
+  </button>
+  <div class=" dropdown-menu" aria-labelledby="userDropdownMenu">
+    <a class="dropdown-item" style="width: 100%;" th:href="@{#}">Thay đổi mật khẩu</a>
+    <a class="dropdown-item" th:href="@{/Donations/login(logout)}">Đăng xuất</a>
+  </div>
   </div>
 
 </header>
@@ -101,15 +105,13 @@
                               href="/Donations/admin/foundation"><i
         class="fa-solid fa-people-group"></i> Nhà tổ chức</a></li>
       <li class="nav-item"><a class="nav-link "
-                              href="#"><i
+                              href="/Donations/admin/fund"><i
         class="fa-solid fa-sack-dollar"></i> Quỹ quyên góp</a></li>
       <li class="nav-item"><a class="nav-link "
                               href="/Donations/admin/donation"><i
         class="fa-solid fa-hand-holding-heart"></i> Lượt Quyên Góp</a></li>
       <li class="nav-item"><a class="nav-link "
-                              href="#"> <i
-        class="fa-solid fa-user"></i> Tài khoản
-      </a></li>
+                              href="/Donations/admin/user"> <i class="fa-solid fa-user"></i> Tài khoản </a></li>
     </ul>
   </div>
 </nav>

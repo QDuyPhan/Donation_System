@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
@@ -24,6 +26,9 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     @Query("SELECT d FROM Category d WHERE d.name LIKE %?1% OR CAST(d.id AS string) LIKE %?1%")
     Page<Category> findAllByNameOrID(String query, Pageable pageable);
 
+
+    @Query("SELECT c FROM Category c WHERE c.name LIKE %:categoryName% AND c.status = :status")
+    List<Category> search(String categoryName, String status);
 //    Category findById(int id);
 
 }
