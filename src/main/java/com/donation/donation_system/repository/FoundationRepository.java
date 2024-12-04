@@ -24,9 +24,14 @@ public interface FoundationRepository extends JpaRepository<Foundation, Integer>
 
     @Modifying
     @Query(value = "update Foundation f set f.status= ?1 where f.id= ?2 ")
-    int deleteFoundation( String status, int id);
+    int deleteFoundation(String status, int id);
 
     @Modifying
-    @Query(value="update Foundation f set f.name= :name, f.email= :email, f.description= :description, f.status= :status where f.id= :id")
-    int updateFoundationInfo(@Param("name") String name,@Param("email") String email,@Param("description") String description,@Param("status") String status,@Param("id")int id);
+    @Query(value = "update Foundation f set f.name= :name, f.email= :email, f.description= :description, f.status= :status where f.id= :id")
+    int updateFoundationInfo(@Param("name") String name, @Param("email") String email, @Param("description") String description, @Param("status") String status, @Param("id") int id);
+
+    List<Foundation> findByNameContaining(String foundationName);
+
+    @Query("SELECT f FROM Foundation f WHERE f.name = :foundationName")
+    Foundation findByName(String foundationName);
 }

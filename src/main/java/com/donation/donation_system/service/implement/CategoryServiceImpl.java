@@ -57,4 +57,14 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.search(categoryName, STATUS_ENABLE);
     }
 
+    @Override
+    public List<Category> findAll() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Category findByName(String categoryName) {
+        return categoryRepository.findByName(categoryName);
+    }
+
 }
