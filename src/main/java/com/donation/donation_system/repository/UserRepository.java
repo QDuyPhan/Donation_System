@@ -2,6 +2,8 @@ package com.donation.donation_system.repository;
 
 import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -43,4 +45,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     int getTotalDonationByUser(int id);
 
     User findByResetPasswordToken(String token);
+
+    @Query(value = "SELECT u FROM User u " +
+            "WHERE u.username LIKE %:username% " +
+            "AND u.email LIKE %:email% " +
+            "AND u.sdt LIKE %:sdt% " +
+            "AND (:role = -1 OR u.role = :role)", nativeQuery = true)
+    Page<User> getPage(String username, String email, String sdt, int role, Pageable pageable);
+
 }

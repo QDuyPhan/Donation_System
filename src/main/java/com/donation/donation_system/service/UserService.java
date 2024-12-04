@@ -5,6 +5,8 @@ import com.donation.donation_system.model.User;
 import com.donation.donation_system.service.implement.UserNotFoundException;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -49,4 +51,6 @@ public interface UserService {
     User get(String resetPasswordToken);
 
     void updatePassword(User user, String newPassword) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
+
+    Page<User> getPage(String username, String phone, String email, int role, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 }

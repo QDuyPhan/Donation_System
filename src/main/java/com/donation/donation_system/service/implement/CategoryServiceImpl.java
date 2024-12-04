@@ -6,13 +6,14 @@ import com.donation.donation_system.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+
+import static utils.Constants.STATUS_ENABLE;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -49,6 +50,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category save(Category category) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         return categoryRepository.save(category);
+    }
+
+    @Override
+    public List<Category> search(String categoryName) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return categoryRepository.search(categoryName, STATUS_ENABLE);
     }
 
 }

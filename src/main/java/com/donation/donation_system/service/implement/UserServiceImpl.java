@@ -10,6 +10,8 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -209,5 +211,10 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodePassword(newPassword));
         user.setResetPasswordToken(null);
         userRepository.save(user);
+    }
+
+    @Override
+    public Page<User> getPage(String username, String phone, String email, int role, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return userRepository.getPage(username, phone, email, role, pageable);
     }
 }

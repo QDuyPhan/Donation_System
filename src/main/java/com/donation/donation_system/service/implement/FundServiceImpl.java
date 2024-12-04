@@ -4,9 +4,12 @@ import com.donation.donation_system.model.Fund;
 import com.donation.donation_system.repository.FundRepository;
 import com.donation.donation_system.service.FundService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,15 +69,22 @@ public class FundServiceImpl implements FundService {
     }
 
     @Override
-    public List<Fund> getByCategoryId(int categoryId)
-    {
+    public List<Fund> getByCategoryId(int categoryId) {
         return fundRepository.getByCategoryId(categoryId);
     }
-    @Override
-    public List<Fund> getByFoundationId(int foundationId){return fundRepository.getByFoundationId(foundationId);}
 
     @Override
-    public Fund getFundById(int id){
+    public List<Fund> getByFoundationId(int foundationId) {
+        return fundRepository.getByFoundationId(foundationId);
+    }
+
+    @Override
+    public Page<Fund> getPage(String id, String name, String foundation, String category, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return fundRepository.getPage(id, name, foundation, category, pageable);
+    }
+
+    @Override
+    public Fund getFundById(int id) {
         return fundRepository.getReferenceById(id);
     }
 }
