@@ -5,10 +5,16 @@ import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.User;
 import com.donation.donation_system.repository.UserRepository;
 import com.donation.donation_system.service.UserService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -22,6 +28,8 @@ import static com.donation.donation_system.utils.Constants.*;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Override
     public User findByUsername(String name) {
@@ -32,6 +40,11 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public User findUserById(int id) {
+        return userRepository.findUserById(id);
     }
 
     @Override
@@ -155,5 +168,46 @@ public class UserServiceImpl implements UserService {
             return result;
         }
         return 0;
+    }
+
+    @Override
+    public void updateResetPasswordToken(String token, String email) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException, UserNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            user.setResetPasswordToken(token);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public String getSiteURL(HttpServletRequest request) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException, UserNotFoundException {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
+
+    @Override
+    public void sendEmail(String email, String resetPasswordLink) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException, UnsupportedEncodingException, MessagingException, UserNotFoundException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom("resetpassword", "Reset Password");
+        helper.setTo(email);
+        String subject = "Link to reset password";
+        String content = "<p>Click the link to change your password: </p>"
+                + "<p><b><a href=\"" + resetPasswordLink + "\"> Change my password</a><b></p>";
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
+    }
+
+    @Override
+    public User get(String resetPasswordToken) {
+        return userRepository.findByResetPasswordToken(resetPasswordToken);
+    }
+
+    @Override
+    public void updatePassword(User user, String newPassword) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        user.setPassword(encodePassword(newPassword));
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
     }
 }

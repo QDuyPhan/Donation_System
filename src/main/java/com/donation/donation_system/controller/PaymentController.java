@@ -5,6 +5,7 @@ import com.donation.donation_system.model.Fund;
 import com.donation.donation_system.model.User;
 import com.donation.donation_system.service.DonationService;
 import com.donation.donation_system.service.FundService;
+import com.donation.donation_system.service.UserService;
 import com.donation.donation_system.service.VNPayService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -32,8 +33,12 @@ public class PaymentController {
 
     @Autowired
     private FundService fundService;
+
     @Autowired
     private DonationService donationService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/pay")
     public String createPayment(Model model,
@@ -41,7 +46,7 @@ public class PaymentController {
                                 HttpSession session,
                                 @RequestParam("fund-id") String fund_id,
                                 @RequestParam("donation-amount") String donation_amount,
-                                @RequestParam("donation-message") String donation_message) {
+                                @RequestParam(value = "donation-message", defaultValue = "") String donation_message) {
         System.out.println("fund_id: " + fund_id);
         System.out.println("donation_amount: " + donation_amount);
         System.out.println("donation_message: " + donation_message);
@@ -81,10 +86,14 @@ public class PaymentController {
         Optional<Fund> fundOptional = fundService.findById(Integer.parseInt(fundId));
         Fund fund = fundOptional.get();
 
+        User userName = userService.findUserById(user.getId());
+
         model.addAttribute("fund_id", fundId);
+        model.addAttribute("fund_name", fund.getName());
         model.addAttribute("donation_amount", vnp_Amount);
         model.addAttribute("donation_message", donationMessage);
         model.addAttribute("userID", user.getId());
+        model.addAttribute("userName", userName.getFullName());
         model.addAttribute("vnp_PayDate", standardPayDate);
 
         Donation donation = new Donation();

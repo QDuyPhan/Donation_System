@@ -7,15 +7,20 @@ import com.donation.donation_system.service.CategoryService;
 import com.donation.donation_system.service.DonationService;
 import com.donation.donation_system.service.FundService;
 import com.donation.donation_system.service.UserService;
+import com.donation.donation_system.service.implement.UserNotFoundException;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import net.bytebuddy.utility.RandomString;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -127,5 +132,78 @@ public class LoginController {
             model.addAttribute("sumDonations", sumDonations);
             return "index";
         }
+    }
+
+    @GetMapping("/forgotPassword")
+    public String forgotPassword(Model model, HttpSession session) {
+        model.addAttribute("pageTitle", "Forgot Password");
+
+        return "forgotPassword";
+    }
+
+    @PostMapping("/forgotPassword")
+    public String processForgotPasswordForm(HttpServletRequest request, Model model) {
+        String email = request.getParameter("Email");
+        String token = RandomString.make(45);
+
+        try {
+            userService.updateResetPasswordToken(token, email);
+
+            String resetPasswordLink = userService.getSiteURL(request) +
+                    "/Donations/resetPassword?token=" + token;
+            userService.sendEmail(email, resetPasswordLink);
+            model.addAttribute("message", "we have sent a reset password link to your email.");
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+            model.addAttribute("error", e.getMessage());
+        } catch (UnsupportedEncodingException | MessagingException e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Error while sending email.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException throwables) {
+            throw new RuntimeException(throwables);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        model.addAttribute("pageTitle", "Forgot Password");
+        return "forgotPassword";
+    }
+
+    @GetMapping("/resetPassword")
+    public String showResetPasswordForm(@Param("token") String token, Model model) {
+        User user = userService.get(token);
+        if (user == null) {
+            model.addAttribute("error", "Invalid token");
+            return "error";
+        }
+        model.addAttribute("token", token);
+        model.addAttribute("pageTitle", "Reset your Password");
+        return "resetPassword";
+    }
+
+    @PostMapping("/resetPassword")
+    public String processResetPasswordForm(HttpServletRequest request, Model model) {
+        String token = request.getParameter("token");
+        String password = request.getParameter("newPassword");
+        System.out.println("token: " + token);
+        System.out.println("Password: " + password);
+        User user = userService.get(token);
+        if (user == null) {
+            model.addAttribute("error", "Invalid token");
+            return "resetPassword";
+//            return "error";
+//            return "redirect:/resetPassword?error=Invalid token";
+        } else {
+            try {
+                userService.updatePassword(user, password);
+            } catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+            model.addAttribute("message", "Change password successfully");
+            return "resetPassword";
+//            return "redirect:/resetPassword?message=Change password successfully";
+        }
+//        return "message";
     }
 }

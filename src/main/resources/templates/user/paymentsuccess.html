@@ -24,28 +24,33 @@
 <div class="body py-5">
   <div class="container">
     <div class="w-50 m-auto">
-      <!-- Thêm lớp "my-4" để tạo ra khoảng cách trên và dưới tiêu đề trang -->
       <h1 class="my-3 text-success text-center">Thanh toán thành công</h1>
-      <!-- Sử dụng lớp "alert" và "alert-danger" để tạo ra thông báo lỗi -->
-      <h2 class="my-2">Chi tiết đơn hàng</h2>
-      <!-- Sử dụng lớp "table" và "table-bordered" để tạo ra bảng hiển thị thông tin chi tiết đơn hàng -->
+      <h2 class="my-2">Chi tiết thanh toán</h2>
       <table class="table table-bordered">
         <tbody>
         <tr>
-          <td>fund_id:</td>
+          <td>Mã dự án:</td>
           <td><span th:text="${fund_id}">[fund_id]</span></td>
         </tr>
         <tr>
-          <td>Tổng tiền:</td>
+          <td>Tên dự án:</td>
+          <td><span th:text="${fund_name}">[fund_name]</span></td>
+        </tr>
+        <tr>
+          <td>Tổng tiền thanh toán:</td>
           <td><span th:text="${donation_amount}">[donation_amount]</span></td>
         </tr>
         <tr>
-          <td>donation_message:</td>
+          <td>Lời nhắn:</td>
           <td><span th:text="${donation_message}">[donation_message]</span></td>
         </tr>
         <tr>
-          <td>userID:</td>
+          <td>Mã người thanh toán:</td>
           <td><span th:text="${userID}">[userID]</span></td>
+        </tr>
+        <tr>
+          <td>Người thanh toán:</td>
+          <td><span th:text="${userName}">[userName]</span></td>
         </tr>
         <tr>
           <td>Ngày giao dịch:</td>

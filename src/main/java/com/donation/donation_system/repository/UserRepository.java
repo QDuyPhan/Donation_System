@@ -16,6 +16,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByEmail(String email);
 
+    User findUserById(int id);
+
     @Query(value = "select count(*) from User where username = :username and id = :id")
     int activate(@Param("username") String username, @Param("id") String id);
 
@@ -39,4 +41,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "select count(*) from Donation where id = :id", nativeQuery = true)
     int getTotalDonationByUser(int id);
+
+    User findByResetPasswordToken(String token);
 }

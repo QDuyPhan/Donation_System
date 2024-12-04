@@ -39,4 +39,8 @@ public class User {
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
 }
