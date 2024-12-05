@@ -16,65 +16,56 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
     <meta charset="UTF-8">
-    <title>Add Foundation</title>
+    <title>Thêm Nhà tổ chức</title>
 </head>
 <body>
-<div th:if="${param.message}">
+<div th:if="${message}">
     <script th:inline="text">
-        alert("Foundation added successfully!");
+        alert("[(${message})]");
     </script>
 </div>
 <div id="contentF" th:fragment="contentAdmin">
     <div id="content-headerF">
-        <h4>Create Foundation</h4>
+        <h4>Thêm Nhà tổ chức</h4>
     </div>
-    <div th:if="${param.error}" class="w-100 d-flex">
-    <span
-            class="text-danger align-items-center"
-            th:text="${param.error}"
-    >
-      ...
-    </span>
+    <div th:if="${error}" class="w-100 d-flex">
+        <span
+                class="text-danger align-items-center"
+                th:text="${error}">
+        </span>
     </div>
-    <div th:if="${param.message}" class="w-100 d-flex">
-    <span
-            class="text-danger align-items-center"
-            th:text="${param.message}"
-    >
-      ...
-    </span>
+    <div th:if="${message}" class="w-100 d-flex">
+        <span
+                class="text-success align-items-center"
+                th:text="${message}">
+        </span>
     </div>
-    <form class="create-form" th:action="@{/Donations/admin/foundation/add}" method="post"
-          th:object="${foundation}">
+    <form class="create-form" th:action="@{/Donations/admin/foundation/add}" method="post" th:object="${foundation}">
         <div class="form-group">
-            <input id="foundation-id" type="hidden" class="form-control" readonly name="id" th:field="*{id}">
+            <input id="category-id" type="hidden" class="form-control" readonly name="id" th:field="*{id}">
             <span class="form-message"></span>
         </div>
         <div class="form-group mt-2">
             <label class="form-label">Name</label>
-            <input id="foundation-name" type="text" class="form-control" name="name" th:field="*{name}">
-            <span class="form-message"></span>
+            <input id="foundation-name" type="text" name="name" th:field="*{name}" class="form-control" required>
         </div>
         <div class="form-group mt-2">
             <label class="form-label">Email</label>
-            <input id="foundation-email" type="text" class="form-control" name="email" th:field="*{email}">
-            <span class="form-message"></span>
+            <input id="foundation-email" type="email" name="email" th:field="*{email}" class="form-control" required>
         </div>
         <div class="form-group mt-2">
-            <label class="form-label">Description</label>
-            <input id="foundation-description" class="form-control" name="description" th:field="*{description}">
-            <span class="form-message"></span>
+            <label  class="form-label">Description</label>
+            <textarea id="foundation-description" name="description" th:field="*{description}" class="form-control"></textarea>
         </div>
         <div class="form-group mt-2">
-            <label class="form-label">Status</label>
-            <select id="foundation-status" class="form-select" name="status">
+            <label  class="form-label">Status</label>
+            <select id="foundation-status" name="status" class="form-select" >
                 <option th:each="status : ${statusList}" th:text="${status}" th:field="*{status}" th:value="${status}"
                         th:selected="${foundation.status == status}"></option>
             </select>
-            <span class="form-message"></span>
         </div>
         <div class="form-group mt-3">
-            <button id="btn-SaveF" type="submit" class="btn btn-success mx-1">
+            <button id="btn-SaveF" type="submit" class="btn btn-success">
                 <i class="fa-solid fa-floppy-disk"></i> Save
             </button>
             <button id="btn-CancelF" type="button" class="btn btn-primary mx-1">

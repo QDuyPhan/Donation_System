@@ -77,4 +77,9 @@ public class FoundationServiceImpl implements FoundationService {
         }
         return false;
     }
+
+    @Override
+    public boolean existsByNameAndIdNot(String name, int id) {
+        return foundationRepository.existsByNameAndIdNot(name, id);
+    }
 }

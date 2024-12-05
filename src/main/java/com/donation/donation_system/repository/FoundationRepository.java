@@ -29,4 +29,10 @@ public interface FoundationRepository extends JpaRepository<Foundation, Integer>
     @Modifying
     @Query(value="update Foundation f set f.name= :name, f.email= :email, f.description= :description, f.status= :status where f.id= :id")
     int updateFoundationInfo(@Param("name") String name,@Param("email") String email,@Param("description") String description,@Param("status") String status,@Param("id")int id);
+
+    @Query("SELECT CASE WHEN COUNT(f) > 0 THEN TRUE ELSE FALSE END " +
+            "FROM Foundation f WHERE f.name = ?1 AND f.id <> ?2")
+    boolean existsByNameAndIdNot(String name, int id);
+
+
 }

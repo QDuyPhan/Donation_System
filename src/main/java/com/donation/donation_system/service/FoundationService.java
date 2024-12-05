@@ -20,5 +20,5 @@ public interface FoundationService {
     Page<Foundation> findAllByNameOrID(String query, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
     boolean updateFoundation(String name,String email,String description,String status,int id);
     boolean deleteFoundation(int id);
-
+    boolean existsByNameAndIdNot(String name, int id);
 }

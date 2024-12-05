@@ -16,57 +16,75 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
   />
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Sửa Danh mục</title>
 </head>
 <body>
-<div th:if="${action=='add'}">
+<div th:if="${message}">
   <script th:inline="text">
-      alert("Thêm thất bại !");
+    alert("[(${message})]");
   </script>
 </div>
 <div id="content" th:fragment="contentAdmin">
   <div id="content-header">
-    <h4 th:if="${action=='add'}">Create Category</h4>
-    <h4 th:if="${action=='edit'}">Edit Category</h4>
+    <h4 >Sửa Danh mục</h4>
   </div>
-
-  <form class="create-form" th:action="@{http://localhost:8080/Donations/admin/category}" method="post"
-        th:object="${category}">
+  <div th:if="${error}" class="w-100 d-flex">
+        <span
+                class="text-danger align-items-center"
+                th:text="${error}">
+        </span>
+  </div>
+  <div th:if="${message}" class="w-100 d-flex">
+        <span
+                class="text-success align-items-center"
+                th:text="${message}">
+        </span>
+  </div>
+  <form class="create-form" th:action="@{/Donations/admin/category/edit}" method="post" th:object="${category}">
     <div class="form-group">
-      <label class="form-label">ID</label>
-      <input id="category-id" type="text" class="form-control" readonly name="id"
-             th:value="${category != null ? category.id : ''}">
-      <span class="form-message"></span>
+      <input id="category-id" type="hidden" class="form-control" readonly name="id" th:field="*{id}">
     </div>
+    <!-- Name -->
     <div class="form-group mt-2">
       <label class="form-label">Name</label>
-      <input id="category-name" type="text" class="form-control" name="name"
-             th:value="${category != null ? category.name : ''}">
-      <span class="form-message"></span>
+      <input id="category-name" type="text" class="form-control" name="name" th:field="*{name}" required>
     </div>
+    <!-- Description -->
     <div class="form-group mt-2">
       <label class="form-label">Description</label>
-      <input id="category-description" rows="3" class="form-control" name="description"
-             th:value="${category != null ? category.description : ''}">
-      <span class="form-message"></span>
+      <textarea id="category-description" class="form-control" name="description" th:field="*{description}" rows="3" required></textarea>
     </div>
+    <!-- Status -->
     <div class="form-group mt-2">
       <label class="form-label">Status</label>
-      <select id="category-status" class="form-select" name="status">
-        <option th:each="status : ${statusList}" th:text="${status}"
-                th:selected="${category != null and category.status == status}"></option>
+      <select id="category-status" class="form-select" name="status" th:field="*{status}" required>
+        <option th:each="status : ${statusList}" th:text="${status}" th:value="${status}"
+                th:selected="${category.status == status}">Default Option</option>
       </select>
-      <span class="form-message"></span>
     </div>
+    <!-- Buttons -->
     <div class="form-group mt-3">
-      <button id="btn-Save" type="submit" class="btn btn-success mx-1">
+      <button id="btn-Save-Update" type="submit" class="btn btn-success mx-1">
         <i class="fa-solid fa-floppy-disk"></i> Save
       </button>
+      <!-- Nút cancel sẽ sử dụng JavaScript để chuyển hướng -->
       <button id="btn-Cancel" type="button" class="btn btn-primary mx-1">
         <i class="fa-solid fa-rotate-left"></i> Cancel
       </button>
     </div>
   </form>
 </div>
+<script>
+  // Thêm sự kiện vào nút Cancel để chuyển trang
+  document.getElementById('btn-Cancel').addEventListener('click', function () {
+    const categoryId = document.getElementById('category-id').value; // Lấy ID
+    if (categoryId) {
+      const baseUrl = window.location.origin; // URL gốc
+      window.location.href = baseUrl + "/admin/category/edit?id=" + categoryId;
+    } else {
+      alert("No category ID found!");
+    }
+  });
+</script>
 </body>
 </html>

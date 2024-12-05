@@ -44,21 +44,21 @@
       ...
     </span>
   </div>
-  <form class="create-form" th:action="@{/Donation/admin/category/add}" method="post"
+  <form  th:action="@{/Donation/admin/category/add}" method="post"
         th:object="${category}">
     <div class="form-group">
       <input id="category-id" type="hidden" class="form-control" readonly name="id" th:field="*{id}">
-      <span class="form-message"></span>
+
     </div>
     <div class="form-group mt-2">
       <label class="form-label">Name</label>
       <input id="category-name" type="text" class="form-control" name="name" th:field="*{name}">
-      <span class="form-message"></span>
+
     </div>
     <div class="form-group mt-2">
       <label class="form-label">Description</label>
       <input id="category-description" class="form-control" name="description" th:field="*{description}">
-      <span class="form-message"></span>
+
     </div>
     <div class="form-group mt-2">
       <label class="form-label">Status</label>
@@ -66,7 +66,6 @@
         <option th:each="status : ${statusList}" th:text="${status}" th:field="*{status}" th:value="${status}"
                 th:selected="${category.status == status}"></option>
       </select>
-      <span class="form-message"></span>
     </div>
     <div class="form-group mt-3">
       <button id="btn-Save" type="submit" class="btn btn-success mx-1">

@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.swing.text.html.Option;
 import java.security.NoSuchAlgorithmException;
@@ -121,47 +122,57 @@ public class FoundationController {
         return "admin/foundation/foundation-form-add";
     }
     @PostMapping("/admin/foundation/add")
-    public String processFoundation(@ModelAttribute("foundation") Foundation foundation, Model model) {
-        try {
-            // Validate dữ liệu (nếu cần)
-            if (foundation.getName() == null || foundation.getName().isEmpty()) {
-                model.addAttribute("error", "Foundation name cannot be empty.");
+    public String processFoundation(@ModelAttribute ("foundation") Foundation foundation,Model model) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+        try
+        {
+            if(foundation.getName()==null || foundation.getName().equals("")){
+                model.addAttribute("Error", "Category name cannot be empty");
                 List<String> statusList = Arrays.asList("Enable", "Disable");
                 model.addAttribute("statusList", statusList);
                 return "admin/foundation/foundation-form-add";
             }
 
-            // Lưu Foundation vào database
             foundationService.save(foundation);
 
-            // Redirect về trang danh sách với thông báo thành công
-            model.addAttribute("success", "Foundation added successfully!");
-            return "redirect:/admin/foundation";
+            model.addAttribute("Success", "Them thanh cong");
+            return "redirect:/Donations/admin/foundation";
         } catch (Exception e) {
-            // Xử lý lỗi và thông báo
-            model.addAttribute("error", "Error occurred while saving the foundation: " + e.getMessage());
+            model.addAttribute("Error", e.getMessage());
             List<String> statusList = Arrays.asList("Enable", "Disable");
             model.addAttribute("statusList", statusList);
+            model.addAttribute("Error", "Category name cannot be empty");
             return "admin/foundation/foundation-form-add";
+
         }
     }
+
     @GetMapping("/admin/foundation/edit")
     public String showEditFoundationForm(@RequestParam("id") int id, Model model) {
         Optional<Foundation> foundation = foundationService.findById(id);
-        if (foundation == null) {
+        if (!foundation.isPresent()) { // Sửa để kiểm tra Optional an toàn hơn
             model.addAttribute("error", "Foundation not found!");
             return "redirect:/admin/foundation";
         }
-
         model.addAttribute("foundation", foundation.get());
-
         List<String> statusList = Arrays.asList("Enable", "Disable");
         model.addAttribute("statusList", statusList);
-
         return "admin/foundation/foundation-form-edit";
     }
+
     @PostMapping("/admin/foundation/edit")
     public ResponseEntity<String> updateFoundation(@RequestBody Foundation foundation) {
+        // Kiểm tra dữ liệu
+        String validationError = validateFoundation(foundation);
+        if (validationError != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationError);
+        }
+
+        // Kiểm tra tên đã tồn tại chưa
+        if (foundationService.existsByNameAndIdNot(foundation.getName(), foundation.getId())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Tên Nhà tổ chức đã tồn tại");
+        }
+
+        // Cập nhật
         boolean result = foundationService.updateFoundation(
                 foundation.getName(),
                 foundation.getEmail(),
@@ -171,24 +182,42 @@ public class FoundationController {
         );
 
         if (result) {
-            return ResponseEntity.ok("Foundation updated successfully");
+            return ResponseEntity.ok("Nhà tổ chức sửa thành công");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Failed to update foundation");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sửa Nhà tổ chức không thành công");
         }
     }
-    @PostMapping("/admin/foundation/delete")
-    public ResponseEntity<String> deleteFoundation(@RequestParam("foundation-id") int foundationId) {
-        boolean result = foundationService.deleteFoundation(foundationId);
-        if (result) {
-            return ResponseEntity.ok("Foundation deleted successfully!");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Foundation not found or could not be deleted.");
+
+    // Hàm kiểm tra dữ liệu đầu vào
+    private String validateFoundation(Foundation foundation) {
+        if (foundation.getName() == null || foundation.getName().trim().isEmpty()) {
+            return "Tên không được để trống";
         }
+        if (foundation.getEmail() == null || foundation.getEmail().trim().isEmpty()|| !foundation.getEmail().contains("@")) {
+            return "Email không được để trống và phải đúng cú pháp Ví dụ chứa ký tự @";
+        }
+        if (foundation.getDescription() == null || foundation.getDescription().trim().isEmpty()) {
+            return "Mô tả không được để trống";
+        }
+        return null;
+    }
+
+    @DeleteMapping("/admin/foundation/delete/{id}")
+    public ResponseEntity<String> deleteFoundation(@PathVariable("id") int id) {
+        Optional<Foundation> foundation = foundationService.findById(id);
+        if (!foundation.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Foundation không tồn tại hoặc đã bị xóa");
+        }
+
+        boolean result = foundationService.deleteFoundation(id);
+        return result
+                ? ResponseEntity.ok("Xóa thành công")
+                : ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Không thể xóa");
     }
 
 
 
 
 }
+
+

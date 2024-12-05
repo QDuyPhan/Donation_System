@@ -16,7 +16,7 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
     <meta charset="UTF-8">
-    <title>Edit Foundation</title>
+    <title>Sửa Nhà tổ chức</title>
 </head>
 <body>
 <div th:if="${message}">
@@ -26,7 +26,7 @@
 </div>
 <div id="contentF" th:fragment="contentAdmin">
     <div id="content-headerF">
-        <h4>Edit Foundation</h4>
+        <h4>Sửa Nhà tổ chức</h4>
     </div>
     <div th:if="${error}" class="w-100 d-flex">
         <span
@@ -80,18 +80,6 @@
         </div>
     </form>
 </div>
-<!-- JavaScript -->
-<script>
-    // Thêm sự kiện vào nút Cancel để chuyển trang
-    document.getElementById('btn-CancelF').addEventListener('click', function () {
-        const foundationId = document.getElementById('foundation-id').value; // Lấy ID
-        if (foundationId) {
-            const baseUrl = window.location.origin; // URL gốc
-            window.location.href = baseUrl + "/admin/foundation/edit?id=" + foundationId;
-        } else {
-            alert("No Foundation ID found!");
-        }
-    });
-</script>
+
 </body>
 </html>

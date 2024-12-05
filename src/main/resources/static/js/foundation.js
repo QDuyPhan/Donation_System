@@ -13,27 +13,30 @@ $(document).ready(function () {
         const newPath = `/${pathS[1]}/admin/foundation/edit?id=${foundationId}`;
         window.location.replace(newPath);
     });
-    $(".btn-deleteF").on("click", function () {
-        var foundationId = $(this).closest('tr').find('.foundation-id').text();
+    $(".btn-delete").on("click", function () {
+        const foundationId = $(this).data("id"); // Lấy ID từ nút xóa
+        const row = $(this).closest("tr"); // Lấy dòng hiện tại
 
-        // Hiển thị hộp thoại xác nhận
-        if (confirm("Are you sure you want to delete foundation with ID: " + foundationId + "?")) {
-            // Gửi yêu cầu xóa tới controller nếu xác nhận
+        if (confirm(`Are you sure you want to delete foundation with ID: ${foundationId}?`)) {
             $.ajax({
-                url: "/Donations/admin/foundation/delete",  // Đảm bảo đường dẫn đúng
-                type: "POST",
-                data: { "foundation-id": foundationId },  // Gửi ID foundation
+                url: `/Donations/admin/foundation/delete/${foundationId}`,
+                method: "DELETE", // Gửi request DELETE
                 success: function (response) {
-                    alert(response);  // Hiển thị thông báo thành công
-                    location.reload(); // Tải lại trang sau khi xóa thành công
+                    alert(response); // Hiển thị thông báo thành công
+                    row.remove(); // Xóa dòng khỏi bảng
                 },
-                error: function (xhr, status, error) {
-                    console.error("Error:", error);
-                    alert("Error deleting foundation: " + xhr.responseText); // Hiển thị lỗi nếu có
+                error: function (xhr) {
+                    alert(xhr.responseText || "An error occurred!"); // Hiển thị lỗi
                 }
             });
         }
     });
+
+
+
+
+
+
 
     $("#btn-SelectedDeleteF").on("click", function () {
         const selectedIdList = [];
@@ -60,42 +63,12 @@ $(document).ready(function () {
 // window.location.replace("/"+pathS[1]+"/admin/foundation/?action=delete&id="+foundationId);
         }
     });
-    $("#btn-SaveF").on("click", function (e) {
-        e.preventDefault(); // Ngăn hành động mặc định (submit form)
 
-        // Thu thập dữ liệu từ form
-        const foundationData = {
-            id: $("#foundation-id").val(),
-            name: $("#foundation-name").val(),
-            email: $("#foundation-email").val(),
-            description: $("#foundation-description").val(),
-            status: $("#foundation-status").val()
-        };
-
-        // Gửi dữ liệu qua AJAX
-        $.ajax({
-            url: "/Donations/admin/foundation/add", // Đường dẫn API
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(foundationData), // Chuyển dữ liệu thành JSON
-            success: function (response) {
-                // Xử lý khi lưu thành công
-                alert("Foundation added successfully!");
-                window.location.href = "/Donations/admin/foundation"; // Điều hướng sau khi lưu
-            },
-            error: function (xhr, status, error) {
-                // Xử lý lỗi
-                console.error("Error:", error);
-                alert("Error saving foundation: " + xhr.responseText);
-            }
-        });
-    });
 
     $("#btn-SaveF-Update").on("click", function (e) {
         e.preventDefault(); // Ngăn submit mặc định của form
 
         const foundationData = {
-            id: $("#foundation-id").val(),
             name: $("#foundation-name").val(),
             email: $("#foundation-email").val(),
             description: $("#foundation-description").val(),
@@ -108,7 +81,7 @@ $(document).ready(function () {
             contentType: "application/json", // Nếu server mong đợi JSON
             data: JSON.stringify(foundationData), // Chuyển dữ liệu sang JSON
             success: function (response) {
-                alert("Foundation updated successfully!");
+                alert("Cập nhật nhà tổ chức thành công!");
                 window.location.href = "/Donations/admin/foundation";
             },
             error: function (xhr, status, error) {
@@ -116,9 +89,6 @@ $(document).ready(function () {
             }
         });
     });
-
-
-
     document.getElementById('btn-CancelF').addEventListener('click', function () {
         var baseUrl = window.location.origin; // Lấy ra đường dẫn gốc của trang
         var pathS = window.location.pathname.split("/");

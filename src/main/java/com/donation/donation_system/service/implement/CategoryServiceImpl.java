@@ -3,6 +3,7 @@ package com.donation.donation_system.service.implement;
 import com.donation.donation_system.model.Category;
 import com.donation.donation_system.repository.CategoryRepository;
 import com.donation.donation_system.service.CategoryService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,8 +47,28 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category save(Category category) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+    public Category save(Category category) {
         return categoryRepository.save(category);
     }
+    @Override
+    @Transactional
+    public boolean updateCategory(String name, String description,String status,int id){
+        int result=categoryRepository.updateCategoryInfo(name,description,status,id);
+        if(result!=0){
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean deleteCategory(int id) {
+        if(categoryRepository.existsById(id)){
+            categoryRepository.deleteById(id);
+        }
+        return false;
+    }
 
+    @Override
+    public boolean existsByNameAndIdNot(String name, int id) {
+        return categoryRepository.existsByNameAndIdNot(name, id);
+    }
 }
