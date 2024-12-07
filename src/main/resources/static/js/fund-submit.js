@@ -14,10 +14,10 @@ $(document).ready(function () {
             $("form").attr("action", "/" + pathS[1] + "/admin/fund/?action=edit")
         }
     });
-    $("#btn-Cancel").on("click", function () {
-        var pathS = window.location.pathname.split("/");
-        window.location.replace("/" + pathS[1] + "/admin/fund/");
-    })
+    // $("#btn-Cancel").on("click", function () {
+    //     var pathS = window.location.pathname.split("/");
+    //     window.location.replace("/" + pathS[1] + "/admin/fund/");
+    // })
 
 });
 

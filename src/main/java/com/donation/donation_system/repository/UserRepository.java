@@ -46,11 +46,22 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByResetPasswordToken(String token);
 
-    @Query(value = "SELECT u FROM User u " +
-            "WHERE u.username LIKE %:username% " +
-            "AND u.email LIKE %:email% " +
-            "AND u.sdt LIKE %:sdt% " +
-            "AND (:role = -1 OR u.role = :role)", nativeQuery = true)
-    Page<User> getPage(String username, String email, String sdt, int role, Pageable pageable);
+//    @Query(value = "SELECT u FROM User u " +
+//            "WHERE u.username LIKE %:username% " +
+//            "AND u.email LIKE %:email% " +
+//            "AND u.sdt LIKE %:sdt% " +
+//            "AND (:role = -1 OR u.role = :role)", nativeQuery = true)
+//    Page<User> getPage(String username, String email, String sdt, int role, Pageable pageable);
 
+
+    @Query("SELECT u FROM User u " +
+            "WHERE (:username IS NULL OR u.username LIKE %:username%) " +
+            "AND (:phone IS NULL OR u.sdt LIKE %:phone%) " +
+            "AND (:email IS NULL OR u.email LIKE %:email%) " +
+            "AND (:role = 0 OR u.role = :role)")
+    Page<User> getPage(@Param("username") String username,
+                       @Param("phone") String phone,
+                       @Param("email") String email,
+                       @Param("role") Integer role,
+                       Pageable pageable);
 }

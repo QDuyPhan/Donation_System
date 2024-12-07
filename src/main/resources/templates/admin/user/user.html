@@ -35,15 +35,18 @@
       <select class="form-select" id="filter-role" style="width: 90px">
         <option>Role</option>
         <option th:each="role : ${roles}" th:selected="${role == param.role}" th:text="${role}"></option>
+        <!--        <option th:each="role : ${roles}" th:selected="${role != param.role}" th:text="${role}"></option>-->
       </select>
-      <button id="btn-Search"
+      <button id="btn-SearchUser"
               class="btn btn-success btn-sm mx-1">
         <i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm
       </button>
-      <button id="btn-Add" type="button"
-              class="btn btn-primary btn-sm mx-1 d-block">
-        <i class="fa-solid fa-plus"></i> Thêm mới
-      </button>
+<!--      <button id="btn-AddUser" type="button"-->
+      <!--              class="btn btn-primary btn-sm mx-1 d-block">-->
+      <!--        <i class="fa-solid fa-plus"></i> Thêm mới-->
+      <!--      </button>-->
+      <a href="/Donations/admin/userList/adduser" class="btn btn-primary btn-sm mx-1 d-block"><i class="fa-solid fa-plus"></i> Thêm
+        mới</a>
     </div>
   </div>
 
@@ -98,7 +101,7 @@
           th:class="${currentPage == 0 ? 'page-item disabled' : 'page-item'}"
         >
           <a
-            th:href="@{/Donations/admin/user(page=0,  username=${username}, phone=${phone}, email=${email}, role=${role})}"
+            th:href="@{/Donations/admin/userList(page=0,  username=${username}, phone=${phone}, email=${email}, role=${role})}"
             class="page-link"
           >First</a
           >
@@ -107,7 +110,7 @@
           th:class="${currentPage == 0 ? 'page-item disabled' : 'page-item'}"
         >
           <a
-            th:href="@{/Donations/admin/user(page=${currentPage - 1},  username=${username}, phone=${phone}, email=${email}, role=${role})}"
+            th:href="@{/Donations/admin/userList(page=${currentPage - 1},  username=${username}, phone=${phone}, email=${email}, role=${role})}"
             class="page-link"
           >Previous</a
           >
@@ -119,7 +122,7 @@
             th:class="${currentPage == i ? 'page-item active' : 'page-item'}"
           >
             <a
-              th:href="@{/Donations/admin/user(page=${i}, username=${username}, phone=${phone}, email=${email}, role=${role})}"
+              th:href="@{/Donations/admin/userList(page=${i}, username=${username}, phone=${phone}, email=${email}, role=${role})}"
               class="page-link"
               th:text="${i + 1}"
             ></a>
@@ -129,7 +132,7 @@
           th:class="${currentPage == totalPages - 1 ? 'page-item disabled' : 'page-item'}"
         >
           <a
-            th:href="@{/Donations/admin/user(page=${currentPage + 1}, username=${username}, phone=${phone}, email=${email}, role=${role})}"
+            th:href="@{/Donations/admin/userList(page=${currentPage + 1}, username=${username}, phone=${phone}, email=${email}, role=${role})}"
             class="page-link"
           >Next</a
           >
@@ -138,7 +141,7 @@
           th:class="${currentPage == totalPages - 1 ? 'page-item disabled' : 'page-item'}"
         >
           <a
-            th:href="@{/Donations/admin/user(page=${totalPages - 1},  username=${username}, phone=${phone}, email=${email}, role=${role})}"
+            th:href="@{/Donations/admin/userList(page=${totalPages - 1},  username=${username}, phone=${phone}, email=${email}, role=${role})}"
             class="page-link"
           >Last</a
           >
