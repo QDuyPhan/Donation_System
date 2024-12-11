@@ -4,10 +4,7 @@ import com.donation.donation_system.model.Category;
 import com.donation.donation_system.model.Donation;
 import com.donation.donation_system.model.Fund;
 import com.donation.donation_system.model.User;
-import com.donation.donation_system.service.CategoryService;
-import com.donation.donation_system.service.DonationService;
-import com.donation.donation_system.service.FundService;
-import com.donation.donation_system.service.UserService;
+import com.donation.donation_system.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,11 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static com.donation.donation_system.api.StringAPI.encodePassword;
+import static com.donation.donation_system.api.StringAPI.generateStrongPassword;
+import static utils.Constants.STATUS_NOTACTIVATED;
 import static utils.Constants.TOTAL_ITEMS_PER_PAGE;
 
 @Controller
@@ -37,6 +37,8 @@ public class UserController {
     private DonationService donationService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/forgotpassword")
     public String forgotpassword() {
@@ -152,7 +154,7 @@ public class UserController {
         return "user/donationhistory";
     }
 
-    @GetMapping("/admin/user")
+    @GetMapping("/admin/userList")
     public String showAdminUser(Model model, HttpSession session,
                                 @RequestParam(required = false, defaultValue = "0") int page,
                                 @RequestParam(required = false, defaultValue = "") String username,
@@ -162,13 +164,20 @@ public class UserController {
                                 @RequestParam(required = false, value = "action", defaultValue = "") String action) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
 
         User user = new User();
-        if (username == null) username = "";
-        if (phone == null) phone = "";
-        if (email == null) email = "";
-        Pageable pageable = PageRequest.of(page, TOTAL_ITEMS_PER_PAGE);
-        Page<User> userList = userService.getPage(username, phone, email, Integer.parseInt(role), pageable);
-
+        username = (username == null) ? "" : username;
+        phone = (phone == null) ? "" : phone;
+        email = (email == null) ? "" : email;
+        if (role.equals("Admin")) {
+            role = String.valueOf(1);
+        } else if (role.equals("User")) {
+            role = String.valueOf(2);
+        } else {
+            role = String.valueOf(0); // Giá trị mặc định hoặc xử lý khác
+        }
+//        Pageable pageable = PageRequest.of(page, TOTAL_ITEMS_PER_PAGE);
+        Page<User> userList = userService.getPage(username, phone, email, Integer.valueOf(role), page, TOTAL_ITEMS_PER_PAGE);
         String roles[] = {"Admin", "User"};
+
         model.addAttribute("userList", userList);
         model.addAttribute("size", userList.getSize());
         model.addAttribute("totalPages", userList.getTotalPages());
@@ -177,20 +186,96 @@ public class UserController {
         model.addAttribute("username", username);
         model.addAttribute("phone", phone);
         model.addAttribute("email", email);
-        model.addAttribute("roles", roles);
         model.addAttribute("role", role);
         model.addAttribute("user", user);
+        model.addAttribute("roles", roles);
         return "admin/user/user";
     }
 
-    @GetMapping("/admin/user/add")
-    public String showAdminUserAdd(Model model, @ModelAttribute("user") User user) {
+    @GetMapping("/admin/userList/adduser")
+    public String showAdminUserAdd(Model model) {
         String statusList[] = {"NotActivated", "Active", "Inactive", "Banned"};
         int roleList[] = {1, 2};
-
-
+        User user = new User();
+        model.addAttribute("user", user);
         model.addAttribute("statusList", statusList);
         model.addAttribute("roleList", roleList);
         return "admin/user/addUserForm";
+    }
+
+    @PostMapping("/admin/userList/adduser")
+    public String addUser(Model model,
+                          @RequestParam("username") String username,
+                          @RequestParam("role") String role,
+                          @RequestParam("fullname") String fullname,
+                          @RequestParam("phone") String phone,
+                          @RequestParam("email") String email,
+                          @RequestParam("address") String address
+    ) {
+        String error = "";
+        String message = "";
+        User user = new User();
+        user.setFullName(fullname);
+        user.setRole(Integer.parseInt(role));
+        user.setSdt(phone);
+        user.setEmail(email);
+        user.setDiachi(address);
+        user.setStatus(STATUS_NOTACTIVATED);
+        String password = generateStrongPassword(8);
+        try {
+            user.setPassword(encodePassword(password));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        User newUser = userService.save(user);
+        if (newUser != null) {
+            emailService.sendMailRegisterUser(newUser, password);
+            message = "User added successfully!";
+        } else {
+            error = "User add failed!";
+        }
+        model.addAttribute("message", message);
+        model.addAttribute("error", error);
+        return "admin/user/addUserForm";
+    }
+
+    @GetMapping("/admin/userList/updateuser")
+    public String showAdminUpdateAdd(Model model, @RequestParam("userId") Integer id) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+        String statusList[] = {"NotActivated", "Active", "Inactive", "Banned"};
+        int roleList[] = {1, 2};
+        User user = userService.findUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("statusList", statusList);
+        model.addAttribute("roleList", roleList);
+
+        return "admin/user/updateUserForm";
+    }
+
+    @PostMapping("/admin/userList/updateuser")
+    public String updateUser(Model model,
+                             @RequestParam("username") String username,
+                             @RequestParam("role") String role,
+                             @RequestParam("fullname") String fullname,
+                             @RequestParam("phone") String phone,
+                             @RequestParam("email") String email,
+                             @RequestParam("address") String address,
+                             @RequestParam("status") String status) {
+        String error = "";
+        String message = "";
+        User user = new User();
+        user.setUsername(username);
+        user.setFullName(fullname);
+        user.setRole(Integer.parseInt(role));
+        user.setSdt(phone);
+        user.setEmail(email);
+        user.setDiachi(address);
+        user.setStatus(status);
+        boolean result = userService.update(user);
+        if (result) {
+            message = "User update successfully!";
+        } else {
+            error = "User update failed!";
+        }
+        return "admin/user/updateUserForm";
     }
 }

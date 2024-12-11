@@ -123,6 +123,7 @@ public class LoginController {
             Map<Integer, Integer> sumDonations = new HashMap<>();
             for (Fund fund : funds) {
 
+
                 Integer total = donationService.findTotalDonationsByFund(fund.getId());
                 Integer sumdonation = donationService.countDonationsByFund(fund.getId());
 
@@ -134,6 +135,15 @@ public class LoginController {
                 }
                 fund.setPercentAchieved(percentAchieved);
             }
+            List<Fund> under100Funds = funds.stream()
+                    .filter(fund -> fund.getPercentAchieved() < 100)
+                    .toList();
+
+            List<Fund> atLeast100Funds = funds.stream()
+                    .filter(fund -> fund.getPercentAchieved() >= 100)
+                    .toList();
+            model.addAttribute("under100Funds", under100Funds); // Thêm danh sách percentAchieved < 100
+            model.addAttribute("atLeast100Funds", atLeast100Funds);
             model.addAttribute("donationList", donationList);
             model.addAttribute("categories", categories);
             model.addAttribute("funds", funds);

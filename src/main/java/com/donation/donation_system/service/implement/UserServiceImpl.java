@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -69,6 +70,19 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public boolean update(User user) {
+        try {
+            int updateUser = userRepository.updateUser(user.getRole(), user.getFullName(), user.getSdt(), user.getEmail(), user.getDiachi(), user.getStatus(), user.getId());
+            if (updateUser != 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
@@ -214,7 +228,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getPage(String username, String phone, String email, int role, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+    public Page<User> getPage(String username, String phone, String email, Integer role, int page, int pageSize) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        Pageable pageable = PageRequest.of(page, pageSize);
         return userRepository.getPage(username, phone, email, role, pageable);
     }
 }

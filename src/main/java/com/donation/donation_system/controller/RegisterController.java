@@ -32,6 +32,37 @@ public class RegisterController {
         return "register";  // Trả về trang index.html
     }
 
+    @PostMapping("/register")
+    public String processRegistration(@ModelAttribute("user") User user, HttpSession session, Model model) {
+        try {
+            String password = generateStrongPassword(8);
+            String hashPassword = encodePassword(password);
+            user.setPassword((hashPassword));
+            user.setStatus(STATUS_NOTACTIVATED);
+            user.setRole(USER_ROLE);
+
+            User existUser = userService.findByUsername(user.getUsername());
+            if (existUser != null) {
+                return "redirect:/register?existuser=Username is already exist!";
+            }
+            existUser = userService.findByEmail(user.getEmail());
+            if (existUser != null) {
+                return "redirect:/register?existemail=Email is already exist!";
+            }
+            User newUser = userService.save(user);
+            if (newUser != null) {
+                emailService.sendMailRegisterUser(newUser, password);
+                return "register-success";
+            } else {
+                System.out.println("create user fail");
+                return "register-fail";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/register";
+    }
+
     @GetMapping("/register-success")
     public String registerSuccess() {
         return "register-success";
@@ -63,38 +94,6 @@ public class RegisterController {
     @GetMapping("/activate-account-fail")
     public String activateAccountFail() {
         return "activate-account-fail";
-    }
-
-
-    @PostMapping("/register")
-    public String processRegistration(@ModelAttribute("user") User user, HttpSession session, Model model) {
-        try {
-            String password = generateStrongPassword(8);
-            String hashPassword = encodePassword(password);
-            user.setPassword((hashPassword));
-            user.setStatus(STATUS_NOTACTIVATED);
-            user.setRole(USER_ROLE);
-
-            User existUser = userService.findByUsername(user.getUsername());
-            if (existUser != null) {
-                return "redirect:/register?existuser=Username is already exist!";
-            }
-            existUser = userService.findByEmail(user.getEmail());
-            if (existUser != null) {
-                return "redirect:/register?existemail=Email is already exist!";
-            }
-            User newUser = userService.save(user);
-            if (newUser != null) {
-                emailService.sendMailRegisterUser(newUser, password);
-                return "register-success";
-            } else {
-                System.out.println("create user fail");
-                return "register-fail";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "redirect:/register";
     }
 
 }
