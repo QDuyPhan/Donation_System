@@ -1,357 +1,240 @@
 <div th:fragment="hoanCanhQuyenGopFragment">
-<div  class="py-4 " style="background-color: #ffffff;">
-  <div class="w-auto px-5 px-md-4 px-lg-4">
-    <div class="mb-5 mb-md-4 text-center">
-      <h2 class="" style="">
-        CÁC HOẠT ĐỘNG ĐANG DIỄN RA
-      </h2>
-    </div>
-    <div class="container mt-4">
-      <!-- Tab Navigation -->
-      <!-- Tab Content -->
-      <div class="row">
+  <div class="py-4 " style="background-color: #ffffff;">
+    <div class="w-auto px-5 px-md-4 px-lg-4">
+      <div class="mb-5 mb-md-4 text-center">
+        <h2 class="" style="">
+          CÁC HOẠT ĐỘNG ĐANG DIỄN RA
+        </h2>
+      </div>
+      <div class="container mt-4">
+        <!-- Tab Navigation -->
+        <!-- Tab Content -->
+        <div id="fund-container" class="row">
+          <!----->
 
-        <!----->
-        <div class="col-md-4">
-          <a href="detailFragment" class="text-decoration-none" style="color: black;">
+          <div class="col-md-4 mb-2" th:each="fund, iterStat : ${under100Funds} " th:if="${fund.status == 'Opening'}" >
+            <a class="text-decoration-none" style="color: black;">
+              <div
+                class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
+                <!-- Nội dung quỹ -->
+                <div class="dn-img d-flex">
+          <span class="position-relative w-100" style="display:block;">
+            <img alt="Hình ảnh quỹ" class="img-fluid" th:src="${fund.imageUrl}">
+          </span>
+                </div>
+                <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
+                  <div class="dn-title h5 font-weight-bold"
+                       th:text="${fund.name.length() > 40 ? #strings.concat(fund.name.substring(0, 40), '...') : fund.name}">
+                  </div>
+                </div>
+                <div class="dn-footer mb-4 px-4 pt-0">
+                  <div class="mb-3 d-flex align-items-center">
+                    <div class="flex-grow-1 text-xs text-muted"
+                         th:text="${fund.foundation.name.length() > 40 ? #strings.concat(fund.foundation.name.substring(0, 40), '...') : fund.foundation.name}">
+                    </div>
+                  </div>
 
-            <div class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
-              <div class="dn-img d-flex">
-            <span class="position-relative w-100" style="display:block; overflow:hidden; height: 0; padding-top: 75%;">
-                <img alt="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111637-638162901971523820.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
-            </span>
-              </div>
-              <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
-                <div class="dn-title h5 font-weight-bold">Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang</div>
-              </div>
-              <div class="dn-footer mb-4 px-4 pt-0">
-                <div class="mb-3 d-flex align-items-center">
-                  <div class="shrink-0">
-                    <div class="overflow-hidden rounded-circle border border-light p-1">
-                      <div class="position-relative" style="width: 45px; height: 45px;">
-                        <img alt="DNXH Trăng Khuyết" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111645-638162902054734839.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: contain;">
+                  <div class="mb-3 d-flex align-items-center">
+                    <div class="flex-grow-1 text-xs text-muted"
+                         th:text="${'Ngày kết thúc: ' + fund.endDate}">
+                    </div>
+                  </div>
+
+                  <div class="dn-detail">
+                    <div class="dn-money mb-2 d-flex align-items-end">
+                      <strong class="item-end d-flex align-items-center text-dark"
+                              th:text="${totalDonations[fund.id]} + 'đ/'"></strong>
+                      <span class="pl-2 text-xs text-muted" th:text="${fund.expectedResult} + 'đ'"></span>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-between align-items-center">
+                      <div class="flex-grow-1">
+                        <div class="text-xs text-muted">Lượt quyên góp</div>
+                        <div class="text-sm font-weight-bold text-dark" th:text="${sumDonations[fund.id]}"></div>
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="text-xs text-muted">Đạt được</div>
+                        <div class="text-sm font-weight-bold text-dark" th:text="${fund.percentAchieved} + '%'"></div>
+                      </div>
+                      <div class="position-relative">
+                        <a th:href="@{/Donations/detailFund(id=${fund.id})}" class="btn btn-outline-info">Xem chi
+                          tiết</a>
                       </div>
                     </div>
                   </div>
-                  <div class="flex-grow-1 text-xs text-muted">DNXH Trăng Khuyết</div>
-                  <div class="shrink-0"></div>
-                </div>
-                <div class="dn-detail">
-                  <div class="dn-money mb-2 d-flex align-items-end">
-                    <strong class="item-end d-flex align-items-center text-dark">150.159.287đ</strong>
-                    <span class="pl-2 text-xs text-muted">/ 150.000.000đ</span>
-                  </div>
-                  <div class="dn-progress my-1 d-flex h-1.5 w-100 overflow-hidden rounded bg-light">
-                    <div class="dn-progress-bar done bg-success h-1.5" style="width: 100%;"></div>
-                  </div>
-                  <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Lượt quyên góp</div>
-                      <div class="text-sm font-weight-bold text-dark">20.484</div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Đạt được</div>
-                      <div class="text-sm font-weight-bold text-dark">100%</div>
-                    </div>
-                    <div class="position-relative">
-                      <a href="/cong-dong/chung-tay-trao-tang-tui-ngu-va-the-ve-sinh-cho-200-manh-doi"
-                         style="position: absolute; inset: 0; z-index: 1;"
-                         title="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang"></a>
-                      <span class="btn btn-outline-secondary">Đạt mục tiêu</span>
-                    </div>
-                  </div>
                 </div>
               </div>
-            </div>
-          </a>
-        </div>
+            </a>
+          </div>
 
-        <div class="col-md-4">
-          <a href="detailFragment" class="text-decoration-none" style="color: black;">
+          <div class="text-center mt-3">
+            <button id="load-more-btn" class="btn btn-primary">Xem thêm</button>
+          </div>
 
-            <div class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
-              <div class="dn-img d-flex">
-            <span class="position-relative w-100" style="display:block; overflow:hidden; height: 0; padding-top: 75%;">
-                <img alt="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111637-638162901971523820.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
-            </span>
-              </div>
-              <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
-                <div class="dn-title h5 font-weight-bold">Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang</div>
-              </div>
-              <div class="dn-footer mb-4 px-4 pt-0">
-                <div class="mb-3 d-flex align-items-center">
-                  <div class="shrink-0">
-                    <div class="overflow-hidden rounded-circle border border-light p-1">
-                      <div class="position-relative" style="width: 45px; height: 45px;">
-                        <img alt="DNXH Trăng Khuyết" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111645-638162902054734839.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: contain;">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex-grow-1 text-xs text-muted">DNXH Trăng Khuyết</div>
-                  <div class="shrink-0"></div>
-                </div>
-                <div class="dn-detail">
-                  <div class="dn-money mb-2 d-flex align-items-end">
-                    <strong class="item-end d-flex align-items-center text-dark">150.159.287đ</strong>
-                    <span class="pl-2 text-xs text-muted">/ 150.000.000đ</span>
-                  </div>
-                  <div class="dn-progress my-1 d-flex h-1.5 w-100 overflow-hidden rounded bg-light">
-                    <div class="dn-progress-bar done bg-success h-1.5" style="width: 100%;"></div>
-                  </div>
-                  <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Lượt quyên góp</div>
-                      <div class="text-sm font-weight-bold text-dark">20.484</div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Đạt được</div>
-                      <div class="text-sm font-weight-bold text-dark">100%</div>
-                    </div>
-                    <div class="position-relative">
-                      <a href="/cong-dong/chung-tay-trao-tang-tui-ngu-va-the-ve-sinh-cho-200-manh-doi"
-                         style="position: absolute; inset: 0; z-index: 1;"
-                         title="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang"></a>
-                      <span class="btn btn-outline-secondary">Đạt mục tiêu</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
+          <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                  const funds = document.querySelectorAll("#fund-container .col-md-4"); // Tất cả phần tử quỹ
+                  const loadMoreBtn = document.getElementById("load-more-btn");
+                  const increment = 3; // Hiển thị thêm 3 phần tử mỗi lần nhấn
+                  const initialCount = 3; // Số lượng phần tử ban đầu được hiển thị
+                  let visibleCount = initialCount; // Số phần tử hiện đang hiển thị
 
-        <div class="col-md-4">
-          <a href="detailFragment" class="text-decoration-none" style="color: black;">
+                  // Ẩn tất cả phần tử trừ các phần tử ban đầu
+                  funds.forEach((fund, index) => {
+                      if (index >= initialCount) {
+                          fund.style.display = "none";
+                      }
+                  });
 
-            <div class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
-              <div class="dn-img d-flex">
-            <span class="position-relative w-100" style="display:block; overflow:hidden; height: 0; padding-top: 75%;">
-                <img alt="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111637-638162901971523820.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
-            </span>
-              </div>
-              <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
-                <div class="dn-title h5 font-weight-bold">Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang</div>
-              </div>
-              <div class="dn-footer mb-4 px-4 pt-0">
-                <div class="mb-3 d-flex align-items-center">
-                  <div class="shrink-0">
-                    <div class="overflow-hidden rounded-circle border border-light p-1">
-                      <div class="position-relative" style="width: 45px; height: 45px;">
-                        <img alt="DNXH Trăng Khuyết" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111645-638162902054734839.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: contain;">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex-grow-1 text-xs text-muted">DNXH Trăng Khuyết</div>
-                  <div class="shrink-0"></div>
-                </div>
-                <div class="dn-detail">
-                  <div class="dn-money mb-2 d-flex align-items-end">
-                    <strong class="item-end d-flex align-items-center text-dark">150.159.287đ</strong>
-                    <span class="pl-2 text-xs text-muted">/ 150.000.000đ</span>
-                  </div>
-                  <div class="dn-progress my-1 d-flex h-1.5 w-100 overflow-hidden rounded bg-light">
-                    <div class="dn-progress-bar done bg-success h-1.5" style="width: 100%;"></div>
-                  </div>
-                  <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Lượt quyên góp</div>
-                      <div class="text-sm font-weight-bold text-dark">20.484</div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Đạt được</div>
-                      <div class="text-sm font-weight-bold text-dark">100%</div>
-                    </div>
-                    <div class="position-relative">
-                      <a href="/cong-dong/chung-tay-trao-tang-tui-ngu-va-the-ve-sinh-cho-200-manh-doi"
-                         style="position: absolute; inset: 0; z-index: 1;"
-                         title="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang"></a>
-                      <span class="btn btn-outline-secondary">Đạt mục tiêu</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
+                  // Xử lý khi nhấn nút "Xem thêm" hoặc "Ẩn bớt"
+                  loadMoreBtn.addEventListener("click", function () {
+                      if (visibleCount < funds.length) {
+                          // Hiển thị thêm các phần tử
+                          const hiddenFunds = Array.from(funds).filter((fund) => fund.style.display === "none");
+                          for (let i = 0; i < increment && i < hiddenFunds.length; i++) {
+                              hiddenFunds[i].style.display = "block";
+                          }
+
+                          // Cập nhật số lượng phần tử hiển thị
+                          visibleCount += increment;
+
+                          // Nếu hiển thị hết, đổi nút thành "Ẩn bớt"
+                          if (visibleCount >= funds.length) {
+                              loadMoreBtn.textContent = "Ẩn bớt";
+                          }
+                      } else {
+                          // Ẩn bớt các phần tử
+                          funds.forEach((fund, index) => {
+                              if (index >= initialCount) {
+                                  fund.style.display = "none";
+                              }
+                          });
+
+                          // Cập nhật lại số lượng phần tử hiển thị và đổi nút thành "Xem thêm"
+                          visibleCount = initialCount;
+                          loadMoreBtn.textContent = "Xem thêm";
+                      }
+                  });
+              });
+
+
+          </script>
+
         </div>
 
       </div>
+
+      <div class="mb-5 mb-md-4 my-2 text-center">
+        <h2 class="" style="">
+          CÁC HOẠT ĐỘNG ĐÃ HOÀN THÀNH
+        </h2>
       </div>
+      <div class="container mt-4">
+        <!-- Tab Navigation -->
+        <!-- Tab Content -->
+        <div id="fund-container1" class="  row">
 
-    <div class="mb-5 mb-md-4 my-2 text-center">
-      <h2 class="" style="">
-        CÁC HOẠT ĐỘNG ĐÃ HOÀN THÀNH
-      </h2>
-    </div>
-    <div class="container mt-4">
-      <!-- Tab Navigation -->
-      <!-- Tab Content -->
-      <div class="row">
-
-        <!----->
-        <div class="col-md-4">
-          <a href="detailFragment" class="text-decoration-none" style="color: black;">
-
-            <div class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
-              <div class="dn-img d-flex">
+          <div class="col-md-4 mb-2" th:each="fund, iterStat : ${atLeast100Funds} " th:if="${fund.status == 'Finish'}">
+            <a class="text-decoration-none" style="color: black;">
+              <div
+                class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
+                <div class="dn-img d-flex">
             <span class="position-relative w-100" style="display:block; overflow:hidden; height: 0; padding-top: 75%;">
-                <img alt="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111637-638162901971523820.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
+                <img alt="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang"
+                     th:src="${fund.imageUrl}" class="position-absolute top-0 start-0 w-100 h-100"
+                     style="object-fit: cover;">
             </span>
-              </div>
-              <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
-                <div class="dn-title h5 font-weight-bold">Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang</div>
-              </div>
-              <div class="dn-footer mb-4 px-4 pt-0">
-                <div class="mb-3 d-flex align-items-center">
-                  <div class="shrink-0">
-                    <div class="overflow-hidden rounded-circle border border-light p-1">
-                      <div class="position-relative" style="width: 45px; height: 45px;">
-                        <img alt="DNXH Trăng Khuyết" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111645-638162902054734839.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: contain;">
+                </div>
+                <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
+                  <div class="dn-title h5 font-weight-bold"
+                       th:text="${fund.name.length() > 40 ? #strings.concat(fund.name.substring(0, 40), '...') : fund.name}"></div>
+
+                </div>
+                <div class="dn-footer mb-4 px-4 pt-0">
+                  <div class="mb-3 d-flex align-items-center">
+                    <div class="flex-grow-1 text-xs text-muted"
+                         th:text="${fund.foundation.name.length() > 40 ? #strings.concat(fund.foundation.name.substring(0, 40), '...') : fund.foundation.name}"></div>
+                    <div class="shrink-0"></div>
+                  </div>
+                  <div class="dn-detail">
+                    <div class="dn-money mb-2 d-flex align-items-end">
+                      <strong class="item-end d-flex align-items-center text-dark"
+                              th:text="${totalDonations[fund.id]} + 'đ/'"></strong>
+                      <span class="pl-2 text-xs text-muted" th:text="${fund.expectedResult} + 'đ'"></span>
+                    </div>
+
+
+                    <div class="mt-3 d-flex justify-content-between align-items-center">
+                      <div class="flex-grow-1">
+                        <div class="text-xs text-muted">Lượt quyên góp</div>
+                        <div class="text-sm font-weight-bold text-dark" th:text="${sumDonations[fund.id]}"></div>
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="text-xs text-muted">Đạt được</div>
+                        <div class="text-sm font-weight-bold text-dark" th:text=" '100%'"></div>
+                      </div>
+                      <div class="position-relative">
+                        <a class="btn btn-secondary">Đã hoàn thành</a>
                       </div>
                     </div>
                   </div>
-                  <div class="flex-grow-1 text-xs text-muted">DNXH Trăng Khuyết</div>
-                  <div class="shrink-0"></div>
-                </div>
-                <div class="dn-detail">
-                  <div class="dn-money mb-2 d-flex align-items-end">
-                    <strong class="item-end d-flex align-items-center text-dark">150.159.287đ</strong>
-                    <span class="pl-2 text-xs text-muted">/ 150.000.000đ</span>
-                  </div>
-                  <div class="dn-progress my-1 d-flex h-1.5 w-100 overflow-hidden rounded bg-light">
-                    <div class="dn-progress-bar done bg-success h-1.5" style="width: 100%;"></div>
-                  </div>
-                  <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Lượt quyên góp</div>
-                      <div class="text-sm font-weight-bold text-dark">20.484</div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Đạt được</div>
-                      <div class="text-sm font-weight-bold text-dark">100%</div>
-                    </div>
-                    <div class="position-relative">
-                      <a href="/cong-dong/chung-tay-trao-tang-tui-ngu-va-the-ve-sinh-cho-200-manh-doi"
-                         style="position: absolute; inset: 0; z-index: 1;"
-                         title="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang"></a>
-                      <span class="btn btn-outline-secondary">Đạt mục tiêu</span>
-                    </div>
-                  </div>
                 </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
+          <div class="text-center mt-3">
+            <button id="load-more-btn2" class="btn btn-primary">Xem thêm</button>
+          </div>
+
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const funds = document.querySelectorAll("#fund-container1 .col-md-4"); // Tất cả phần tử quỹ
+                const loadMoreBtn = document.getElementById("load-more-btn2");
+                const increment = 3; // Hiển thị thêm 3 phần tử mỗi lần nhấn
+                const initialCount = 3; // Số lượng phần tử ban đầu được hiển thị
+                let visibleCount = initialCount; // Số phần tử hiện đang hiển thị
 
-        <div class="col-md-4">
-          <a href="detailFragment" class="text-decoration-none" style="color: black;">
+                // Ẩn tất cả phần tử trừ các phần tử ban đầu
+                funds.forEach((fund, index) => {
+                    if (index >= initialCount) {
+                        fund.style.display = "none";
+                    }
+                });
 
-            <div class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
-              <div class="dn-img d-flex">
-            <span class="position-relative w-100" style="display:block; overflow:hidden; height: 0; padding-top: 75%;">
-                <img alt="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111637-638162901971523820.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
-            </span>
-              </div>
-              <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
-                <div class="dn-title h5 font-weight-bold">Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang</div>
-              </div>
-              <div class="dn-footer mb-4 px-4 pt-0">
-                <div class="mb-3 d-flex align-items-center">
-                  <div class="shrink-0">
-                    <div class="overflow-hidden rounded-circle border border-light p-1">
-                      <div class="position-relative" style="width: 45px; height: 45px;">
-                        <img alt="DNXH Trăng Khuyết" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111645-638162902054734839.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: contain;">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex-grow-1 text-xs text-muted">DNXH Trăng Khuyết</div>
-                  <div class="shrink-0"></div>
-                </div>
-                <div class="dn-detail">
-                  <div class="dn-money mb-2 d-flex align-items-end">
-                    <strong class="item-end d-flex align-items-center text-dark">150.159.287đ</strong>
-                    <span class="pl-2 text-xs text-muted">/ 150.000.000đ</span>
-                  </div>
-                  <div class="dn-progress my-1 d-flex h-1.5 w-100 overflow-hidden rounded bg-light">
-                    <div class="dn-progress-bar done bg-success h-1.5" style="width: 100%;"></div>
-                  </div>
-                  <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Lượt quyên góp</div>
-                      <div class="text-sm font-weight-bold text-dark">20.484</div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Đạt được</div>
-                      <div class="text-sm font-weight-bold text-dark">100%</div>
-                    </div>
-                    <div class="position-relative">
-                      <a href="/cong-dong/chung-tay-trao-tang-tui-ngu-va-the-ve-sinh-cho-200-manh-doi"
-                         style="position: absolute; inset: 0; z-index: 1;"
-                         title="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang"></a>
-                      <span class="btn btn-outline-secondary">Đạt mục tiêu</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
+                // Xử lý khi nhấn nút "Xem thêm" hoặc "Ẩn bớt"
+                loadMoreBtn.addEventListener("click", function () {
+                    if (visibleCount < funds.length) {
+                        // Hiển thị thêm các phần tử
+                        const hiddenFunds = Array.from(funds).filter((fund) => fund.style.display === "none");
+                        for (let i = 0; i < increment && i < hiddenFunds.length; i++) {
+                            hiddenFunds[i].style.display = "block";
+                        }
 
-        <div class="col-md-4">
-          <a href="detailFragment" class="text-decoration-none" style="color: black;">
+                        // Cập nhật số lượng phần tử hiển thị
+                        visibleCount += increment;
 
-            <div class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
-              <div class="dn-img d-flex">
-            <span class="position-relative w-100" style="display:block; overflow:hidden; height: 0; padding-top: 75%;">
-                <img alt="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111637-638162901971523820.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
-            </span>
-              </div>
-              <div class="dn-body flex-grow-1 px-4 pb-3 pt-4">
-                <div class="dn-title h5 font-weight-bold">Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang</div>
-              </div>
-              <div class="dn-footer mb-4 px-4 pt-0">
-                <div class="mb-3 d-flex align-items-center">
-                  <div class="shrink-0">
-                    <div class="overflow-hidden rounded-circle border border-light p-1">
-                      <div class="position-relative" style="width: 45px; height: 45px;">
-                        <img alt="DNXH Trăng Khuyết" src="https://homepage.momocdn.net/blogscontents/momo-upload-api-230405111645-638162902054734839.jpg" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: contain;">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex-grow-1 text-xs text-muted">DNXH Trăng Khuyết</div>
-                  <div class="shrink-0"></div>
-                </div>
-                <div class="dn-detail">
-                  <div class="dn-money mb-2 d-flex align-items-end">
-                    <strong class="item-end d-flex align-items-center text-dark">150.159.287đ</strong>
-                    <span class="pl-2 text-xs text-muted">/ 150.000.000đ</span>
-                  </div>
-                  <div class="dn-progress my-1 d-flex h-1.5 w-100 overflow-hidden rounded bg-light">
-                    <div class="dn-progress-bar done bg-success h-1.5" style="width: 100%;"></div>
-                  </div>
-                  <div class="mt-3 d-flex justify-content-between align-items-center">
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Lượt quyên góp</div>
-                      <div class="text-sm font-weight-bold text-dark">20.484</div>
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="text-xs text-muted">Đạt được</div>
-                      <div class="text-sm font-weight-bold text-dark">100%</div>
-                    </div>
-                    <div class="position-relative">
-                      <a href="/cong-dong/chung-tay-trao-tang-tui-ngu-va-the-ve-sinh-cho-200-manh-doi"
-                         style="position: absolute; inset: 0; z-index: 1;"
-                         title="Chung tay trao tặng túi ngủ và thẻ vệ sinh cho 200 mảnh đời lang thang"></a>
-                      <span class="btn btn-outline-secondary">Đạt mục tiêu</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
+                        // Nếu hiển thị hết, đổi nút thành "Ẩn bớt"
+                        if (visibleCount >= funds.length) {
+                            loadMoreBtn.textContent = "Ẩn bớt";
+                        }
+                    } else {
+                        // Ẩn bớt các phần tử
+                        funds.forEach((fund, index) => {
+                            if (index >= initialCount) {
+                                fund.style.display = "none";
+                            }
+                        });
 
+                        // Cập nhật lại số lượng phần tử hiển thị và đổi nút thành "Xem thêm"
+                        visibleCount = initialCount;
+                        loadMoreBtn.textContent = "Xem thêm";
+                    }
+                });
+            });
+
+
+        </script>
       </div>
-    </div>
     </div>
   </div>
 </div>

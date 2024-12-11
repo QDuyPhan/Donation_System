@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body th:fragment="content">
+<main  th:fragment="searchFragment">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a
+              href="/Donations/home"><i
+              class="fa-solid fa-house"></i></a></li>
+      <li class="breadcrumb-item active  "><a class="text-decoration-none text-dark"
+                                              href="${pageContext.request.contextPath}/home">Quỹ Từ Thiện</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Tìm kiếm</li>
+    </ol>
+  </nav>
+  <div class="content-header">
+    <h3 class="content-title display-5 text-center" th:text="'Kết quả tìm kiếm cho từ khóa ' + ${param.keyword}"
+    > </h3>
+    <hr class="content-title-underline">
+  </div>
+  <div>
+    <div th:if="${fundList != null}">
+      <div th:replace="layout/displayFundList :: displayFundListFragment"></div>
+    </div>
+
+    <div th:if="${fundList == null}">
+      <p>Không có dữ liệu để hiển thị.</p>
+    </div>
+  </div>
+</main>
+</body>
+</html>

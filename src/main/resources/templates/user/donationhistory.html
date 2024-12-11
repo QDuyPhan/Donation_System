@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{index}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div th:fragment="content" class="container mt-3 w-100">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/Donations/home"><i
+        class="fa-solid fa-house"></i></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Lịch sử quyên góp
+      </li>
+    </ol>
+  </nav>
+
+  <table
+    class="table table-bordered table-striped table-responsive-md"
+  >
+    <thead class="table-dark">
+    <tr>
+      <th scope="col">Tên quỹ quyên góp</th>
+      <th scope="col">Tiền quyên góp</th>
+      <th scope="col">Lời nhắn</th>
+      <th scope="col">Thời gian</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item: ${donationList}">
+      <td style="vertical-align: middle" th:text="${item.fund.name}"></td>
+      <td style="vertical-align: middle" th:text="${item.donationAmount}"></td>
+      <td style="vertical-align: middle" th:text="${item.donationMessage}"></td>
+      <td style="vertical-align: middle" th:text="${item.createdDate}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div
+    class="d-flex justify-content-end align-items-center"
+    th:if="${totalPages > 0}"
+  >
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li
+          th:class="${currentPage == 0 ? 'page-item disabled' : 'page-item'}"
+        >
+          <a
+            th:href="@{/Donations/donationhistory(page=0)}"
+            class="page-link"
+          >First</a
+          >
+        </li>
+        <li
+          th:class="${currentPage == 0 ? 'page-item disabled' : 'page-item'}"
+        >
+          <a
+            th:href="@{/Donations/donationhistory(page=${currentPage - 1})}"
+            class="page-link"
+          >Previous</a
+          >
+        </li>
+        <th:block
+          th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+        >
+          <li
+            th:class="${currentPage == i ? 'page-item active' : 'page-item'}"
+          >
+            <a
+              th:href="@{/Donations/donationhistory(page=${i})}"
+              class="page-link"
+              th:text="${i + 1}"
+            ></a>
+          </li>
+        </th:block>
+        <li
+          th:class="${currentPage == totalPages - 1 ? 'page-item disabled' : 'page-item'}"
+        >
+          <a
+            th:href="@{/Donations/donationhistory(page=${currentPage + 1})}"
+            class="page-link"
+          >Next</a
+          >
+        </li>
+        <li
+          th:class="${currentPage == totalPages - 1 ? 'page-item disabled' : 'page-item'}"
+        >
+          <a
+            th:href="@{/Donations/donationhistory(page=${totalPages - 1})}"
+            class="page-link"
+          >Last</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+</div>
+</body>
+</html>

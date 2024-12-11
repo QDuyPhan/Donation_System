@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+  />
+  <title>Thanh toán thành công</title>
+</head>
+<body>
+
+<div class="body py-5">
+  <div class="container">
+    <div class="w-50 m-auto">
+      <h1 class="my-3 text-success text-center">Thanh toán thành công</h1>
+      <h2 class="my-2">Chi tiết thanh toán</h2>
+      <table class="table table-bordered">
+        <tbody>
+        <tr>
+          <td>Mã dự án:</td>
+          <td><span th:text="${fund_id}">[fund_id]</span></td>
+        </tr>
+        <tr>
+          <td>Tên dự án:</td>
+          <td><span th:text="${fund_name}">[fund_name]</span></td>
+        </tr>
+        <tr>
+          <td>Tổng tiền thanh toán:</td>
+          <td><span th:text="${donation_amount}">[donation_amount]</span></td>
+        </tr>
+        <tr>
+          <td>Lời nhắn:</td>
+          <td><span th:text="${donation_message}">[donation_message]</span></td>
+        </tr>
+        <tr>
+          <td>Mã người thanh toán:</td>
+          <td><span th:text="${userID}">[userID]</span></td>
+        </tr>
+        <tr>
+          <td>Người thanh toán:</td>
+          <td><span th:text="${userName}">[userName]</span></td>
+        </tr>
+        <tr>
+          <td>Ngày giao dịch:</td>
+          <td><span th:text="${vnp_PayDate}">[vnp_PayDate]</span></td>
+        </tr>
+        </tbody>
+      </table>
+      <a th:href="@{/Donations/home}" class="btn btn-primary">Về trang chủ</a>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

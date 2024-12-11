@@ -19,10 +19,10 @@ public class Donation {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "donationAmount")
+    @Column(name = "donation_Amount")
     private int donationAmount;
 
-    @Column(name = "donationMessage")
+    @Column(name = "donation_Message")
     private String donationMessage;
 
     @ManyToOne
@@ -34,6 +34,12 @@ public class Donation {
     private User user;
 
     @CreatedDate
-    @Column(name = "createdDate")
+    @Column(name = "created_Date")
     private Date createdDate;
+
+
+    public Donation(int fundId, int totalAmount) {
+        this.id = fundId;
+        this.donationAmount = totalAmount;
+    }
 }

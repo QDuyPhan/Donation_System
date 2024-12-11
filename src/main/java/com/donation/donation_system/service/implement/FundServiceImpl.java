@@ -4,8 +4,12 @@ import com.donation.donation_system.model.Fund;
 import com.donation.donation_system.repository.FundRepository;
 import com.donation.donation_system.service.FundService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +21,7 @@ public class FundServiceImpl implements FundService {
     public FundServiceImpl(FundRepository fundRepository) {
         this.fundRepository = fundRepository;
     }
+
     @Override
     public List<Fund> FindAll() {
         return fundRepository.findAll();
@@ -49,7 +54,7 @@ public class FundServiceImpl implements FundService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         if (fundRepository.existsById(id)) {
             fundRepository.deleteById(id);
         } else {
@@ -58,17 +63,38 @@ public class FundServiceImpl implements FundService {
     }
 
     @Override
-    public void deleteAll() {
-        fundRepository.deleteAll();
+    public List<Fund> getAllBySearch(String search) {
+
+        return fundRepository.getAllBySearch(search);
     }
 
     @Override
-    public void deleteAllInBatch(Iterable<Fund> funds) {
-        fundRepository.deleteAllInBatch(funds);
+    public List<Fund> getByCategoryId(int categoryId) {
+        return fundRepository.getByCategoryId(categoryId);
     }
 
     @Override
-    public Fund saveAndFlush(Fund fund) {
-        return fundRepository.saveAndFlush(fund);
+    public List<Fund> getByFoundationId(int foundationId) {
+        return fundRepository.getByFoundationId(foundationId);
+    }
+
+    @Override
+    public Page<Fund> getPage(String id, String name, String foundation, String category, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        return fundRepository.getPage(id, name, foundation, category, pageable);
+    }
+
+    @Override
+    public Fund getFundById(int id) {
+        return fundRepository.getReferenceById(id);
+    }
+
+    @Override
+    public Fund update(Fund fund) {
+        return fundRepository.save(fund);
+    }
+
+    @Override
+    public List<Fund> FindAllById(List<Integer>  id){
+        return fundRepository.findAllById(id);
     }
 }
