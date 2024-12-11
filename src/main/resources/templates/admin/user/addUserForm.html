@@ -23,22 +23,8 @@
   <div id="content-header">
     <h4>Create User</h4>
   </div>
-  <div th:if="${error}" class="w-100 d-flex">
-      <span
-        class="text-danger align-items-center"
-        th:text="${error}"
-      >
-        ...
-      </span>
-  </div>
-  <div th:if="${message}" class="w-100 d-flex">
-    <span
-      class="text-danger align-items-center"
-      th:text="${message}"
-    >
-      ...
-    </span>
-  </div>
+  <span class="text-info align-items-center" th:text="${message}"></span>
+  <span class="text-danger align-items-center" th:text="${error}"></span>
   <form class="mx-1 mx-md-4" method="post" th:action="@{/Donations/admin/userList/adduser}">
     <div class="d-flex flex-row align-items-center mb-4 flex-column">
       <div class="form-outline flex-fill mb-0 d-flex w-100">
@@ -106,9 +92,6 @@
       <button id="btn-SaveUser" type="submit" class="btn btn-success mx-1">
         <i class="fa-solid fa-floppy-disk"></i> Save
       </button>
-      <!--      <button id="btn-CancelUser" type="button" class="btn btn-primary mx-1">-->
-      <!--        <i class="fa-solid fa-rotate-left"></i> Cancel-->
-      <!--      </button>-->
       <a href="/Donations/admin/userList" class="btn btn-primary mx-1"> <i
         class="fa-solid fa-rotate-left"></i>Cancel</a>
     </div>

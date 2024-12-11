@@ -21,32 +21,19 @@
 <body>
 <div id="content" th:fragment="contentAdmin">
   <div id="content-header">
-    <h4>Create Category</h4>
+    <h4>Update User</h4>
   </div>
-  <div th:if="${param.error}" class="w-100 d-flex">
-    <span
-      class="text-danger align-items-center"
-      th:text="${param.error}"
-    >
-      ...
-    </span>
-  </div>
-  <div th:if="${param.message}" class="w-100 d-flex">
-    <span
-      class="text-danger align-items-center"
-      th:text="${param.message}"
-    >
-      ...
-    </span>
-  </div>
-  <form class="mx-1 mx-md-4" method="post" th:action="@{/Donations/admin/add}" th:object="${user}">
+  <!--  <span class="text-info align-items-center" th:text="${message}"></span>-->
+  <!--  <span class="text-danger align-items-center" th:text="${error}"></span>-->
+  <form class="mx-1 mx-md-4" method="post" th:action="@{/Donations/admin/userList/updateuser}" th:object="${user}">
     <div class="d-flex flex-row align-items-center mb-4 flex-column">
       <div class="form-outline flex-fill mb-0 d-flex w-100">
         <label class="form-label d-flex justify-content-center align-items-center" for="username">
           <i class="fas fa-user fa-lg me-3 fa-fw"></i>
         </label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required
-               th:field="*{username}"/>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required readonly
+               th:field="*{username}"
+        />
       </div>
     </div>
 
@@ -57,7 +44,7 @@
         </label>
         <div class="form-group">
           <label class="form-label">Role</label>
-          <select id="user-role" name="role" class="form-select">
+          <select id="user-role" name="role" class="form-select" th:field="*{role}">
             <option th:selected="${user.role == 1}" value="1">Admin</option>
             <option th:selected="${user.role == 2}" value="2" th:disabled="${user.role == 2}">User</option>
           </select>
@@ -72,7 +59,8 @@
           <i class="fas fa-file-signature fa-lg me-3 fa-fw"></i>
         </label>
         <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Fullname" required
-               th:field="*{fullName}"/>
+               th:field="*{fullName}"
+        />
       </div>
     </div>
 
@@ -89,34 +77,37 @@
     <div class="d-flex flex-row align-items-center mb-4">
       <i class="fas fa-location-dot fa-lg me-3 fa-fw"></i>
       <div class="form-outline flex-fill mb-0">
+        <input type="text" id="email" name="email" class="form-control" placeholder="Email" th:field="*{email}"/>
+        <label class="form-label" for="email"></label>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row align-items-center mb-4">
+      <i class="fas fa-location-dot fa-lg me-3 fa-fw"></i>
+      <div class="form-outline flex-fill mb-0">
         <input type="text" id="address" name="address" class="form-control" placeholder="Address" th:field="*{diachi}"/>
         <label class="form-label" for="address"></label>
       </div>
     </div>
 
-    <div class="d-flex flex-row align-items-center mb-4 flex-column">
-      <div class="form-outline flex-fill mb-0 d-flex w-100">
-        <label class="form-label d-flex justify-content-center align-items-center">
-          <i class="fas fa-file-signature fa-lg me-3 fa-fw"></i>
-        </label>
-        <div class="form-group">
-          <label class="form-label">Status</label>
-          <select id="user-status" name="status" class="form-select">
-            <option th:each="status : ${statusList}" th:selected="${status == user.status}"
-                    th:text="${status}"></option>
-          </select>
-          <span class="form-message"></span>
-        </div>
-      </div>
+    <div class="d-flex flex-row align-items-center mb-4">
+      <i class="fas fa-location-dot fa-lg me-3 fa-fw"></i>
+      <select id="user-status" name="status" class="form-select">
+        <option th:each="status : ${statusList}"
+                th:value="${status}"
+                th:selected="${status == user.status}"
+                th:text="${status}">
+        </option>
+      </select>
+      <span class="form-message"></span>
     </div>
 
     <div class="form-group mt-3">
-      <button id="btn-Save" type="submit" class="btn btn-success mx-1">
+      <button id="btn-SaveUser" type="submit" class="btn btn-success mx-1">
         <i class="fa-solid fa-floppy-disk"></i> Save
       </button>
-      <button id="btn-Cancel" type="button" class="btn btn-primary mx-1">
-        <i class="fa-solid fa-rotate-left"></i> Cancel
-      </button>
+      <a href="/Donations/admin/userList" class="btn btn-primary mx-1"> <i
+        class="fa-solid fa-rotate-left"></i>Cancel</a>
     </div>
   </form>
 </div>

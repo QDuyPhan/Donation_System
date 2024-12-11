@@ -215,7 +215,6 @@ public class UserController {
         String error = "";
         String message = "";
         User user = new User();
-        user.setUsername(username);
         user.setFullName(fullname);
         user.setRole(Integer.parseInt(role));
         user.setSdt(phone);
@@ -231,15 +230,52 @@ public class UserController {
         User newUser = userService.save(user);
         if (newUser != null) {
             emailService.sendMailRegisterUser(newUser, password);
-//            message = "User added successfully!";
-//            model.addAttribute("message", message);
-            return "redirect:/Donations/admin/userList/adduser?message=Add User Successfully!";
-//            return "admin/user/addUserForm";
+            message = "User added successfully!";
         } else {
-//            error = "User add failed!";
-//            model.addAttribute("error", error);
-            return "redirect:/Donations/admin/userList/adduser?error=Add User Failed!";
+            error = "User add failed!";
         }
-//        return "admin/user/addUserForm";
+        model.addAttribute("message", message);
+        model.addAttribute("error", error);
+        return "admin/user/addUserForm";
+    }
+
+    @GetMapping("/admin/userList/updateuser")
+    public String showAdminUpdateAdd(Model model, @RequestParam("userId") Integer id) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+        String statusList[] = {"NotActivated", "Active", "Inactive", "Banned"};
+        int roleList[] = {1, 2};
+        User user = userService.findUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("statusList", statusList);
+        model.addAttribute("roleList", roleList);
+
+        return "admin/user/updateUserForm";
+    }
+
+    @PostMapping("/admin/userList/updateuser")
+    public String updateUser(Model model,
+                             @RequestParam("username") String username,
+                             @RequestParam("role") String role,
+                             @RequestParam("fullname") String fullname,
+                             @RequestParam("phone") String phone,
+                             @RequestParam("email") String email,
+                             @RequestParam("address") String address,
+                             @RequestParam("status") String status) {
+        String error = "";
+        String message = "";
+        User user = new User();
+        user.setUsername(username);
+        user.setFullName(fullname);
+        user.setRole(Integer.parseInt(role));
+        user.setSdt(phone);
+        user.setEmail(email);
+        user.setDiachi(address);
+        user.setStatus(status);
+        boolean result = userService.update(user);
+        if (result) {
+            message = "User update successfully!";
+        } else {
+            error = "User update failed!";
+        }
+        return "admin/user/updateUserForm";
     }
 }

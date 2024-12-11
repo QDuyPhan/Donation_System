@@ -24,6 +24,8 @@ public interface UserService {
 
     User save(User user);
 
+    boolean update(User user);
+
     boolean activate(String username, String id);
 
     boolean updateStatusAfterActivated(int id);

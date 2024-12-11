@@ -1,15 +1,17 @@
 $(document).ready(function () {
     //set up web display
-    if ($("#user-username").val() != "") $("#user-username").prop('readonly', true);
-    if ($("#user-id").val() == "") {
-        $("#user-status").prop('disabled', true);
-    } else {
-        // if ($("#user-role option:selected").text() == 'Admin') $("#user-role").prop('disabled', true);
-    }
+    // if ($("#user-username").val() != "") $("#user-username").prop('readonly', true);
+    // if ($("#user-id").val() == "") {
+    //     $("#user-status").prop('disabled', true);
+    // } else {
+    // if ($("#user-role option:selected").text() == 'Admin') $("#user-role").prop('disabled', true);
+    // }
     $("#btn-SaveUser").on("click", function (event) {
         if (!validateUser()) {
             alert("Thêm tài khoản thành công");
-            // event.preventDefault();
+            event.preventDefault();
+            var pathS = window.location.pathname.split("/");
+            window.location.replace("/" + pathS[1] + "/admin/userList");
         }
         // var pathS = window.location.pathname.split("/");
         // if ($("#user-id").val() == "") {

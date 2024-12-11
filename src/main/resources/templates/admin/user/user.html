@@ -41,11 +41,12 @@
               class="btn btn-success btn-sm mx-1">
         <i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm
       </button>
-<!--      <button id="btn-AddUser" type="button"-->
+      <!--      <button id="btn-AddUser" type="button"-->
       <!--              class="btn btn-primary btn-sm mx-1 d-block">-->
       <!--        <i class="fa-solid fa-plus"></i> Thêm mới-->
       <!--      </button>-->
-      <a href="/Donations/admin/userList/adduser" class="btn btn-primary btn-sm mx-1 d-block"><i class="fa-solid fa-plus"></i> Thêm
+      <a href="/Donations/admin/userList/adduser" class="btn btn-primary btn-sm mx-1 d-block"><i
+        class="fa-solid fa-plus"></i> Thêm
         mới</a>
     </div>
   </div>
@@ -85,8 +86,11 @@
         <span th:if="${item.status == 'Banned'}" class="badge text-bg-warning">Banned</span>
       </td>
       <td>
-        <button type="button" class="btn btn-warning btn-sm btn-edit">Edit</button>
-        <button type="button" class="btn btn-danger btn-sm btn-delete">Delete</button>
+        <a
+          th:href="@{/Donations/admin/userList/updateuser(userId=${item.id})}"
+          class="btn btn-warning btn-sm btn-edit"
+        >Edit</a>
+        <!--        <button type="button" class="btn btn-danger btn-sm btn-delete">Delete</button>-->
       </td>
     </tr>
     </tbody>

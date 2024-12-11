@@ -73,6 +73,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean update(User user) {
+        try {
+            int updateUser = userRepository.updateUser(user.getRole(), user.getFullName(), user.getSdt(), user.getEmail(), user.getDiachi(), user.getStatus(), user.getId());
+            if (updateUser != 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
     @Transactional
     public boolean activate(String username, String id) {
         try {
