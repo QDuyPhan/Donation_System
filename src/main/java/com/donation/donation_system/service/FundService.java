@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface FundService {
     List<Fund> FindAll();
-
+    List<Fund> FindAllById(List<Integer> id);
     Optional<Fund> findById(int id);
 
     Fund save(Fund fund);
@@ -25,6 +25,7 @@ public interface FundService {
     void deleteById(Integer id);
 
     Fund getFundById(int id);
+    Fund update(Fund fund);
 
     List<Fund> getAllBySearch(String search);
 

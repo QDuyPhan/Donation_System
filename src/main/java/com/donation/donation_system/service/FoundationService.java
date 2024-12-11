@@ -15,6 +15,7 @@ public interface FoundationService {
 
     Optional<Foundation> findById(int id);
 
+    Foundation findOneById(int id);
     Foundation save(Foundation foundation);
 
     int getTotalItems(String id, String name) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;

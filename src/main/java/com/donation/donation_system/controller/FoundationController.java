@@ -38,6 +38,8 @@ public class FoundationController {
     private DonationService donationService;
     @Autowired
     private FoundationService foundationService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/foundation")
     public String ShowFoundations(@RequestParam(name = "id", required = false, defaultValue = "") int id, Model model) {
@@ -71,7 +73,16 @@ public class FoundationController {
         model.addAttribute("content", "/pages/SearchFoundation");
         return "index";
     }
+    @GetMapping("/foundation/show")
+    public String ShowFoundations( Model model) {
 
+        List<Foundation> foundations = foundationService.findAll();
+        List<Category> categories = categoryService.FindAll();
+        model.addAttribute("foundations", foundations);
+        model.addAttribute("categories", categories);
+        model.addAttribute("content", "/pages/FounDonation");
+        return "index";
+    }
     @GetMapping("/admin/foundation")
     public String showFoundationAdmin(Model model, HttpSession session,
                                       @RequestParam(required = false, defaultValue = "0") int page,

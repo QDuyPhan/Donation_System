@@ -11,14 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -66,19 +67,41 @@ public class FundController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdFund);  // Trả về 201 khi tạo thành công
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Fund> updateFund(@PathVariable int id, @RequestBody Fund fundDetails) {
+    @GetMapping("admin/fund/update/{id}")
+    public String showUpdateForm(@PathVariable int id, Model model) {
+        Optional<Fund> fundOptional = fundService.findById(id);
+        if (fundOptional.isEmpty()) {
+            return "redirect:/error"; // Nếu không tìm thấy quỹ, chuyển hướng đến trang lỗi
+        }
+        Fund fund = fundOptional.get();
+
+        // Không cần phải gọi lại category và foundation nếu bạn chỉ cần ID
+        // Chỉ cần lấy danh sách cho dropdowns
+        List<Category> categoryList = categoryService.FindAll(); // Lấy danh sách category
+        List<Foundation> foundationList = foundationService.findAll(); // Lấy danh sách foundation
+
+        // Thêm đối tượng fund, categoryList và foundationList vào model
+        model.addAttribute("fund", fund);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("foundationList", foundationList);
+
+        return "admin/fund/fundUpdate"; // Trả về tên view cho form cập nhật
+    }
+
+
+    // Hàm xử lý form cập nhật
+    @PostMapping("admin/fund/updateFund/{id}")
+    public String updateFund(@PathVariable int id, @ModelAttribute Fund fundDetails, Model model) {
         // Tìm quỹ theo ID
         Optional<Fund> fundOptional = fundService.findById(id);
         if (fundOptional.isEmpty()) {
-            // Trả về mã lỗi 404 nếu không tìm thấy quỹ
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return "redirect:/error"; // Nếu không tìm thấy quỹ, chuyển hướng đến trang lỗi
         }
 
         // Lấy đối tượng fund từ Optional
         Fund fund = fundOptional.get();
 
-        // Cập nhật các thông tin của quỹ
+        // Cập nhật các thông tin của quỹ từ form
         if (fundDetails.getName() != null) {
             fund.setName(fundDetails.getName());
         }
@@ -108,23 +131,24 @@ public class FundController {
         }
 
         // Lưu lại quỹ đã được cập nhật
-        Fund updatedFund = fundService.save(fund);
+        fundService.save(fund);
 
-        // Trả về quỹ đã cập nhật với mã trạng thái 200 OK
-        return ResponseEntity.ok(updatedFund);
+        // Chuyển hướng đến trang chi tiết quỹ hoặc danh sách quỹ
+        model.addAttribute("fund", fund); // Thêm quỹ đã cập nhật vào model
+        return "redirect:/Donations/admin/fund"; // Chuyển hướng đến danh sách các quỹ
     }
 
 
-    // Xóa một quỹ
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFund(@PathVariable Integer id) {
         try {
             fundService.deleteById(id);
-            return ResponseEntity.noContent().build();  // Trả về 204 khi xóa thành công
+            return ResponseEntity.noContent().build(); // Trả về 204 nếu xóa thành công
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();  // Trả về 404 nếu không tìm thấy quỹ
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Trả về 404 nếu không tìm thấy
         }
     }
+
 
     @GetMapping("/detailFund")
     public String detailFund(@RequestParam(name = "id", required = false, defaultValue = "") int id, Model model, HttpSession session) {
@@ -210,31 +234,100 @@ public class FundController {
         model.addAttribute("foundationList", foundationList);
         return "admin/fund/fundAdd";
     }
+    @GetMapping("admin/fund/fundAddUser")
+    public String showFormFundAddUser(Model model) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+        Fund fund = new Fund();
+        fund.setStatus("Waiting");
+//        List<Category> categoryList = categoryService.search("");
+//        List<Foundation> foundationList = foundationService.search("");
+        List<Category> categoryList = categoryService.findAll();
+        List<Foundation> foundationList = foundationService.findAll();
+        model.addAttribute("fund", fund);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("foundationList", foundationList);
+        return "admin/fund/fundAddUser";
+    }
+    @PostMapping("/admin/fund/addFund")
+    public String addFund(@ModelAttribute Fund fund,
+                          RedirectAttributes redirectAttributes) {
+        try {
+            fundService.save(fund);
+            redirectAttributes.addFlashAttribute("toast", "success");
+            redirectAttributes.addFlashAttribute("message", "Fund created successfully!");
+            System.out.println("Success: Fund created successfully!");
+            return "redirect:/Donations/admin/fund";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("toast", "error");
+            redirectAttributes.addFlashAttribute("message", "Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
+            return "redirect:/Donations/admin/fund";
+        }
+    }
 
-//    @GetMapping("/admin/fund/add")
-//    public String createFund(@ModelAttribute("fund") Fund fund, Model model, HttpSession session) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
-//        LocalDateTime currentDateTime = LocalDateTime.now();
-//        Timestamp timestamp = Timestamp.valueOf(currentDateTime);
-//
-//        Fund f = new Fund();
-//        f.setName(fund.getName());
-//        f.setContent(fund.getContent());
-//        f.setImageUrl(fund.getImageUrl());
-//        f.setDescription(fund.getDescription());
-//        f.setExpectedResult(fund.getExpectedResult());
-//        f.setStatus(fund.getStatus());
-//        f.setCreatedDate(timestamp.toLocalDateTime());
-//        f.setEndDate(fund.getEndDate());
-//        Foundation foundation = foundationService.findByName(fund.getName());
-//        Category category = categoryService.findByName(fund.getName());
-//        f.setCategory(category);
-//        f.setFoundation(foundation);
-//
-//        Fund returnFund = fundService.save(f);
-//        if (returnFund != null) {
-//            return "redirect:/admin/fund?message=Add Fund Successfully";
-//        } else {
-//            return "redirect:/admin/fund?error=Add Fund Failed";
-//        }
-//    }
+    @GetMapping("admin/fund/deleteFund")
+    public String closeFund(@RequestParam int id,
+                            RedirectAttributes redirectAttributes) {
+        try {
+            // Lấy quỹ từ database
+            Optional<Fund> fundOptional = fundService.findById(id);
+            if (fundOptional.isEmpty()) {
+
+                return "redirect:/Donations/admin/fund";
+            }
+
+            // Lấy đối tượng fund từ Optional
+            Fund fund = fundOptional.get();
+
+            // Cập nhật trạng thái quỹ
+            fund.setStatus("Close");
+            fundService.save(fund); // Giả định rằng `save` là phương thức lưu dữ liệu
+
+            // Gửi thông báo thành công
+            redirectAttributes.addFlashAttribute("toast", "success");
+            redirectAttributes.addFlashAttribute("message", "Fund status updated to 'close' successfully!");
+            System.out.println("Success: Fund status updated to 'close'!");
+
+            return "redirect:/Donations/admin/fund";
+        } catch (Exception e) {
+            // Gửi thông báo lỗi
+            redirectAttributes.addFlashAttribute("toast", "error");
+            redirectAttributes.addFlashAttribute("message", "Error while updating fund status: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
+
+            return "redirect:/Donations/admin/fund";
+        }
+    }
+    @GetMapping("admin/fund/deleteFunds")
+    public String closeFunds(@RequestParam List<Integer> ids, RedirectAttributes redirectAttributes) {
+        try {
+            // Lấy danh sách quỹ
+            List<Fund> funds = fundService.FindAllById(ids); // Sử dụng List<Integer>
+
+            if (funds.isEmpty()) {
+                redirectAttributes.addFlashAttribute("toast", "warning");
+                redirectAttributes.addFlashAttribute("message", "No funds found for the provided IDs!");
+                return "redirect:/Donations/admin/fund";
+            }
+
+            // Cập nhật trạng thái
+            for (Fund fund : funds) {
+                fund.setStatus("Close");
+                fundService.save(fund);
+            }
+
+            // Lưu lại
+
+
+            redirectAttributes.addFlashAttribute("toast", "success");
+            redirectAttributes.addFlashAttribute("message", "Funds status updated to 'close' successfully!");
+            return "redirect:/Donations/admin/fund";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("toast", "error");
+            redirectAttributes.addFlashAttribute("message", "Error while updating fund statuses: " + e.getMessage());
+            return "redirect:/Donations/admin/fund";
+        }
+    }
+
+
+
 }

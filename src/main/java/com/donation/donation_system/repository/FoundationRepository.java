@@ -1,5 +1,6 @@
 package com.donation.donation_system.repository;
 
+import com.donation.donation_system.model.Category;
 import com.donation.donation_system.model.Foundation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,4 +35,7 @@ public interface FoundationRepository extends JpaRepository<Foundation, Integer>
 
     @Query("SELECT f FROM Foundation f WHERE f.name = :foundationName")
     Foundation findByName(String foundationName);
+
+    @Query("SELECT f FROM Foundation f WHERE f.id = :foundationId")
+    Foundation findOneById(@Param("foundationId") int foundationId);
 }

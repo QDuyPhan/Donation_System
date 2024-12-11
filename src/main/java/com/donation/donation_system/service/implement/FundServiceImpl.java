@@ -87,4 +87,14 @@ public class FundServiceImpl implements FundService {
     public Fund getFundById(int id) {
         return fundRepository.getReferenceById(id);
     }
+
+    @Override
+    public Fund update(Fund fund) {
+        return fundRepository.save(fund);
+    }
+
+    @Override
+    public List<Fund> FindAllById(List<Integer>  id){
+        return fundRepository.findAllById(id);
+    }
 }

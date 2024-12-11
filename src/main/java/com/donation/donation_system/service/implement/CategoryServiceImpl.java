@@ -41,7 +41,10 @@ public class CategoryServiceImpl implements CategoryService {
     public Page<Category> getPage(String id, String name, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         return categoryRepository.getPage(id, name, pageable);
     }
-
+    @Override
+    public Category FindOneById (int Id){
+        return categoryRepository.findOneById(Id);
+    }
     @Override
     public Page<Category> findAllByNameOrID(String query, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         return categoryRepository.findAllByNameOrID(query, pageable);

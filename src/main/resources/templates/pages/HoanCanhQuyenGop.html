@@ -12,7 +12,7 @@
         <div id="fund-container" class="row">
           <!----->
 
-          <div class="col-md-4 mb-2" th:each="fund, iterStat : ${under100Funds} " >
+          <div class="col-md-4 mb-2" th:each="fund, iterStat : ${under100Funds} " th:if="${fund.status == 'Opening'}" >
             <a class="text-decoration-none" style="color: black;">
               <div
                 class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">
@@ -133,7 +133,7 @@
         <!-- Tab Content -->
         <div id="fund-container1" class="  row">
 
-          <div class="col-md-4 mb-2" th:each="fund, iterStat : ${atLeast100Funds} ">
+          <div class="col-md-4 mb-2" th:each="fund, iterStat : ${atLeast100Funds} " th:if="${fund.status == 'Finish'}">
             <a class="text-decoration-none" style="color: black;">
               <div
                 class="donation-item d-flex flex-column overflow-hidden rounded border border-light bg-white text-dark shadow-sm transition">

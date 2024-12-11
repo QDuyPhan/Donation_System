@@ -1,5 +1,6 @@
 package com.donation.donation_system.service.implement;
 
+import com.donation.donation_system.model.Category;
 import com.donation.donation_system.service.FoundationService;
 import com.donation.donation_system.model.Foundation;
 import com.donation.donation_system.repository.FoundationRepository;
@@ -41,7 +42,10 @@ public class FoundationServiceImpl implements FoundationService {
         int count = foundationRepository.getTotalItems(id, name);
         return count;
     }
-
+    @Override
+    public Foundation findOneById (int Id){
+        return foundationRepository.findOneById(Id);
+    }
     @Override
     public Page<Foundation> getPage(String id, String name, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         return foundationRepository.getPage(id, name, pageable);

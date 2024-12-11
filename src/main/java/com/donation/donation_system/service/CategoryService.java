@@ -17,6 +17,7 @@ public interface CategoryService {
 
     Optional<Category> FindById(int id);
 
+    Category FindOneById(int id);
     int getTotalItems(String id, String name) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 
     Page<Category> getPage(String id, String name, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
