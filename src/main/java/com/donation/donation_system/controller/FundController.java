@@ -234,7 +234,7 @@ public class FundController {
         model.addAttribute("foundationList", foundationList);
         return "admin/fund/fundAdd";
     }
-    @GetMapping("admin/fund/fundAddUser")
+    @GetMapping("fund/fundAddUser")
     public String showFormFundAddUser(Model model) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
         Fund fund = new Fund();
         fund.setStatus("Waiting");

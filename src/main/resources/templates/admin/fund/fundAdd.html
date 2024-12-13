@@ -15,6 +15,14 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
   />
+  <!--  <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.0.0/ckeditor5.css" crossorigin>-->
+  <!--  <link rel="stylesheet"-->
+  <!--        href="https://cdn.ckeditor.com/ckeditor5-premium-features/44.0.0/ckeditor5-premium-features.css" crossorigin>
+  -->
+
+  <script src="https://cdn.ckeditor.com/4.19.1/full/ckeditor.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <meta charset="UTF-8">
   <title>Title</title>
 
@@ -27,7 +35,8 @@
     <h4>Create Fund</h4>
   </div>
 
-  <form class="create-form-fund" id="create-form-fund" method="post" th:action="@{/Donations/admin/fund/addFund}" th:object="${fund}">
+  <form class="create-form-fund" id="create-form-fund" method="post" th:action="@{/Donations/admin/fund/addFund}"
+        th:object="${fund}">
 
     <div class="form-group">
       <label for="fund-name" class="form-label">Name</label>
@@ -43,7 +52,7 @@
 
     <div class="form-group">
       <label for="fund-content" class="form-label">Content</label>
-      <textarea id="fund-content" class="form-control" name="content" th:field="*{content}"></textarea>
+      <textarea id="fund-content" rows="10" class="form-control ckeditor" name="content" th:field="*{content}"></textarea>
       <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
     </div>
 
@@ -55,7 +64,8 @@
 
     <div class="form-group">
       <label for="fund-expected-result" class="form-label">Expected Result</label>
-      <input type="number" id="fund-expected-result" class="form-control" name="expectedResult" th:field="*{expectedResult}">
+      <input type="number" id="fund-expected-result" class="form-control" name="expectedResult"
+             th:field="*{expectedResult}">
       <p th:if="${#fields.hasErrors('expectedResult')}" class="text-danger" th:errors="*{expectedResult}"></p>
     </div>
 
@@ -88,24 +98,26 @@
     <div class="form-group">
       <label for="fund-foundation" class="form-label">Foundation</label>
       <select id="fund-foundation" class="form-select" name="foundation" th:field="*{foundation}">
-        <option th:each="foundation : ${foundationList}" th:value="${foundation.id}" th:text="${foundation.name}"></option>
+        <option th:each="foundation : ${foundationList}" th:value="${foundation.id}"
+                th:text="${foundation.name}"></option>
       </select>
       <p th:if="${#fields.hasErrors('foundation')}" class="text-danger" th:errors="*{foundation}"></p>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mt-3">
       <button id="btn-Save-fund" type="submit" class="btn btn-success mx-1">
         <i class="fa-solid fa-floppy-disk"></i> Save
       </button>
-      <button id="btn-Cancel-fund" type="button" class="btn btn-primary mx-1">
-        <i class="fa-solid fa-rotate-left"></i> Cancel
-      </button>
+      <a href="/Donations/admin/fund" class="btn btn-primary mx-1"> <i
+        class="fa-solid fa-rotate-left"></i>Cancel</a>
     </div>
 
   </form>
 </div>
-<script>
-
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    CKEDITOR.replace('content');
+    /*]]>*/
 </script>
 </body>
 

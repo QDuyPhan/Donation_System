@@ -2,6 +2,7 @@ package com.donation.donation_system.repository;
 
 import com.donation.donation_system.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -36,4 +37,8 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
     @Query("SELECT c FROM Category c WHERE c.id = :categoryId")
     Category findOneById(@Param("categoryId") int categoryId);
+
+    @Modifying
+    @Query("UPDATE Category u SET u.name=:name, u.description=:description, u.status = :status WHERE u.id = :id")
+    int updateCategory(String name, String description, String status, int id);
 }

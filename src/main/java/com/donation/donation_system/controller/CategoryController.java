@@ -2,6 +2,7 @@ package com.donation.donation_system.controller;
 
 import com.donation.donation_system.model.Category;
 import com.donation.donation_system.model.Fund;
+import com.donation.donation_system.model.User;
 import com.donation.donation_system.service.CategoryService;
 import com.donation.donation_system.service.DonationService;
 import com.donation.donation_system.service.FundService;
@@ -70,35 +71,13 @@ public class CategoryController {
     public String showCategoryAdmin(Model model, HttpSession session,
                                     @RequestParam(required = false, defaultValue = "0") int page,
                                     @RequestParam(required = false, defaultValue = "") String id,
-                                    @RequestParam(required = false, defaultValue = "") String name,
-                                    @RequestParam(required = false, value = "action", defaultValue = "") String action
+                                    @RequestParam(required = false, defaultValue = "") String name
     )
             throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
-
-//        Optional<Category> category = categoryService.FindById(Integer.parseInt(id));
-        if (action != null && action.equals("add")) {
-            List<String> statusList = Arrays.asList("Enable", "Disable");
-            model.addAttribute("statusList", statusList);
-            model.addAttribute("action", action);
-            return "admin/category/category-form";
-        } else if (action != null && action.equals("edit")) {
-            Optional<Category> category = categoryService.FindById(Integer.parseInt(id));
-            if (category.isPresent())
-                model.addAttribute("category", category.get());
-            else
-                model.addAttribute("category", null);
-            List<String> statusList = Arrays.asList("Enable", "Disable");
-            model.addAttribute("statusList", statusList);
-            model.addAttribute("action", action);
-            return "admin/category/category-form";
-        }
         if (id == null) id = "";
         if (name == null) name = "";
         Pageable pageable = PageRequest.of(page, TOTAL_ITEMS_PER_PAGE);
         Page<Category> categoryList = categoryService.getPage(id, name, pageable);
-//        option
-//        int totalItems = categoryService.getTotalItems(id, name);
-//        int totalPages = (int) Math.ceil((double) totalItems / TOTAL_ITEMS_PER_PAGE);
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("size", categoryList.getSize());
         model.addAttribute("totalPages", categoryList.getTotalPages());
@@ -109,18 +88,68 @@ public class CategoryController {
         return "admin/category/category";
     }
 
-    @PostMapping("/admin/category")
-    public String processCategory(@ModelAttribute("category") Category category,
-                                  @RequestParam(required = false, value = "action", defaultValue = "") String action,
-                                  @RequestParam("id") String id,
-                                  @RequestParam("name") String name,
-                                  @RequestParam("description") String description,
-                                  @RequestParam("status") String status) {
-        if (action != null && action.equals("add")) {
-            System.out.println("id" + id);
-            System.out.println("name" + name);
-            System.out.println("description" + description);
-            System.out.println("status" + status);
+    @GetMapping("/admin/category/addCategory")
+    public String addCategory(Model model) {
+        List<String> statusList = Arrays.asList("Enable", "Disable");
+        model.addAttribute("category", new Category());
+        model.addAttribute("statusList", statusList);
+        return "admin/category/addCategory";
+    }
+
+    @PostMapping("/admin/category/addCategory")
+    public String addCategory(
+            Model model,
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("status") String status) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+
+        String error = "";
+        String message = "";
+        Category category = new Category();
+        category.setName(name);
+        category.setDescription(description);
+        category.setStatus(status);
+
+        System.out.println("name: " + name);
+        System.out.println("description: " + description);
+        System.out.println("status: " + status);
+
+        Category newCategory = categoryService.save(category);
+        if (newCategory != null) {
+            message = "Category added successfully";
+        } else {
+            error = "Category could not be added";
+        }
+        model.addAttribute("message", message);
+        model.addAttribute("error", error);
+        return "admin/category/addCategory";
+    }
+
+    @GetMapping("/admin/category/updateCategory")
+    public String updateCategory(Model model, @RequestParam("categoryId") Integer id) {
+        List<String> statusList = Arrays.asList("Enable", "Disable");
+        Optional<Category> categoryOptional = categoryService.FindById(id);
+        model.addAttribute("category", categoryOptional.get());
+        model.addAttribute("statusList", statusList);
+        return "admin/category/updateCategory";
+    }
+
+    @PostMapping("/admin/category/updateCategory")
+    public String updateCategory(
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("status") String status) {
+        String error = "";
+        String message = "";
+        Category category = new Category();
+        category.setName(name);
+        category.setDescription(description);
+        category.setStatus(status);
+        boolean result = categoryService.update(category);
+        if (result) {
+            message = "Category update successfully!";
+        } else {
+            error = "Category update failed!";
         }
         return "admin/category/category";
     }

@@ -1,6 +1,7 @@
 package com.donation.donation_system.service;
 
 import com.donation.donation_system.model.Category;
+import com.donation.donation_system.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public interface CategoryService {
     Optional<Category> FindById(int id);
 
     Category FindOneById(int id);
+
     int getTotalItems(String id, String name) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 
     Page<Category> getPage(String id, String name, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
@@ -31,4 +33,6 @@ public interface CategoryService {
     List<Category> findAll() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException;
 
     Category findByName(String categoryName);
+
+    boolean update(Category category);
 }

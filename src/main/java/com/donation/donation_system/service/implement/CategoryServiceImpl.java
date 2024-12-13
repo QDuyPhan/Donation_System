@@ -1,6 +1,7 @@
 package com.donation.donation_system.service.implement;
 
 import com.donation.donation_system.model.Category;
+import com.donation.donation_system.model.User;
 import com.donation.donation_system.repository.CategoryRepository;
 import com.donation.donation_system.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +42,12 @@ public class CategoryServiceImpl implements CategoryService {
     public Page<Category> getPage(String id, String name, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         return categoryRepository.getPage(id, name, pageable);
     }
+
     @Override
-    public Category FindOneById (int Id){
+    public Category FindOneById(int Id) {
         return categoryRepository.findOneById(Id);
     }
+
     @Override
     public Page<Category> findAllByNameOrID(String query, Pageable pageable) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
         return categoryRepository.findAllByNameOrID(query, pageable);
@@ -68,6 +71,19 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findByName(String categoryName) {
         return categoryRepository.findByName(categoryName);
+    }
+
+    @Override
+    public boolean update(Category category) {
+        try {
+            int updateCategory = categoryRepository.updateCategory(category.getName(), category.getDescription(), category.getStatus(), category.getId());
+            if (updateCategory != 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

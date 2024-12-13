@@ -40,21 +40,25 @@
     href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"
     rel="stylesheet">
   <link th:href="@{/css/body-content.css}" rel="stylesheet" type="text/css"/>
+  <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
   <script th:src="@{/js/admin-header.js}"></script>
   <script th:src="@{/js/foundation.js}"></script>
   <script th:src="@{/js/category.js}"></script>
+  <script th:src="@{/js/category-submit.js}"></script>
   <script th:src="@{/js/donation.js}"></script>
   <script th:src="@{/js/user.js}"></script>
   <script th:src="@{/js/user-submit.js}"></script>
   <script th:src="@{/js/fund.js}"></script>
   <script th:src="@{/js/fund-submit.js}"></script>
+  <script th:src="@{/js/main.js}"></script>
+  <script th:src="@{/ckeditor/ckeditor.js}"></script>
   <meta charset="UTF-8">
   <style>
       .dropdown-menu {
           width: 100%;
       }
 
-      @media ( max-width: 991.98px) {
+      @media ( max-width: 991px) {
           #userDropdownMenu {
               width: 100%;
           }
@@ -64,13 +68,12 @@
 </head>
 <body>
 <header
-  class="d-md-flex flex-md-row justify-content-between align-items-center mx-md-5 ">
+  class="d-md-flex flex-md-row justify-content-between align-items-center mx-md-5 " style="z-index: 3">
   <img th:src="@{/images/logosgu2.png}" alt="" style="width: 300px">
-  <h1 style="color: #42727c;" class="text-md-center">MANAGEMENT SYSTEM</h1>
   <div th:unless="${session.user}">
     <a th:href="@{/Donations/login}">Đăng nhập</a>
   </div>
-  <button class="btn dropdown-toggle" type="button"
+  <button th:if="${session.user.role == 1}" class="btn dropdown-toggle" type="button"
           id="userDropdownMenu" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
     <img th:src="@{/images/icon1.png}" style="width: 50px" alt="">
@@ -79,7 +82,6 @@
   <div class=" dropdown-menu" aria-labelledby="userDropdownMenu">
     <a class="dropdown-item" style="width: 100%;" th:href="@{#}">Thay đổi mật khẩu</a>
     <a class="dropdown-item" th:href="@{/Donations/login(logout)}">Đăng xuất</a>
-  </div>
   </div>
 
 </header>
@@ -100,7 +102,7 @@
         class="fa-solid fa-house"></i> Home </a></li>
       <li class="nav-item"><a class="nav-link"
                               href="/Donations/admin/category"><i
-        class="fa-solid fa-layer-group"></i></i> Danh mục</a></li>
+        class="fa-solid fa-layer-group"></i>Danh mục</a></li>
       <li class="nav-item"><a class="nav-link"
                               href="/Donations/admin/foundation"><i
         class="fa-solid fa-people-group"></i> Nhà tổ chức</a></li>
